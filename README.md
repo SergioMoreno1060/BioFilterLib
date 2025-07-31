@@ -21,25 +21,21 @@ BioFilterLib es una biblioteca de filtros digitales optimizada para Arduino Due,
 
 ## Requisitos
 
-- Arduino Due (basado en ARM Cortex-M3)
-- Arduino IDE 1.8.0 o superior
-- [CMSIS-DSP Library](https://arm-software.github.io/CMSIS_5/DSP/html/index.html)
+- Arduino Due
+- Visual Studio Code
+- Extension PlatformIO
 
 ## Instalación
 
 ### Instalación manual
 
 1. Descarga este repositorio como archivo ZIP
-2. En el IDE de Arduino, ve a Sketch -> Include Library -> Add .ZIP Library...
-3. Selecciona el archivo ZIP descargado
-4. Reinicia el IDE de Arduino
+2. Colocar el archivo comprimido en la carpeta lib/ de tu proyecto de PlatformIO
+3. Descomprimir el archivo ZIP
 
 ### Instalación de dependencias
 
-BioFilterLib requiere la biblioteca CMSIS-DSP para funcionar. Para instalarla:
-
-1. Descarga la biblioteca CMSIS-DSP desde [aquí](https://github.com/ARM-software/CMSIS_5)
-2. Sigue las instrucciones de instalación para Arduino Due
+BioFilterLib requiere la biblioteca CMSIS-DSP para funcionar. Al descargar este repositorio se descargan los archivos necesarios de CMSIS 5 y CMSIS DSP.
 
 ## Uso básico
 
@@ -52,81 +48,129 @@ BioFilterLib requiere la biblioteca CMSIS-DSP para funcionar. Para instalarla:
 ### Ejemplo básico: Filtro FIR para ECG
 
 ```cpp
+#include <Arduino.h>
 #include <BioFilterLib.h>
+#include "Waveforms.h"
 
-// Declarar filtro
-FIRFilter ecgFilter;
+// Parámetros del filtro
+#define BLOCK_SIZE  32
+#define NUM_TAPS    51
+#define SAMPLE_RATE 1000  // Hz típico para ECG
+#define CUTOFF_FREQ 50   // Hz - frecuencia de corte para eliminar ruido
 
-// Buffers para estado y coeficientes
-q15_t firState[ECG_FIR_TAPS + BLOCK_SIZE - 1];
-q15_t firCoeffs[ECG_FIR_TAPS];
+// Coeficientes FIR simulados (pasa bajas, por ejemplo)
+const float32_t ecgFilterCoeffs[NUM_TAPS] = {
+  1.01602337e-03,  1.05219578e-03,  1.05485683e-03,  9.52665359e-04,
+  6.39612342e-04, -6.52666866e-19, -1.05692964e-03, -2.55869546e-03,
+  -4.43506165e-03, -6.49496992e-03, -8.42139827e-03, -9.78815640e-03,
+  -1.00992192e-02, -8.84737843e-03, -5.58538708e-03,  2.65242472e-18,
+  8.02209630e-03,  1.83472206e-02,  3.05752787e-02,  4.40532964e-02,
+  5.79227190e-02,  7.11964426e-02,  8.28570731e-02,  9.19645190e-02,
+  9.77592660e-02,  9.97478615e-02,  9.77592660e-02,  9.19645190e-02,
+  8.28570731e-02,  7.11964426e-02,  5.79227190e-02,  4.40532964e-02,
+  3.05752787e-02,  1.83472206e-02,  8.02209630e-03,  2.65242472e-18,
+  -5.58538708e-03, -8.84737843e-03, -1.00992192e-02, -9.78815640e-03,
+  -8.42139827e-03, -6.49496992e-03, -4.43506165e-03, -2.55869546e-03,
+  -1.05692964e-03, -6.52666866e-19,  6.39612342e-04,  9.52665359e-04,
+  1.05485683e-03,  1.05219578e-03,  1.01602337e-03
+};
+
+// Buffers para procesamiento
+float32_t inputSignal[maxSamplesNum];
+float32_t filteredSignal[maxSamplesNum];
+
+// Instancia del filtro
+FIRFilter* ecgFilter;
 
 void setup() {
-  Serial.begin(115200);
-  
-  // Generar coeficientes para un filtro paso banda para ECG (0.5-40Hz)
-  // Los coeficientes deberían ser generados con herramientas como MATLAB o Python
-  // y luego copiados aquí como constantes
-
-  // Inicializar el filtro
-  ecgFilter.init(firCoeffs, ECG_FIR_TAPS, firState, BLOCK_SIZE);
+    Serial.begin(9600);
+    while (!Serial) {
+        delay(10);
+    }
+    
+    Serial.println("=== BioFilterLib ECG Filtering Demo ===");
+    Serial.println("Filtering noisy ECG signal with FIR low-pass filter");
+    Serial.println("Filter specs: 51 taps, fc=40Hz, fs=250Hz");
+    Serial.println();
+    
+    // Convertir señal ECG de uint16_t a float32_t y normalizar
+    Serial.println("Converting and normalizing ECG signal...");
+    for (int i = 0; i < maxSamplesNum; i++) {
+        // Normalizar de rango 0-4095 (12-bit) a rango ±1.0
+        inputSignal[i] = ((float32_t)waveformsTable[4][i] - 2048.0f) / 2048.0f;
+    }
+    
+    // Inicializar filtro FIR
+    Serial.println("Initializing FIR filter...");
+    ecgFilter = new FIRFilter(ecgFilterCoeffs, NUM_TAPS, BLOCK_SIZE);
+    
+    // Procesar señal por bloques
+    Serial.println("Processing signal...");
+    uint32_t samplesProcessed = 0;
+    
+    while (samplesProcessed < maxSamplesNum) {
+        uint32_t currentBlockSize = min((uint32_t)BLOCK_SIZE, maxSamplesNum - samplesProcessed);
+        ecgFilter->processBuffer(&inputSignal[samplesProcessed], 
+                                 &filteredSignal[samplesProcessed], 
+                                 currentBlockSize);
+        samplesProcessed += currentBlockSize;
+    }
+    
+    Serial.println("Filtering complete!");
+    Serial.println();
+    
+    // Mostrar header para CSV
+    Serial.println("Sample,Original,Filtered");
+    
+    // Mostrar datos en formato CSV
+    for (int i = 0; i < maxSamplesNum; i++) {
+        Serial.print(i);
+        Serial.print(",");
+        Serial.print(inputSignal[i], 6);
+        Serial.print(",");
+        Serial.println(filteredSignal[i], 6);
+        
+        // Pequeña pausa para evitar overflow del buffer serial
+        if (i % 50 == 0) {
+            delay(10);
+        }
+    }
+    
+    Serial.println();
+    Serial.println("=== Data transmission complete ===");
+    Serial.println("You can now save this data to CSV using:");
+    Serial.println("python -c \"import serial; s=serial.Serial('COM6',115200); [print(s.readline().decode().strip()) for _ in range(1010)]\" > ecg_data.csv");
 }
 
 void loop() {
-  // Leer datos del ADC
-  q15_t input[BLOCK_SIZE];
-  q15_t output[BLOCK_SIZE];
-  
-  // Leer datos (ejemplo simplificado)
-  for(int i = 0; i < BLOCK_SIZE; i++) {
-    input[i] = analogRead(A0);
-    delay(1); // 1ms entre muestras = 1kHz
-  }
-  
-  // Aplicar filtro
-  ecgFilter.process(input, output, BLOCK_SIZE);
-  
-  // Enviar datos filtrados por Serial
-  for(int i = 0; i < BLOCK_SIZE; i++) {
-    Serial.println(output[i]);
-  }
-}
-```
-
-### Ejemplo: Filtro Notch para eliminar interferencia de red (50/60Hz)
-
-```cpp
-#include <BioFilterLib.h>
-
-NotchFilter notchFilter;
-q31_t notchState[4]; // 2 estados por sección biquad
-q31_t notchCoeffs[5]; // 5 coeficientes para una sección biquad
-
-void setup() {
-  Serial.begin(115200);
-  
-  // Configurar coeficientes para un filtro Notch a 50Hz
-  // Con frecuencia de muestreo de 1kHz y Q=30
-  
-  // Coeficientes calculados previamente para un filtro Notch de 50Hz
-  // Los valores exactos dependen de la frecuencia de muestreo y factor de calidad deseados
-  
-  // Inicializar el filtro
-  notchFilter.init(notchCoeffs, notchState);
+    // Demostración en tiempo real (opcional)
+    static unsigned long lastTime = 0;
+    static int sampleIndex = 0;
+    
+    if (millis() - lastTime > 1) {  // Simular fs=1000Hz (1ms entre muestras)
+        if (sampleIndex < maxSamplesNum) {
+            float32_t currentSample = inputSignal[sampleIndex];
+            float32_t filteredSample = ecgFilter->processSample(currentSample);
+            
+            // Mostrar muestra en tiempo real (comentar si no se necesita)
+            /*
+            Serial.print("RT: ");
+            Serial.print(sampleIndex);
+            Serial.print(",");
+            Serial.print(currentSample, 4);
+            Serial.print(",");
+            Serial.println(filteredSample, 4);
+            */
+            
+            sampleIndex++;
+            if (sampleIndex >= maxSamplesNum) {
+                sampleIndex = 0;  // Reiniciar para loop continuo
+            }
+        }
+        lastTime = millis();
+    }
 }
 
-void loop() {
-  // Leer datos del ADC
-  q31_t input[BLOCK_SIZE];
-  q31_t output[BLOCK_SIZE];
-  
-  // Adquirir datos...
-  
-  // Aplicar filtro
-  notchFilter.process(input, output, BLOCK_SIZE);
-  
-  // Procesar salida...
-}
 ```
 
 ## Documentación de la API
@@ -139,61 +183,6 @@ FIRFilter();
 void init(const q15_t *coeffs, uint32_t numTaps, q15_t *state, uint32_t blockSize);
 void process(const q15_t *input, q15_t *output, uint32_t blockSize);
 static void filterStatic(const q15_t *input, q15_t *output, const q15_t *coeffs, uint32_t numTaps, q15_t *state, uint32_t blockSize);
-void end();
-```
-
-### Clase IIRFilter
-
-```cpp
-IIRFilter();
-~IIRFilter();
-void init(const q31_t *coeffs, q31_t *state, uint32_t numStages);
-void process(const q31_t *input, q31_t *output, uint32_t blockSize);
-static void filterStatic(const q31_t *input, q31_t *output, const q31_t *coeffs, q31_t *state, uint32_t numStages, uint32_t blockSize);
-void end();
-```
-
-### Clase NotchFilter
-
-```cpp
-NotchFilter();
-~NotchFilter();
-void init(const q31_t *coeffs, q31_t *state);
-void process(const q31_t *input, q31_t *output, uint32_t blockSize);
-static void filterStatic(const q31_t *input, q31_t *output, const q31_t *coeffs, q31_t *state, uint32_t blockSize);
-void end();
-```
-
-### Clase LMSFilter
-
-```cpp
-LMSFilter();
-~LMSFilter();
-void init(const q15_t *coeffs, q15_t *state, uint32_t numTaps, q15_t mu);
-void process(const q15_t *input, const q15_t *desired, q15_t *output, uint32_t blockSize);
-static void filterStatic(const q15_t *input, const q15_t *desired, q15_t *output, const q15_t *coeffs, q15_t *state, uint32_t numTaps, q15_t mu, uint32_t blockSize);
-void end();
-```
-
-### Clase WaveletFilter
-
-```cpp
-WaveletFilter();
-~WaveletFilter();
-void init(const q15_t *coeffs, uint32_t numTaps, q15_t *state, uint32_t blockSize);
-void process(const q15_t *input, q15_t *output, uint32_t blockSize);
-static void filterStatic(const q15_t *input, q15_t *output, const q15_t *coeffs, uint32_t numTaps, q15_t *state, uint32_t blockSize);
-void end();
-```
-
-### Clase MedianFilter
-
-```cpp
-MedianFilter();
-~MedianFilter();
-void init(uint32_t windowSize);
-void process(const q15_t *input, q15_t *output, uint32_t blockSize);
-static void filterStatic(const q15_t *input, q15_t *output, uint32_t windowSize, uint32_t blockSize);
 void end();
 ```
 
@@ -246,129 +235,129 @@ Especialmente útiles para:
 ### Filtrado completo de ECG
 
 ```cpp
+#include <Arduino.h>
 #include <BioFilterLib.h>
+#include "Waveforms.h"
 
-// Definiciones y constantes
-#define SAMPLE_RATE 500
-#define BLOCK_SIZE 32
-#define ECG_FIR_TAPS 101
+// Parámetros del filtro
+#define BLOCK_SIZE  32
+#define NUM_TAPS    51
+#define SAMPLE_RATE 1000  // Hz típico para ECG
+#define CUTOFF_FREQ 50   // Hz - frecuencia de corte para eliminar ruido
 
-// Instancias de filtros
-FIRFilter baselineFilter;       // Para eliminar deriva de línea base
-NotchFilter powerLineFilter;    // Para eliminar interferencia de red eléctrica
-MedianFilter spikeFilter;       // Para eliminar artefactos impulsivos
+// Coeficientes FIR simulados (pasa bajas, por ejemplo)
+const float32_t ecgFilterCoeffs[NUM_TAPS] = {
+  1.01602337e-03,  1.05219578e-03,  1.05485683e-03,  9.52665359e-04,
+  6.39612342e-04, -6.52666866e-19, -1.05692964e-03, -2.55869546e-03,
+  -4.43506165e-03, -6.49496992e-03, -8.42139827e-03, -9.78815640e-03,
+  -1.00992192e-02, -8.84737843e-03, -5.58538708e-03,  2.65242472e-18,
+  8.02209630e-03,  1.83472206e-02,  3.05752787e-02,  4.40532964e-02,
+  5.79227190e-02,  7.11964426e-02,  8.28570731e-02,  9.19645190e-02,
+  9.77592660e-02,  9.97478615e-02,  9.77592660e-02,  9.19645190e-02,
+  8.28570731e-02,  7.11964426e-02,  5.79227190e-02,  4.40532964e-02,
+  3.05752787e-02,  1.83472206e-02,  8.02209630e-03,  2.65242472e-18,
+  -5.58538708e-03, -8.84737843e-03, -1.00992192e-02, -9.78815640e-03,
+  -8.42139827e-03, -6.49496992e-03, -4.43506165e-03, -2.55869546e-03,
+  -1.05692964e-03, -6.52666866e-19,  6.39612342e-04,  9.52665359e-04,
+  1.05485683e-03,  1.05219578e-03,  1.01602337e-03
+};
 
-// Buffers de estado y coeficientes
-q15_t baselineState[ECG_FIR_TAPS + BLOCK_SIZE - 1];
-q15_t baselineCoeffs[ECG_FIR_TAPS];
-q31_t notchState[4];
-q31_t notchCoeffs[5];
+// Buffers para procesamiento
+float32_t inputSignal[maxSamplesNum];
+float32_t filteredSignal[maxSamplesNum];
 
-// Buffers de datos
-q15_t rawData[BLOCK_SIZE];
-q15_t tempData[BLOCK_SIZE];
-q31_t notchInput[BLOCK_SIZE];
-q31_t notchOutput[BLOCK_SIZE];
-q15_t filteredData[BLOCK_SIZE];
+// Instancia del filtro
+FIRFilter* ecgFilter;
 
 void setup() {
-  Serial.begin(115200);
-  
-  // Inicializar filtros
-  // ... configurar coeficientes ...
-  
-  baselineFilter.init(baselineCoeffs, ECG_FIR_TAPS, baselineState, BLOCK_SIZE);
-  powerLineFilter.init(notchCoeffs, notchState);
-  spikeFilter.init(5); // Ventana de 5 muestras
-  
-  // Configurar ADC
-  analogReadResolution(12);
+    Serial.begin(9600);
+    while (!Serial) {
+        delay(10);
+    }
+    
+    Serial.println("=== BioFilterLib ECG Filtering Demo ===");
+    Serial.println("Filtering noisy ECG signal with FIR low-pass filter");
+    Serial.println("Filter specs: 51 taps, fc=40Hz, fs=250Hz");
+    Serial.println();
+    
+    // Convertir señal ECG de uint16_t a float32_t y normalizar
+    Serial.println("Converting and normalizing ECG signal...");
+    for (int i = 0; i < maxSamplesNum; i++) {
+        // Normalizar de rango 0-4095 (12-bit) a rango ±1.0
+        inputSignal[i] = ((float32_t)waveformsTable[4][i] - 2048.0f) / 2048.0f;
+    }
+    
+    // Inicializar filtro FIR
+    Serial.println("Initializing FIR filter...");
+    ecgFilter = new FIRFilter(ecgFilterCoeffs, NUM_TAPS, BLOCK_SIZE);
+    
+    // Procesar señal por bloques
+    Serial.println("Processing signal...");
+    uint32_t samplesProcessed = 0;
+    
+    while (samplesProcessed < maxSamplesNum) {
+        uint32_t currentBlockSize = min((uint32_t)BLOCK_SIZE, maxSamplesNum - samplesProcessed);
+        ecgFilter->processBuffer(&inputSignal[samplesProcessed], 
+                                 &filteredSignal[samplesProcessed], 
+                                 currentBlockSize);
+        samplesProcessed += currentBlockSize;
+    }
+    
+    Serial.println("Filtering complete!");
+    Serial.println();
+    
+    // Mostrar header para CSV
+    Serial.println("Sample,Original,Filtered");
+    
+    // Mostrar datos en formato CSV
+    for (int i = 0; i < maxSamplesNum; i++) {
+        Serial.print(i);
+        Serial.print(",");
+        Serial.print(inputSignal[i], 6);
+        Serial.print(",");
+        Serial.println(filteredSignal[i], 6);
+        
+        // Pequeña pausa para evitar overflow del buffer serial
+        if (i % 50 == 0) {
+            delay(10);
+        }
+    }
+    
+    Serial.println();
+    Serial.println("=== Data transmission complete ===");
+    Serial.println("You can now save this data to CSV using:");
+    Serial.println("python -c \"import serial; s=serial.Serial('COM6',115200); [print(s.readline().decode().strip()) for _ in range(1010)]\" > ecg_data.csv");
 }
 
 void loop() {
-  // Adquirir datos
-  for(int i = 0; i < BLOCK_SIZE; i++) {
-    rawData[i] = analogRead(A0);
-    delay(1000/SAMPLE_RATE);
-  }
-  
-  // Aplicación en cascada de filtros
-  
-  // 1. Eliminar artefactos impulsivos con filtro de mediana
-  spikeFilter.process(rawData, tempData, BLOCK_SIZE);
-  
-  // 2. Eliminar interferencia de red eléctrica con filtro notch
-  for(int i = 0; i < BLOCK_SIZE; i++) {
-    notchInput[i] = (q31_t)tempData[i] << 16; // Escalar a q31_t
-  }
-  powerLineFilter.process(notchInput, notchOutput, BLOCK_SIZE);
-  
-  // 3. Eliminar deriva de línea base con filtro FIR paso-alto
-  for(int i = 0; i < BLOCK_SIZE; i++) {
-    tempData[i] = (q15_t)(notchOutput[i] >> 16); // Volver a q15_t
-  }
-  baselineFilter.process(tempData, filteredData, BLOCK_SIZE);
-  
-  // Enviar datos procesados
-  for(int i = 0; i < BLOCK_SIZE; i++) {
-    Serial.println(filteredData[i]);
-  }
-}
-```
-
-### Implementación de filtro adaptativo LMS para eliminación de artefactos
-
-```cpp
-#include <BioFilterLib.h>
-
-#define SAMPLE_RATE 1000
-#define BLOCK_SIZE 32
-#define LMS_TAPS 32
-
-LMSFilter adaptiveFilter;
-q15_t lmsState[LMS_TAPS + BLOCK_SIZE - 1];
-q15_t lmsCoeffs[LMS_TAPS];
-
-q15_t primaryInput[BLOCK_SIZE];    // Señal contaminada (ECG + ruido)
-q15_t referenceInput[BLOCK_SIZE];  // Señal de referencia (aproximación del ruido)
-q15_t filteredOutput[BLOCK_SIZE];  // Salida limpia
-
-void setup() {
-  Serial.begin(115200);
-  
-  // Inicializar coeficientes en cero
-  for(int i = 0; i < LMS_TAPS; i++) {
-    lmsCoeffs[i] = 0;
-  }
-  
-  // Inicializar filtro adaptativo con paso de adaptación μ = 0.01
-  q15_t mu = 0.01 * 32768; // Escalar a formato q15_t
-  adaptiveFilter.init(lmsCoeffs, lmsState, LMS_TAPS, mu);
-  
-  // Configurar ADCs
-  analogReadResolution(12);
+    // Demostración en tiempo real (opcional)
+    static unsigned long lastTime = 0;
+    static int sampleIndex = 0;
+    
+    if (millis() - lastTime > 1) {  // Simular fs=1000Hz (1ms entre muestras)
+        if (sampleIndex < maxSamplesNum) {
+            float32_t currentSample = inputSignal[sampleIndex];
+            float32_t filteredSample = ecgFilter->processSample(currentSample);
+            
+            // Mostrar muestra en tiempo real (comentar si no se necesita)
+            /*
+            Serial.print("RT: ");
+            Serial.print(sampleIndex);
+            Serial.print(",");
+            Serial.print(currentSample, 4);
+            Serial.print(",");
+            Serial.println(filteredSample, 4);
+            */
+            
+            sampleIndex++;
+            if (sampleIndex >= maxSamplesNum) {
+                sampleIndex = 0;  // Reiniciar para loop continuo
+            }
+        }
+        lastTime = millis();
+    }
 }
 
-void loop() {
-  // Leer señal principal (contaminada) del canal A0
-  for(int i = 0; i < BLOCK_SIZE; i++) {
-    primaryInput[i] = analogRead(A0);
-    delay(1);
-  }
-  
-  // Leer señal de referencia (aproximación del ruido) del canal A1
-  for(int i = 0; i < BLOCK_SIZE; i++) {
-    referenceInput[i] = analogRead(A1);
-  }
-  
-  // Aplicar filtro adaptativo LMS
-  adaptiveFilter.process(referenceInput, primaryInput, filteredOutput, BLOCK_SIZE);
-  
-  // Enviar datos filtrados
-  for(int i = 0; i < BLOCK_SIZE; i++) {
-    Serial.println(filteredOutput[i]);
-  }
-}
 ```
 
 ## Configuraciones recomendadas para bioseñales comunes
@@ -416,8 +405,22 @@ BioFilterLib está optimizada para el Arduino Due, pero aún así hay limitacion
 ### Problemas comunes
 
 1. **Errores de compilación relacionados con CMSIS-DSP**
-   - Asegúrese de que CMSIS-DSP está correctamente instalado
    - Verifique que la ruta de inclusión es correcta
+   - Verificar que el archivo platformio.ini tenga lo siguiente:
+     ```cpp
+     [env:due]
+      platform = atmelsam
+      board = due
+      framework = arduino
+      
+      build_flags =
+          -DARM_MATH_CM3
+          -Ilib/CMSIS-DSP/Include
+          -Ilib/CMSIS-DSP/Include/DSP
+          -Ilib/CMSIS_5/CMSIS/Core/Include
+          -Ilib/BioFilterLib/src/utils
+          -Ilib/BioFilterLib/src/filters
+     ```
 
 2. **Saturación de señal**
    - Las bioseñales pueden tener componentes DC que causan saturación
@@ -435,10 +438,10 @@ BioFilterLib está optimizada para el Arduino Due, pero aún así hay limitacion
 
 Para verificar el correcto funcionamiento de los filtros:
 
-1. Utilice señales de prueba conocidas (sinusoides, pulsos, etc.)
+1. Utilice las señales de prueba conocidas (sinusoides, pulsos, etc.) que están en el archivo Waveforms.h
 2. Compare la salida con resultados simulados en MATLAB/Python
-3. Visualice la entrada y salida en tiempo real mediante Serial Plotter
-4. Analice el espectro de frecuencia de la señal antes y después del filtrado
+3. Visualice la entrada y salida mediante la exportacion del output a un archivo .csv
+4. Analice el espectro de frecuencia de la señal antes y después del filtrado con herramientas como scipy.
 
 <br>
 
