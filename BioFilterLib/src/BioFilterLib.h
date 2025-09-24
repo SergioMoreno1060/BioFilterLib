@@ -6,6 +6,8 @@
  #define BIOFILTERLIB_H
  
  #include "filters/FIRFilter.h"
+ #include "filters/IIRFilter.h"
+ #include "filters/LMSFilter.h"
  
  #endif // BIOFILTERLIB_H
  

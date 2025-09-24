@@ -1,0 +1,25 @@
+\doxysection{C\+:/\+Users/\+Sergio/\+Documents/\+Platform\+IO/\+Projects/00 -\/ CMSIS test/lib/\+Bio\+Filter\+Lib/src/filters/\+IIRFilter.\+h}
+\hypertarget{_c_1_2_users_2_sergio_2_documents_2_platform_i_o_2_projects_200_01-_01_c_m_s_i_s_01test_2lib_2_b2e4f6e979bfd050f0aa06f64b1922aec}{}\label{_c_1_2_users_2_sergio_2_documents_2_platform_i_o_2_projects_200_01-_01_c_m_s_i_s_01test_2lib_2_b2e4f6e979bfd050f0aa06f64b1922aec}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ Coeficientes\ para\ un\ filtro\ pasa-\/altas\ Butterworth\ de\ 2do\ orden\ a\ 1\ Hz\ (Fs=1000Hz)}}
+\DoxyCodeLine{\textcolor{comment}{//\ Generados\ con\ Python/scipy:\ b,\ a\ =\ signal.butter(2,\ 1,\ 'highpass',\ fs=1000)}}
+\DoxyCodeLine{\textcolor{comment}{//\ Formato\ para\ CMSIS\ Biquad:\ \{b0,\ b1,\ b2,\ a1,\ a2\}\ (a0=1\ se\ omite)}}
+\DoxyCodeLine{\textcolor{keyword}{const}\ float32\_t\ highpassCoeffs[5]\ =\ \{}
+\DoxyCodeLine{0.99376249f,\ -\/1.98752499f,\ \ 0.99376249f,\ \textcolor{comment}{//\ b0,\ b1,\ b2}}
+\DoxyCodeLine{-\/1.98745615f,\ \ 0.98759382f\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ a1,\ a2}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{*\ \textcolor{comment}{//\ Crear\ filtro\ IIR\ con\ 1\ sección\ Biquad,\ para\ procesamiento\ en\ tiempo\ real}}
+\DoxyCodeLine{\mbox{\hyperlink{class_i_i_r_filter}{IIRFilter}}\ filter(highpassCoeffs,\ 1,\ 1);}
+\DoxyCodeLine{*\ \textcolor{comment}{//\ Procesar\ una\ muestra\ individual}}
+\DoxyCodeLine{float32\_t\ filteredSample\ =\ filter.processSample(inputSample);}
+\DoxyCodeLine{*\ \textcolor{comment}{//\ Procesar\ un\ buffer\ completo}}
+\DoxyCodeLine{filter.processBuffer(inputBuffer,\ outputBuffer,\ bufferSize);}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyCodeInclude}{0}
+
+\end{DoxyCodeInclude}
+ -\/ CMSIS \doxylink{_i_i_r_filter_8h}{test/lib/\+Bio\+Filter\+Lib/src/filters/\+IIRFilter.\+h} 

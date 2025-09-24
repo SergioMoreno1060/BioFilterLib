@@ -1,0 +1,264 @@
+\doxysection{FIRFilter Class Reference}
+\hypertarget{class_f_i_r_filter}{}\label{class_f_i_r_filter}\index{FIRFilter@{FIRFilter}}
+
+
+Wrapper C++ para filtros FIR de CMSIS-\/\+DSP optimizado para bioseñales.  
+
+
+
+
+{\ttfamily \#include $<$FIRFilter.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_f_i_r_filter_a7944c16caf70319417d3f620181ea6f8}{FIRFilter}} (const float32\+\_\+t \texorpdfstring{$\ast$}{*}coeffs, uint16\+\_\+t num\+Taps, uint16\+\_\+t block\+Size)
+\begin{DoxyCompactList}\small\item\em Constructor que inicializa el filtro FIR con parámetros específicos. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_f_i_r_filter_a7d376351ab71190d49b8b7abaa304767}{\texorpdfstring{$\sim$}{\string~}\+FIRFilter}} ()
+\begin{DoxyCompactList}\small\item\em Destructor de la clase \doxylink{class_f_i_r_filter}{FIRFilter}. \end{DoxyCompactList}\item 
+float32\+\_\+t \mbox{\hyperlink{class_f_i_r_filter_a2ec31d5f400abe1ffd69ad2d9f912e59}{process\+Sample}} (float32\+\_\+t input)
+\begin{DoxyCompactList}\small\item\em Procesa una muestra individual usando el filtro FIR. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_f_i_r_filter_a3478d4c3b1c3d11250a6ee43fa5d6664}{process\+Buffer}} (const float32\+\_\+t \texorpdfstring{$\ast$}{*}input\+Array, float32\+\_\+t \texorpdfstring{$\ast$}{*}output\+Array, uint32\+\_\+t length)
+\begin{DoxyCompactList}\small\item\em Procesa un buffer completo de muestras usando el filtro FIR. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Wrapper C++ para filtros FIR de CMSIS-\/\+DSP optimizado para bioseñales. 
+
+Esta clase encapsula la funcionalidad de filtros FIR (Finite Impulse Response) de CMSIS-\/\+DSP, proporcionando una interfaz amigable para el procesamiento de señales biomédicas como ECG, EMG, EEG, etc.
+
+Los filtros FIR son especialmente útiles para\+:
+\begin{DoxyItemize}
+\item Eliminación de ruido de alta frecuencia (filtros pasa-\/bajas)
+\item Eliminación de interferencia de línea eléctrica (filtros notch)
+\item Separación de bandas de frecuencia específicas (filtros pasa-\/banda)
+\item Preservación de la forma de onda original (respuesta de fase lineal)
+\end{DoxyItemize}
+
+La clase maneja automáticamente\+:
+\begin{DoxyItemize}
+\item Inicialización del estado interno del filtro
+\item Gestión de memoria para el buffer de estados
+\item Interfaz con las funciones optimizadas de CMSIS-\/\+DSP
+\item Procesamiento tanto de muestras individuales como de buffers
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+Los coeficientes del filtro deben ser calculados externamente usando herramientas como Python/scipy, MATLAB o herramientas online de diseño de filtros.
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+La memoria para los coeficientes debe mantenerse válida durante toda la vida del objeto \doxylink{class_f_i_r_filter}{FIRFilter}, ya que se almacena solo la referencia.
+\end{DoxyWarning}
+\begin{DoxySeeAlso}{See also}
+arm\+\_\+fir\+\_\+f32() para más detalles sobre la implementación subyacente de CMSIS-\/\+DSP 
+\end{DoxySeeAlso}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_c_1_2_users_2_sergio_2_documents_2_platform_i_o_2_projects_200_01-_01_c_m_s_i_s_01test_2lib_2_ba5995a94abd2c4e0bedd7fc2c5f70f57}{C\+:/\+Users/\+Sergio/\+Documents/\+Platform\+IO/\+Projects/00 -\/ CMSIS test/lib/\+Bio\+Filter\+Lib/src/filters/\+FIRFilter.\+h}}.\end{Desc}
+
+
+\label{doc-constructors}
+\Hypertarget{class_f_i_r_filter_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_f_i_r_filter_a7944c16caf70319417d3f620181ea6f8}\index{FIRFilter@{FIRFilter}!FIRFilter@{FIRFilter}}
+\index{FIRFilter@{FIRFilter}!FIRFilter@{FIRFilter}}
+\doxysubsubsection{\texorpdfstring{FIRFilter()}{FIRFilter()}}
+{\footnotesize\ttfamily \label{class_f_i_r_filter_a7944c16caf70319417d3f620181ea6f8} 
+FIRFilter\+::\+FIRFilter (\begin{DoxyParamCaption}\item[{const float32\+\_\+t \texorpdfstring{$\ast$}{*}}]{coeffs}{, }\item[{uint16\+\_\+t}]{num\+Taps}{, }\item[{uint16\+\_\+t}]{block\+Size}{}\end{DoxyParamCaption})}
+
+
+
+Constructor que inicializa el filtro FIR con parámetros específicos. 
+
+El constructor realiza las siguientes operaciones\+:
+\begin{DoxyEnumerate}
+\item Inicializa las variables miembro con los parámetros proporcionados
+\item Calcula y asigna memoria para el buffer de estados interno
+\item Inicializa la estructura arm\+\_\+fir\+\_\+instance\+\_\+f32 de CMSIS-\/\+DSP
+\item Configura el filtro para procesamiento optimizado
+\end{DoxyEnumerate}
+
+
+\begin{DoxyParams}{Parameters}
+{\em coeffs} & Puntero al array de coeficientes del filtro \\
+\hline
+{\em num\+Taps} & Número de coeficientes (orden del filtro + 1) \\
+\hline
+{\em block\+Size} & Tamaño del bloque de procesamiento\\
+\hline
+\end{DoxyParams}
+\begin{DoxyRemark}{Remarks}
+El tamaño del buffer de estados se calcula como (num\+Taps + block\+Size -\/ 1) según los requerimientos de CMSIS-\/\+DSP para evitar aliasing y permitir procesamiento eficiente en bloques.
+\end{DoxyRemark}
+\begin{DoxyNote}{Note}
+La función arm\+\_\+fir\+\_\+init\+\_\+f32() configura internamente\+:
+\begin{DoxyItemize}
+\item Punteros a coeficientes y buffer de estados
+\item Parámetros de longitud para optimizaciones SIMD
+\item Configuración de acceso circular al buffer
+\end{DoxyItemize}
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+Si la asignación de memoria falla, el comportamiento es indefinido. En producción se debería verificar el retorno de \textquotesingle{}new\textquotesingle{}. 
+\end{DoxyWarning}
+\Hypertarget{class_f_i_r_filter_a7d376351ab71190d49b8b7abaa304767}\index{FIRFilter@{FIRFilter}!````~FIRFilter@{\texorpdfstring{$\sim$}{\string~}FIRFilter}}
+\index{````~FIRFilter@{\texorpdfstring{$\sim$}{\string~}FIRFilter}!FIRFilter@{FIRFilter}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}FIRFilter()}{\string~FIRFilter()}}
+{\footnotesize\ttfamily \label{class_f_i_r_filter_a7d376351ab71190d49b8b7abaa304767} 
+FIRFilter\+::\texorpdfstring{$\sim$}{\string~}\+FIRFilter (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Destructor de la clase \doxylink{class_f_i_r_filter}{FIRFilter}. 
+
+Destructor que libera recursos asignados dinámicamente.
+
+Libera automáticamente la memoria asignada para el buffer de estados interno. El destructor se encarga de limpiar todos los recursos utilizados por el filtro.
+
+\begin{DoxyNote}{Note}
+No es necesario llamar explícitamente a funciones de limpieza.
+\end{DoxyNote}
+Libera la memoria asignada para el buffer de estados interno. El destructor garantiza que no hay fugas de memoria cuando el objeto \doxylink{class_f_i_r_filter}{FIRFilter} sale de scope o es eliminado explícitamente.
+
+\begin{DoxyRemark}{Remarks}
+Solo necesita liberar \+\_\+state ya que\+:
+\begin{DoxyItemize}
+\item \+\_\+coeffs es solo una referencia (gestionada externamente)
+\item \+\_\+fir\+Instance es una estructura por valor (limpieza automática)
+\item Las variables primitivas se limpian automáticamente
+\end{DoxyItemize}
+\end{DoxyRemark}
+\begin{DoxyNote}{Note}
+CMSIS-\/\+DSP no requiere funciones de limpieza específicas para la estructura arm\+\_\+fir\+\_\+instance\+\_\+f32. 
+\end{DoxyNote}
+
+
+\label{doc-func-members}
+\Hypertarget{class_f_i_r_filter_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_f_i_r_filter_a3478d4c3b1c3d11250a6ee43fa5d6664}\index{FIRFilter@{FIRFilter}!processBuffer@{processBuffer}}
+\index{processBuffer@{processBuffer}!FIRFilter@{FIRFilter}}
+\doxysubsubsection{\texorpdfstring{processBuffer()}{processBuffer()}}
+{\footnotesize\ttfamily \label{class_f_i_r_filter_a3478d4c3b1c3d11250a6ee43fa5d6664} 
+void FIRFilter\+::process\+Buffer (\begin{DoxyParamCaption}\item[{const float32\+\_\+t \texorpdfstring{$\ast$}{*}}]{input\+Array}{, }\item[{float32\+\_\+t \texorpdfstring{$\ast$}{*}}]{output\+Array}{, }\item[{uint32\+\_\+t}]{length}{}\end{DoxyParamCaption})}
+
+
+
+Procesa un buffer completo de muestras usando el filtro FIR. 
+
+Esta función aplica el filtro FIR a un array completo de muestras de entrada, escribiendo los resultados en el array de salida. Optimizada para procesamiento por lotes con mejor rendimiento que múltiples llamadas a \doxylink{class_f_i_r_filter_a2ec31d5f400abe1ffd69ad2d9f912e59}{process\+Sample()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+Array} & Puntero al array de muestras de entrada \\
+\hline
+{\em output\+Array} & Puntero al array donde escribir las muestras filtradas ~\newline
+ \\
+\hline
+{\em length} & Número de muestras a procesar\\
+\hline
+\end{DoxyParams}
+\begin{DoxyRemark}{Remarks}
+Utiliza arm\+\_\+fir\+\_\+f32() para procesar el bloque completo\+:
+\begin{DoxyEnumerate}
+\item Procesa \textquotesingle{}length\textquotesingle{} muestras en una sola llamada
+\item Utiliza vectorización SIMD para máximo rendimiento
+\item Mantiene continuidad del estado entre llamadas
+\item Maneja automáticamente el solapamiento entre bloques
+\end{DoxyEnumerate}
+\end{DoxyRemark}
+\begin{DoxyNote}{Note}
+Ventajas del procesamiento por bloques\+:
+\begin{DoxyItemize}
+\item Mayor throughput debido a optimizaciones SIMD
+\item Menor overhead de llamadas a función
+\item Mejor uso de la cache del procesador
+\item Aprovechamiento de paralelismo a nivel de instrucción
+\end{DoxyItemize}
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+Consideraciones importantes\+:
+\begin{DoxyItemize}
+\item Los arrays de entrada y salida NO deben solaparse en memoria
+\item Ambos arrays deben tener al menos \textquotesingle{}length\textquotesingle{} elementos válidos
+\item El estado del filtro se preserva entre llamadas consecutivas
+\end{DoxyItemize}
+\end{DoxyWarning}
+\begin{DoxyParagraph}{Para procesamiento por bloques\+:}
+
+\begin{DoxyItemize}
+\item Throughput\+: Significativamente mayor que procesamiento individual
+\item Latencia\+: \textquotesingle{}length\textquotesingle{} muestras (todo el bloque se procesa junto)
+\item Memoria\+: Uso eficiente de cache por acceso secuencial
+\end{DoxyItemize}
+\end{DoxyParagraph}
+\begin{DoxyParagraph}{Uso típico para señales ECG\+:}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ Buffer\ de\ 256\ muestras\ @\ 1000\ Hz\ =\ 256ms\ de\ datos}}
+\DoxyCodeLine{float32\_t\ ecgInput[256];}
+\DoxyCodeLine{float32\_t\ ecgFiltered[256];}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Adquirir\ datos\ del\ ADC}}
+\DoxyCodeLine{readECGSamples(ecgInput,\ 256);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Aplicar\ filtro\ pasa-\/bajas\ para\ eliminar\ ruido}}
+\DoxyCodeLine{filter.processBuffer(ecgInput,\ ecgFiltered,\ 256);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Procesar\ señal\ filtrada\ (detección\ QRS,\ etc.)}}
+\DoxyCodeLine{analyzeECG(ecgFiltered,\ 256);}
+
+\end{DoxyCode}
+ 
+\end{DoxyParagraph}
+\Hypertarget{class_f_i_r_filter_a2ec31d5f400abe1ffd69ad2d9f912e59}\index{FIRFilter@{FIRFilter}!processSample@{processSample}}
+\index{processSample@{processSample}!FIRFilter@{FIRFilter}}
+\doxysubsubsection{\texorpdfstring{processSample()}{processSample()}}
+{\footnotesize\ttfamily \label{class_f_i_r_filter_a2ec31d5f400abe1ffd69ad2d9f912e59} 
+float32\+\_\+t FIRFilter\+::process\+Sample (\begin{DoxyParamCaption}\item[{float32\+\_\+t}]{input}{}\end{DoxyParamCaption})}
+
+
+
+Procesa una muestra individual usando el filtro FIR. 
+
+Esta función aplica el filtro FIR a una sola muestra de entrada, manteniendo internamente el estado necesario para procesamiento continuo. Es ideal para aplicaciones en tiempo real donde se procesa muestra por muestra.
+
+
+\begin{DoxyParams}{Parameters}
+{\em input} & Muestra de entrada a filtrar \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+float32\+\_\+t Muestra filtrada de salida
+\end{DoxyReturn}
+\begin{DoxyParagraph}{Detalles de implementación}
+Internamente utiliza arm\+\_\+fir\+\_\+f32() con longitud 1, lo que\+:
+\begin{DoxyEnumerate}
+\item Actualiza el buffer de estados con la nueva muestra
+\item Calcula la convolución FIR\+: y\mbox{[}n\mbox{]} = Σ(b\mbox{[}k\mbox{]} \texorpdfstring{$\ast$}{*} x\mbox{[}n-\/k\mbox{]})
+\item Mantiene el estado para la próxima muestra
+\item Utiliza optimizaciones SIMD si están disponibles
+\end{DoxyEnumerate}
+\end{DoxyParagraph}
+\begin{DoxyNote}{Note}
+La función arm\+\_\+fir\+\_\+f32() maneja automáticamente\+:
+\begin{DoxyItemize}
+\item Gestión circular del buffer de estados
+\item Optimizaciones específicas del procesador ARM
+\item Manejo eficiente de la aritmética de punto flotante
+\end{DoxyItemize}
+\end{DoxyNote}
+\begin{DoxyRemark}{Remarks}
+Para procesamiento de una muestra\+:
+\begin{DoxyItemize}
+\item Latencia\+: Mínima (una muestra de retraso del filtro)
+\item Overhead\+: Bajo, optimizado para llamadas frecuentes
+\item Memoria\+: Uso eficiente del buffer de estados 
+\end{DoxyItemize}
+\end{DoxyRemark}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Bio\+Filter\+Lib/src/filters/\mbox{\hyperlink{_f_i_r_filter_8h}{FIRFilter.\+h}}\item 
+Bio\+Filter\+Lib/src/filters/\mbox{\hyperlink{_f_i_r_filter_8cpp}{FIRFilter.\+cpp}}\end{DoxyCompactItemize}

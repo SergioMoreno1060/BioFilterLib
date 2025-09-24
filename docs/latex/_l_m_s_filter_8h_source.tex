@@ -1,0 +1,49 @@
+\doxysection{LMSFilter.\+h}
+\hypertarget{_l_m_s_filter_8h_source}{}\label{_l_m_s_filter_8h_source}\index{BioFilterLib/src/filters/LMSFilter.h@{BioFilterLib/src/filters/LMSFilter.h}}
+\mbox{\hyperlink{_l_m_s_filter_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#ifndef\ LMS\_FILTER\_H}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#define\ LMS\_FILTER\_H}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#include\ <Arduino.h>}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#include\ <arm\_math.h>}\ \textcolor{comment}{//\ CMSIS-\/DSP}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00074\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_l_m_s_filter_aa0e54de3a994c6584151bb59b1ebe5ec}{LMSFilter}}\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_m_s_filter_aa0e54de3a994c6584151bb59b1ebe5ec}{LMSFilter}}(float32\_t*\ coeffs,\ uint16\_t\ numTaps,\ float32\_t\ mu,\ uint16\_t\ blockSize);}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_m_s_filter_a80e57172d4e7f3bc554843a13f6f53ee}{\string~LMSFilter}}();}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_m_s_filter_a5b184f9a9604e3b5bb6aa0388132097a}{processSample}}(float32\_t\ input,\ float32\_t\ reference,\ }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ float32\_t*\ output,\ float32\_t*\ error);}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_m_s_filter_a223ccaf430321b1b8e6cab7ccb4d11a8}{processBuffer}}(\textcolor{keyword}{const}\ float32\_t*\ inputArray,\ \textcolor{keyword}{const}\ float32\_t*\ referenceArray,}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ float32\_t*\ outputArray,\ float32\_t*\ errorArray,\ uint32\_t\ length);}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ float32\_t\ \mbox{\hyperlink{class_l_m_s_filter_a5c625382fc774c6cb16c3ec9aad1334b}{getMu}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \_mu;\ \}}
+\DoxyCodeLine{00218\ }
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_m_s_filter_a92ebe87a49cf85664f071144686da495}{setMu}}(float32\_t\ newMu);}
+\DoxyCodeLine{00233\ }
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_m_s_filter_a1c54c63acad6e134132ac3530b160efd}{resetCoefficients}}(\textcolor{keyword}{const}\ float32\_t*\ newCoeffs\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00247\ }
+\DoxyCodeLine{00248\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ float32\_t*\ \_coeffs;}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ float32\_t*\ \_state;}
+\DoxyCodeLine{00273\ }
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ uint16\_t\ \_numTaps;}
+\DoxyCodeLine{00285\ }
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ uint16\_t\ \_blockSize;}
+\DoxyCodeLine{00295\ }
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ float32\_t\ \_mu;}
+\DoxyCodeLine{00306\ }
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ arm\_lms\_instance\_f32\ \_lmsInstance;}
+\DoxyCodeLine{00317\ }
+\DoxyCodeLine{00318\ \};\ \textcolor{comment}{//\ class\ LMSFilter}}
+\DoxyCodeLine{00319\ }
+\DoxyCodeLine{00320\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ LMS\_FILTER\_H}}
+\DoxyCodeLine{00321\ }
+
+\end{DoxyCode}

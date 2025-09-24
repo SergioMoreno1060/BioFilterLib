@@ -1,0 +1,38 @@
+\doxysection{IIRFilter.\+h}
+\hypertarget{_i_i_r_filter_8h_source}{}\label{_i_i_r_filter_8h_source}\index{BioFilterLib/src/filters/IIRFilter.h@{BioFilterLib/src/filters/IIRFilter.h}}
+\mbox{\hyperlink{_i_i_r_filter_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifndef\ IIR\_FILTER\_H}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ IIR\_FILTER\_H}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ <Arduino.h>}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ <arm\_math.h>}\ \textcolor{comment}{//\ CMSIS-\/DSP}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_i_i_r_filter_ad0520e7eb1501554f092abcfb12c98bd}{IIRFilter}}\ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_i_i_r_filter_ad0520e7eb1501554f092abcfb12c98bd}{IIRFilter}}(\textcolor{keyword}{const}\ float32\_t*\ coeffs,\ uint8\_t\ numStages,\ uint16\_t\ blockSize);}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_i_i_r_filter_a7fbc93f9fc0ff65e785f8f2bfe13cfdf}{\string~IIRFilter}}();}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ float32\_t\ \mbox{\hyperlink{class_i_i_r_filter_a363659816d5bf72842b95b6b3e85ad7e}{processSample}}(float32\_t\ input);}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_i_i_r_filter_a888d5aef189c322259f403d4dd8356bc}{processBuffer}}(\textcolor{keyword}{const}\ float32\_t*\ inputArray,\ float32\_t*\ outputArray,\ uint32\_t\ length);}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ float32\_t*\ \_coeffs;}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ float32\_t*\ \_state;}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ uint8\_t\ \_numStages;}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ uint16\_t\ \_blockSize;}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ arm\_biquad\_casd\_df1\_inst\_f32\ \_iirInstance;}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \};\ \textcolor{comment}{//\ class\ IIRFilter}}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ IIR\_FILTER\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,40 @@
+\doxysection{FIRFilter.\+h}
+\hypertarget{_f_i_r_filter_8h_source}{}\label{_f_i_r_filter_8h_source}\index{BioFilterLib/src/filters/FIRFilter.h@{BioFilterLib/src/filters/FIRFilter.h}}
+\mbox{\hyperlink{_f_i_r_filter_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#ifndef\ FIR\_FILTER\_H}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ FIR\_FILTER\_H}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ <Arduino.h>}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#include\ <arm\_math.h>}\ \ \textcolor{comment}{//\ CMSIS-\/DSP}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00064\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_f_i_r_filter_a7944c16caf70319417d3f620181ea6f8}{FIRFilter}}\ \{}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_f_i_r_filter_a7944c16caf70319417d3f620181ea6f8}{FIRFilter}}(\textcolor{keyword}{const}\ float32\_t*\ coeffs,\ uint16\_t\ numTaps,\ uint16\_t\ blockSize);}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_f_i_r_filter_a7d376351ab71190d49b8b7abaa304767}{\string~FIRFilter}}();}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ float32\_t\ \mbox{\hyperlink{class_f_i_r_filter_a2ec31d5f400abe1ffd69ad2d9f912e59}{processSample}}(float32\_t\ input);}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_f_i_r_filter_a3478d4c3b1c3d11250a6ee43fa5d6664}{processBuffer}}(\textcolor{keyword}{const}\ float32\_t*\ inputArray,\ float32\_t*\ outputArray,\ uint32\_t\ length);}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ float32\_t*\ \_coeffs;}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ float32\_t*\ \_state;}
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ uint16\_t\ \_numTaps;}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ uint16\_t\ \_blockSize;}
+\DoxyCodeLine{00218\ }
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ arm\_fir\_instance\_f32\ \_firInstance;}
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ uint32\_t\ \_sampleIndex;}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00240\ \};\ \textcolor{comment}{//\ class\ FIRFilter}}
+\DoxyCodeLine{00241\ }
+\DoxyCodeLine{00242\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ FIR\_FILTER\_H}}
+
+\end{DoxyCode}

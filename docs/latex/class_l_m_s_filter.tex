@@ -1,0 +1,656 @@
+\doxysection{LMSFilter Class Reference}
+\hypertarget{class_l_m_s_filter}{}\label{class_l_m_s_filter}\index{LMSFilter@{LMSFilter}}
+
+
+Wrapper C++ para filtros LMS adaptativos de CMSIS-\/\+DSP, optimizado para bioseñales.  
+
+
+
+
+{\ttfamily \#include $<$LMSFilter.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_l_m_s_filter_aa0e54de3a994c6584151bb59b1ebe5ec}{LMSFilter}} (float32\+\_\+t \texorpdfstring{$\ast$}{*}coeffs, uint16\+\_\+t num\+Taps, float32\+\_\+t mu, uint16\+\_\+t block\+Size)
+\begin{DoxyCompactList}\small\item\em Constructor de la clase \doxylink{class_l_m_s_filter}{LMSFilter}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_l_m_s_filter_a80e57172d4e7f3bc554843a13f6f53ee}{\texorpdfstring{$\sim$}{\string~}\+LMSFilter}} ()
+\begin{DoxyCompactList}\small\item\em Destructor de la clase \doxylink{class_l_m_s_filter}{LMSFilter}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_l_m_s_filter_a5b184f9a9604e3b5bb6aa0388132097a}{process\+Sample}} (float32\+\_\+t input, float32\+\_\+t reference, float32\+\_\+t \texorpdfstring{$\ast$}{*}output, float32\+\_\+t \texorpdfstring{$\ast$}{*}error)
+\begin{DoxyCompactList}\small\item\em Procesa una muestra individual en tiempo real con adaptación. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_l_m_s_filter_a223ccaf430321b1b8e6cab7ccb4d11a8}{process\+Buffer}} (const float32\+\_\+t \texorpdfstring{$\ast$}{*}input\+Array, const float32\+\_\+t \texorpdfstring{$\ast$}{*}reference\+Array, float32\+\_\+t \texorpdfstring{$\ast$}{*}output\+Array, float32\+\_\+t \texorpdfstring{$\ast$}{*}error\+Array, uint32\+\_\+t length)
+\begin{DoxyCompactList}\small\item\em Procesa un buffer completo de muestras con adaptación. \end{DoxyCompactList}\item 
+float32\+\_\+t \mbox{\hyperlink{class_l_m_s_filter_a5c625382fc774c6cb16c3ec9aad1334b}{get\+Mu}} () const
+\begin{DoxyCompactList}\small\item\em Obtiene el valor actual del paso de adaptación. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_l_m_s_filter_a92ebe87a49cf85664f071144686da495}{set\+Mu}} (float32\+\_\+t new\+Mu)
+\begin{DoxyCompactList}\small\item\em Modifica el paso de adaptación durante la operación. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_l_m_s_filter_a1c54c63acad6e134132ac3530b160efd}{reset\+Coefficients}} (const float32\+\_\+t \texorpdfstring{$\ast$}{*}new\+Coeffs=nullptr)
+\begin{DoxyCompactList}\small\item\em Reinicia los coeficientes adaptativos a valores iniciales. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Wrapper C++ para filtros LMS adaptativos de CMSIS-\/\+DSP, optimizado para bioseñales. 
+
+Esta clase encapsula la funcionalidad de filtros LMS (Least Mean Squares) adaptativos de CMSIS-\/\+DSP, proporcionando una interfaz amigable para el procesamiento adaptativo de señales biomédicas como ECG, EMG, EEG, etc.
+
+Los filtros LMS adaptativos son especialmente útiles para\+:
+\begin{DoxyItemize}
+\item Cancelación adaptativa de artefactos (movimiento, parpadeo, respiración)
+\item Eliminación de interferencia de línea eléctrica variable (50/60 Hz)
+\item Supresión adaptativa de ruido con características cambiantes
+\item Identificación de sistemas biológicos
+\item Ecualización adaptativa de canales de transmisión
+\end{DoxyItemize}
+
+A diferencia de los filtros FIR/\+IIR fijos, los filtros LMS ajustan automáticamente sus coeficientes en tiempo real para minimizar el error entre la señal deseada y la salida del filtro. Esto los hace ideales para entornos donde las características del ruido o la señal cambian con el tiempo.
+
+La clase maneja automáticamente\+:
+\begin{DoxyItemize}
+\item Inicialización del estado interno del filtro adaptativo
+\item Gestión de memoria para coeficientes y buffer de estados
+\item Actualización adaptativa de coeficientes usando el algoritmo LMS
+\item Interfaz con las funciones optimizadas de CMSIS-\/\+DSP
+\item Procesamiento tanto de muestras individuales como de buffers
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+Los coeficientes se actualizan automáticamente durante el procesamiento. Se recomienda inicializar los coeficientes a cero o valores pequeños aleatorios.
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+La memoria para los coeficientes iniciales debe mantenerse válida durante toda la vida del objeto \doxylink{class_l_m_s_filter}{LMSFilter}, ya que se modifica internamente.
+\end{DoxyWarning}
+\begin{DoxySeeAlso}{See also}
+arm\+\_\+lms\+\_\+f32() para más detalles sobre la implementación subyacente de CMSIS-\/\+DSP 
+\end{DoxySeeAlso}
+
+
+\label{doc-constructors}
+\Hypertarget{class_l_m_s_filter_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_l_m_s_filter_aa0e54de3a994c6584151bb59b1ebe5ec}\index{LMSFilter@{LMSFilter}!LMSFilter@{LMSFilter}}
+\index{LMSFilter@{LMSFilter}!LMSFilter@{LMSFilter}}
+\doxysubsubsection{\texorpdfstring{LMSFilter()}{LMSFilter()}}
+{\footnotesize\ttfamily \label{class_l_m_s_filter_aa0e54de3a994c6584151bb59b1ebe5ec} 
+LMSFilter\+::\+LMSFilter (\begin{DoxyParamCaption}\item[{float32\+\_\+t \texorpdfstring{$\ast$}{*}}]{coeffs}{, }\item[{uint16\+\_\+t}]{num\+Taps}{, }\item[{float32\+\_\+t}]{mu}{, }\item[{uint16\+\_\+t}]{block\+Size}{}\end{DoxyParamCaption})}
+
+
+
+Constructor de la clase \doxylink{class_l_m_s_filter}{LMSFilter}. 
+
+Constructor que inicializa el filtro LMS adaptativo con parámetros específicos.
+
+Inicializa un filtro LMS adaptativo con los parámetros especificados. Los coeficientes se ajustarán automáticamente durante el procesamiento para minimizar el error cuadrático medio.
+
+
+\begin{DoxyParams}{Parameters}
+{\em coeffs} & Puntero al array de coeficientes iniciales (será modificado durante la adaptación) \\
+\hline
+{\em num\+Taps} & Número de coeficientes del filtro (orden + 1) \\
+\hline
+{\em mu} & Paso de adaptación (step size) -\/ controla la velocidad de convergencia \\
+\hline
+{\em block\+Size} & Tamaño del bloque para procesamiento optimizado\\
+\hline
+\end{DoxyParams}
+El parámetro \textquotesingle{}mu\textquotesingle{} (paso de adaptación) es crítico para el rendimiento\+:
+\begin{DoxyItemize}
+\item mu muy pequeño\+: convergencia lenta pero estable
+\item mu muy grande\+: convergencia rápida pero puede ser inestable
+\item Valores típicos\+: 0.\+001 -\/ 0.\+1 (ajustar según la aplicación)
+\end{DoxyItemize}
+
+Para bioseñales, valores recomendados de mu\+:
+\begin{DoxyItemize}
+\item ECG\+: 0.\+01 -\/ 0.\+05 (eliminación de deriva de línea base)
+\item EMG\+: 0.\+001 -\/ 0.\+01 (cancelación de artefactos)
+\item EEG\+: 0.\+0001 -\/ 0.\+001 (supresión de parpadeo)
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+Un filtro de orden N tiene N+1 coeficientes (num\+Taps = N+1)
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+Los coeficientes serán modificados durante la operación del filtro. Si necesitas preservar los valores originales, haz una copia antes de pasarlos.
+\end{DoxyWarning}
+\begin{DoxyParagraph}{Ejemplo}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ Filtro\ adaptativo\ de\ 64\ coeficientes\ para\ cancelación\ de\ artefactos\ ECG}}
+\DoxyCodeLine{float32\_t\ adaptiveCoeffs[64];}
+\DoxyCodeLine{\textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 64;\ i++)\ adaptiveCoeffs[i]\ =\ 0.0f;\ \textcolor{comment}{//\ Inicializar\ a\ cero}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{class_l_m_s_filter_aa0e54de3a994c6584151bb59b1ebe5ec}{LMSFilter}}\ ecgArtifactCanceller(adaptiveCoeffs,\ 64,\ 0.02f,\ 1);\ \textcolor{comment}{//\ mu\ =\ 0.02\ para\ ECG}}
+
+\end{DoxyCode}
+
+\end{DoxyParagraph}
+El constructor realiza las siguientes operaciones críticas\+:
+\begin{DoxyEnumerate}
+\item Inicializa las variables miembro con los parámetros proporcionados
+\item Calcula y asigna memoria para el buffer de estados interno (num\+Taps elementos)
+\item Inicializa la estructura arm\+\_\+lms\+\_\+instance\+\_\+f32 de CMSIS-\/\+DSP
+\item Configura el filtro adaptativo para procesamiento optimizado
+\end{DoxyEnumerate}
+
+
+\begin{DoxyParams}{Parameters}
+{\em coeffs} & Puntero al array de coeficientes iniciales del filtro (modificable) \\
+\hline
+{\em num\+Taps} & Número de coeficientes (orden del filtro + 1) \\
+\hline
+{\em mu} & Paso de adaptación que controla la velocidad de convergencia \\
+\hline
+{\em block\+Size} & Tamaño del bloque de procesamiento para optimizaciones SIMD\\
+\hline
+\end{DoxyParams}
+\begin{DoxyRemark}{Remarks}
+El buffer de estados para LMS tiene un tamaño de num\+Taps elementos, diferente al FIR que requiere (num\+Taps + block\+Size -\/ 1). Esto se debe a que CMSIS-\/\+DSP maneja internamente el acceso circular para filtros adaptativos.
+\end{DoxyRemark}
+\begin{DoxyNote}{Note}
+La función arm\+\_\+lms\+\_\+init\+\_\+f32() configura internamente\+:
+\begin{DoxyItemize}
+\item Punteros a coeficientes adaptativos y buffer de estados
+\item Parámetro de paso de adaptación (mu)
+\item Configuración para actualización automática de coeficientes
+\item Optimizaciones SIMD cuando están disponibles
+\end{DoxyItemize}
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+Si la asignación de memoria falla, el comportamiento es indefinido. En un sistema de producción se debería verificar el retorno de \textquotesingle{}new\textquotesingle{}.
+\end{DoxyWarning}
+\begin{DoxyParagraph}{Consideraciones para la selección de μ (mu)\+:}
+
+\begin{DoxyItemize}
+\item μ muy pequeño (\texorpdfstring{$<$}{<} 0.\+001)\+: Convergencia lenta, muy estable, poco ruido residual
+\item μ moderado (0.\+001-\/0.\+01)\+: Balance entre velocidad y estabilidad
+\item μ grande (\texorpdfstring{$>$}{>} 0.\+1)\+: Convergencia rápida pero posible inestabilidad
+\end{DoxyItemize}
+\end{DoxyParagraph}
+Para bioseñales típicas\+:
+\begin{DoxyItemize}
+\item ECG (cancelación 50/60\+Hz)\+: μ = 0.\+01-\/0.\+05
+\item EMG (supresión artefactos)\+: μ = 0.\+001-\/0.\+01 ~\newline
+
+\item EEG (eliminación parpadeo)\+: μ = 0.\+0001-\/0.\+001 
+\end{DoxyItemize}\Hypertarget{class_l_m_s_filter_a80e57172d4e7f3bc554843a13f6f53ee}\index{LMSFilter@{LMSFilter}!````~LMSFilter@{\texorpdfstring{$\sim$}{\string~}LMSFilter}}
+\index{````~LMSFilter@{\texorpdfstring{$\sim$}{\string~}LMSFilter}!LMSFilter@{LMSFilter}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}LMSFilter()}{\string~LMSFilter()}}
+{\footnotesize\ttfamily \label{class_l_m_s_filter_a80e57172d4e7f3bc554843a13f6f53ee} 
+LMSFilter\+::\texorpdfstring{$\sim$}{\string~}\+LMSFilter (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Destructor de la clase \doxylink{class_l_m_s_filter}{LMSFilter}. 
+
+Destructor que libera recursos asignados dinámicamente.
+
+Libera automáticamente la memoria asignada para el buffer de estados interno. Los coeficientes no se liberan ya que son gestionados externamente.
+
+\begin{DoxyNote}{Note}
+No es necesario llamar explícitamente a funciones de limpieza.
+\end{DoxyNote}
+Libera la memoria asignada para el buffer de estados interno. El destructor garantiza que no hay fugas de memoria cuando el objeto \doxylink{class_l_m_s_filter}{LMSFilter} sale de scope o es eliminado explícitamente.
+
+\begin{DoxyRemark}{Remarks}
+Solo necesita liberar \+\_\+state ya que\+:
+\begin{DoxyItemize}
+\item \+\_\+coeffs es una referencia externa (gestionada por el usuario)
+\item \+\_\+lms\+Instance es una estructura por valor (limpieza automática)
+\item Las variables primitivas se limpian automáticamente
+\end{DoxyItemize}
+\end{DoxyRemark}
+\begin{DoxyNote}{Note}
+CMSIS-\/\+DSP no requiere funciones de limpieza específicas para la estructura arm\+\_\+lms\+\_\+instance\+\_\+f32. Los coeficientes adaptativos permanecen en su estado final para posibles consultas posteriores. 
+\end{DoxyNote}
+
+
+\label{doc-func-members}
+\Hypertarget{class_l_m_s_filter_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_l_m_s_filter_a5c625382fc774c6cb16c3ec9aad1334b}\index{LMSFilter@{LMSFilter}!getMu@{getMu}}
+\index{getMu@{getMu}!LMSFilter@{LMSFilter}}
+\doxysubsubsection{\texorpdfstring{getMu()}{getMu()}}
+{\footnotesize\ttfamily \label{class_l_m_s_filter_a5c625382fc774c6cb16c3ec9aad1334b} 
+float32\+\_\+t LMSFilter\+::get\+Mu (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Obtiene el valor actual del paso de adaptación. 
+
+\begin{DoxyReturn}{Returns}
+float32\+\_\+t Valor actual de mu (paso de adaptación)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Útil para monitorear o ajustar dinámicamente la velocidad de adaptación 
+\end{DoxyNote}
+\Hypertarget{class_l_m_s_filter_a223ccaf430321b1b8e6cab7ccb4d11a8}\index{LMSFilter@{LMSFilter}!processBuffer@{processBuffer}}
+\index{processBuffer@{processBuffer}!LMSFilter@{LMSFilter}}
+\doxysubsubsection{\texorpdfstring{processBuffer()}{processBuffer()}}
+{\footnotesize\ttfamily \label{class_l_m_s_filter_a223ccaf430321b1b8e6cab7ccb4d11a8} 
+void LMSFilter\+::process\+Buffer (\begin{DoxyParamCaption}\item[{const float32\+\_\+t \texorpdfstring{$\ast$}{*}}]{input\+Array}{, }\item[{const float32\+\_\+t \texorpdfstring{$\ast$}{*}}]{reference\+Array}{, }\item[{float32\+\_\+t \texorpdfstring{$\ast$}{*}}]{output\+Array}{, }\item[{float32\+\_\+t \texorpdfstring{$\ast$}{*}}]{error\+Array}{, }\item[{uint32\+\_\+t}]{length}{}\end{DoxyParamCaption})}
+
+
+
+Procesa un buffer completo de muestras con adaptación. 
+
+Procesa un buffer completo de muestras usando el filtro LMS adaptativo.
+
+Aplica el filtro LMS adaptativo a un array completo de muestras, usando las señales de referencia correspondientes. Optimizado para procesamiento por lotes con mejor rendimiento que múltiples llamadas a \doxylink{class_l_m_s_filter_a5b184f9a9604e3b5bb6aa0388132097a}{process\+Sample()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+Array} & Puntero al array de muestras de entrada \\
+\hline
+{\em reference\+Array} & Puntero al array de muestras de referencia \\
+\hline
+{\em output\+Array} & Puntero al array donde escribir las muestras filtradas \\
+\hline
+{\em error\+Array} & Puntero al array donde escribir las señales de error \\
+\hline
+{\em length} & Número de muestras a procesar\\
+\hline
+\end{DoxyParams}
+Esta función es optimizada para\+:
+\begin{DoxyItemize}
+\item Mayor throughput que el procesamiento muestra por muestra
+\item Uso eficiente de las optimizaciones SIMD de ARM
+\item Procesamiento de bloques grandes de datos adaptativos
+\end{DoxyItemize}
+
+\begin{DoxyWarning}{Warning}
+Todos los arrays deben tener al menos \textquotesingle{}length\textquotesingle{} elementos válidos y no deben solaparse en memoria.
+\end{DoxyWarning}
+\begin{DoxyNote}{Note}
+Los coeficientes del filtro se actualizan continuamente durante el procesamiento del bloque, por lo que el filtro se adapta incluso dentro de un solo bloque de datos.
+\end{DoxyNote}
+\begin{DoxyParagraph}{Ejemplo}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ Procesamiento\ adaptativo\ de\ un\ buffer\ de\ EEG\ para\ eliminar\ artefactos\ de\ parpadeo}}
+\DoxyCodeLine{float32\_t\ eegBuffer[256];\ \ \ \ \ \ \textcolor{comment}{//\ Señal\ EEG\ contaminada}}
+\DoxyCodeLine{float32\_t\ blinkRefBuffer[256];\ \textcolor{comment}{//\ Referencia\ de\ artefacto\ de\ parpadeo\ (EOG)}}
+\DoxyCodeLine{float32\_t\ cleanEEG[256];\ \ \ \ \ \ \ \textcolor{comment}{//\ EEG\ limpio\ (salida)}}
+\DoxyCodeLine{float32\_t\ adaptError[256];\ \ \ \ \ \textcolor{comment}{//\ Señal\ de\ error\ de\ adaptación}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Leer\ datos\ de\ los\ ADC}}
+\DoxyCodeLine{readEEGBuffer(eegBuffer,\ 256);}
+\DoxyCodeLine{readEOGReference(blinkRefBuffer,\ 256);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Aplicar\ filtro\ adaptativo}}
+\DoxyCodeLine{filter.processBuffer(eegBuffer,\ blinkRefBuffer,\ cleanEEG,\ adaptError,\ 256);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Analizar\ la\ efectividad\ de\ la\ adaptación}}
+\DoxyCodeLine{float32\_t\ meanError\ =\ calculateMean(adaptError,\ 256);}
+\DoxyCodeLine{Serial.print(\textcolor{stringliteral}{"{}Error\ promedio\ de\ adaptación:\ "{}});}
+\DoxyCodeLine{Serial.println(meanError);}
+
+\end{DoxyCode}
+
+\end{DoxyParagraph}
+Esta función aplica el filtro LMS a arrays completos de muestras de entrada y referencia, escribiendo los resultados en los arrays de salida y error. Es más eficiente que múltiples llamadas a \doxylink{class_l_m_s_filter_a5b184f9a9604e3b5bb6aa0388132097a}{process\+Sample()} debido a las optimizaciones vectoriales (SIMD) de CMSIS-\/\+DSP.
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+Array} & Puntero al array de muestras de entrada (señal primaria) \\
+\hline
+{\em reference\+Array} & Puntero al array de muestras de referencia \\
+\hline
+{\em output\+Array} & Puntero al array donde escribir las muestras filtradas \\
+\hline
+{\em error\+Array} & Puntero al array donde escribir las señales de error \\
+\hline
+{\em length} & Número de muestras a procesar\\
+\hline
+\end{DoxyParams}
+\begin{DoxyRemark}{Remarks}
+Utiliza arm\+\_\+lms\+\_\+f32() para procesar el bloque completo\+:
+\begin{DoxyEnumerate}
+\item Procesa \textquotesingle{}length\textquotesingle{} muestras en una sola llamada optimizada
+\item Utiliza vectorización SIMD para máximo rendimiento
+\item Mantiene continuidad del estado adaptativo entre muestras
+\item Actualiza progresivamente los coeficientes a lo largo del bloque
+\end{DoxyEnumerate}
+\end{DoxyRemark}
+\begin{DoxyNote}{Note}
+Ventajas del procesamiento por bloques en filtros adaptativos\+:
+\begin{DoxyItemize}
+\item Mayor throughput debido a optimizaciones SIMD de ARM
+\item Menor overhead de llamadas a función
+\item Mejor uso de la caché del procesador
+\item Aprovechamiento del paralelismo a nivel de instrucción
+\item Adaptación continua durante todo el bloque
+\end{DoxyItemize}
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+Consideraciones importantes\+:
+\begin{DoxyItemize}
+\item Todos los arrays deben tener exactamente \textquotesingle{}length\textquotesingle{} elementos válidos
+\item Los arrays NO deben solaparse en memoria (undefined behavior)
+\item El estado adaptativo se preserva entre llamadas consecutivas
+\item Los coeficientes se modifican continuamente durante el procesamiento
+\end{DoxyItemize}
+\end{DoxyWarning}
+\begin{DoxyParagraph}{Comportamiento adaptativo durante el bloque\+:}
+A diferencia del procesamiento por bloques de filtros fijos (FIR/\+IIR), el LMS actualiza sus coeficientes para cada muestra dentro del bloque. Esto significa que\+:
+\begin{DoxyItemize}
+\item La primera muestra usa los coeficientes iniciales
+\item Las muestras posteriores usan coeficientes progresivamente adaptados
+\item Al final del bloque, los coeficientes han evolucionado \textquotesingle{}length\textquotesingle{} veces
+\end{DoxyItemize}
+\end{DoxyParagraph}
+\begin{DoxyParagraph}{Uso típico para cancelación adaptativa de artefactos en EEG\+:}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ Buffers\ para\ procesamiento\ por\ bloques\ (512\ muestras\ @\ 250Hz\ =\ 2.048s)}}
+\DoxyCodeLine{float32\_t\ eegSignal[512];\ \ \ \ \ \ \ \ \textcolor{comment}{//\ EEG\ contaminado\ con\ parpadeo}}
+\DoxyCodeLine{float32\_t\ blinkReference[512];\ \ \ \textcolor{comment}{//\ Señal\ EOG\ como\ referencia}}
+\DoxyCodeLine{float32\_t\ cleanEEG[512];\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ EEG\ limpio\ (salida)}}
+\DoxyCodeLine{float32\_t\ adaptationError[512];\ \ \textcolor{comment}{//\ Error\ de\ adaptación}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Adquirir\ datos\ de\ los\ ADCs}}
+\DoxyCodeLine{readEEGBuffer(eegSignal,\ 512);}
+\DoxyCodeLine{readEOGBuffer(blinkReference,\ 512);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Aplicar\ filtro\ adaptativo\ para\ cancelar\ artefactos\ de\ parpadeo}}
+\DoxyCodeLine{lmsFilter.processBuffer(eegSignal,\ blinkReference,\ cleanEEG,\ adaptationError,\ 512);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Analizar\ la\ efectividad\ de\ la\ adaptación}}
+\DoxyCodeLine{float32\_t\ meanSquareError\ =\ 0.0f;}
+\DoxyCodeLine{\textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 512;\ i++)\ \{}
+\DoxyCodeLine{\ \ \ \ meanSquareError\ +=\ adaptationError[i]\ *\ adaptationError[i];}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{meanSquareError\ /=\ 512;}
+\DoxyCodeLine{}
+\DoxyCodeLine{Serial.print(\textcolor{stringliteral}{"{}MSE\ de\ adaptación:\ "{}});}
+\DoxyCodeLine{Serial.println(meanSquareError,\ 6);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Si\ MSE\ decrece\ →\ buena\ adaptación}}
+\DoxyCodeLine{\textcolor{comment}{//\ Si\ MSE\ oscila\ →\ considerar\ reducir\ μ}}
+
+\end{DoxyCode}
+ 
+\end{DoxyParagraph}
+\Hypertarget{class_l_m_s_filter_a5b184f9a9604e3b5bb6aa0388132097a}\index{LMSFilter@{LMSFilter}!processSample@{processSample}}
+\index{processSample@{processSample}!LMSFilter@{LMSFilter}}
+\doxysubsubsection{\texorpdfstring{processSample()}{processSample()}}
+{\footnotesize\ttfamily \label{class_l_m_s_filter_a5b184f9a9604e3b5bb6aa0388132097a} 
+void LMSFilter\+::process\+Sample (\begin{DoxyParamCaption}\item[{float32\+\_\+t}]{input}{, }\item[{float32\+\_\+t}]{reference}{, }\item[{float32\+\_\+t \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{float32\+\_\+t \texorpdfstring{$\ast$}{*}}]{error}{}\end{DoxyParamCaption})}
+
+
+
+Procesa una muestra individual en tiempo real con adaptación. 
+
+Procesa una muestra individual usando el filtro LMS adaptativo.
+
+Aplica el filtro LMS adaptativo a una muestra de entrada usando la señal de referencia proporcionada. Los coeficientes del filtro se actualizan automáticamente para minimizar el error entre la salida deseada (referencia) y la salida actual del filtro.
+
+
+\begin{DoxyParams}{Parameters}
+{\em input} & Valor de la muestra de entrada (señal primaria a filtrar) \\
+\hline
+{\em reference} & Valor de la muestra de referencia (señal deseada) \\
+\hline
+{\em output} & Puntero donde escribir la muestra filtrada de salida \\
+\hline
+{\em error} & Puntero donde escribir el error de adaptación (reference -\/ output)\\
+\hline
+\end{DoxyParams}
+El procesamiento LMS realiza las siguientes operaciones\+:
+\begin{DoxyEnumerate}
+\item Calcula la salida del filtro\+: y\mbox{[}n\mbox{]} = Σ(w\mbox{[}k\mbox{]} \texorpdfstring{$\ast$}{*} x\mbox{[}n-\/k\mbox{]})
+\item Calcula el error\+: e\mbox{[}n\mbox{]} = d\mbox{[}n\mbox{]} -\/ y\mbox{[}n\mbox{]} (donde d\mbox{[}n\mbox{]} es la referencia)
+\item Actualiza los coeficientes\+: w\mbox{[}k\mbox{]} = w\mbox{[}k\mbox{]} + mu \texorpdfstring{$\ast$}{*} e\mbox{[}n\mbox{]} \texorpdfstring{$\ast$}{*} x\mbox{[}n-\/k\mbox{]}
+\end{DoxyEnumerate}
+
+\begin{DoxyNote}{Note}
+La señal de error indica qué tan bien se está adaptando el filtro. Un error pequeño indica buena adaptación.
+\end{DoxyNote}
+\begin{DoxyParagraph}{Ejemplo}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ Cancelación\ adaptativa\ de\ interferencia\ de\ línea\ eléctrica}}
+\DoxyCodeLine{float32\_t\ ecgSample\ =\ readECG();\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Señal\ ECG\ con\ interferencia}}
+\DoxyCodeLine{float32\_t\ powerlineRef\ =\ sin(2*PI*60*t);\ \ \ \textcolor{comment}{//\ Referencia\ de\ 60Hz}}
+\DoxyCodeLine{float32\_t\ cleanECG,\ adaptiveError;}
+\DoxyCodeLine{}
+\DoxyCodeLine{filter.processSample(ecgSample,\ powerlineRef,\ \&cleanECG,\ \&adaptiveError);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ cleanECG\ contiene\ la\ señal\ ECG\ con\ interferencia\ reducida}}
+\DoxyCodeLine{\textcolor{comment}{//\ adaptiveError\ indica\ la\ efectividad\ de\ la\ cancelación}}
+
+\end{DoxyCode}
+
+\end{DoxyParagraph}
+Esta función aplica el filtro LMS a una muestra de entrada usando la señal de referencia correspondiente. Internamente realiza\+:
+\begin{DoxyEnumerate}
+\item Filtrado FIR con coeficientes actuales
+\item Cálculo del error de adaptación
+\item Actualización automática de coeficientes usando el algoritmo LMS
+\item Mantenimiento del estado para la próxima muestra
+\end{DoxyEnumerate}
+
+
+\begin{DoxyParams}{Parameters}
+{\em input} & Muestra de entrada (señal primaria a procesar) \\
+\hline
+{\em reference} & Muestra de referencia (señal deseada para adaptación) \\
+\hline
+{\em output} & Puntero donde escribir la muestra filtrada \\
+\hline
+{\em error} & Puntero donde escribir la señal de error (reference -\/ output)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyParagraph}{Detalles del algoritmo LMS implementado\+:}
+El algoritmo ejecuta los siguientes pasos en cada muestra\+:
+\begin{DoxyEnumerate}
+\item {\bfseries{Filtrado}}\+: y\mbox{[}n\mbox{]} = Σ(w\mbox{[}k\mbox{]} \texorpdfstring{$\ast$}{*} x\mbox{[}n-\/k\mbox{]}) donde w\mbox{[}k\mbox{]} son los coeficientes
+\item {\bfseries{Error}}\+: e\mbox{[}n\mbox{]} = d\mbox{[}n\mbox{]} -\/ y\mbox{[}n\mbox{]} donde d\mbox{[}n\mbox{]} es la señal de referencia
+\item {\bfseries{Adaptación}}\+: w\mbox{[}k\mbox{]} ← w\mbox{[}k\mbox{]} + μ \texorpdfstring{$\ast$}{*} e\mbox{[}n\mbox{]} \texorpdfstring{$\ast$}{*} x\mbox{[}n-\/k\mbox{]} para todos los coeficientes
+\end{DoxyEnumerate}
+\end{DoxyParagraph}
+\begin{DoxyNote}{Note}
+La función arm\+\_\+lms\+\_\+f32() maneja automáticamente\+:
+\begin{DoxyItemize}
+\item Gestión circular del buffer de estados
+\item Actualización vectorizada de todos los coeficientes
+\item Optimizaciones específicas del procesador ARM Cortex-\/M
+\item Manejo eficiente de la aritmética de punto flotante
+\end{DoxyItemize}
+\end{DoxyNote}
+\begin{DoxyRemark}{Remarks}
+Interpretación de la señal de error\+:
+\begin{DoxyItemize}
+\item error \texorpdfstring{$>$}{>} 0\+: La salida del filtro es menor que la referencia
+\item error \texorpdfstring{$<$}{<} 0\+: La salida del filtro es mayor que la referencia ~\newline
+
+\item \texorpdfstring{$\vert$}{|}error\texorpdfstring{$\vert$}{|} pequeño\+: Buena adaptación, filtro convergente
+\item \texorpdfstring{$\vert$}{|}error\texorpdfstring{$\vert$}{|} oscilante\+: Posible μ demasiado grande
+\end{DoxyItemize}
+\end{DoxyRemark}
+\begin{DoxyParagraph}{Caso de uso típico -\/ Cancelación de interferencia de 60Hz\+:}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{float32\_t\ ecgSample\ =\ readADC();\ \ \textcolor{comment}{//\ ECG\ contaminado\ con\ 60Hz}}
+\DoxyCodeLine{float32\_t\ ref60Hz\ =\ sin(2*PI*60*t);\ \textcolor{comment}{//\ Referencia\ sinusoidal\ de\ 60Hz}}
+\DoxyCodeLine{float32\_t\ cleanECG,\ adaptError;}
+\DoxyCodeLine{}
+\DoxyCodeLine{filter.processSample(ecgSample,\ ref60Hz,\ \&cleanECG,\ \&adaptError);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ cleanECG:\ ECG\ con\ interferencia\ de\ 60Hz\ reducida}}
+\DoxyCodeLine{\textcolor{comment}{//\ adaptError:\ efectividad\ de\ la\ cancelación\ (idealmente\ →\ 0)}}
+
+\end{DoxyCode}
+ 
+\end{DoxyParagraph}
+\Hypertarget{class_l_m_s_filter_a1c54c63acad6e134132ac3530b160efd}\index{LMSFilter@{LMSFilter}!resetCoefficients@{resetCoefficients}}
+\index{resetCoefficients@{resetCoefficients}!LMSFilter@{LMSFilter}}
+\doxysubsubsection{\texorpdfstring{resetCoefficients()}{resetCoefficients()}}
+{\footnotesize\ttfamily \label{class_l_m_s_filter_a1c54c63acad6e134132ac3530b160efd} 
+void LMSFilter\+::reset\+Coefficients (\begin{DoxyParamCaption}\item[{const float32\+\_\+t \texorpdfstring{$\ast$}{*}}]{new\+Coeffs}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})}
+
+
+
+Reinicia los coeficientes adaptativos a valores iniciales. 
+
+Reinicia los coeficientes adaptativos a valores específicos o cero.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Coeffs} & Puntero a los nuevos coeficientes iniciales (opcional, si es NULL usa ceros)\\
+\hline
+\end{DoxyParams}
+Útil para\+:
+\begin{DoxyItemize}
+\item Reiniciar la adaptación cuando cambian las condiciones
+\item Implementar esquemas de adaptación por bloques
+\item Recuperarse de una mala convergencia
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+El buffer de estados también se reinicia a cero
+\end{DoxyNote}
+Esta función permite reinicializar los coeficientes del filtro adaptativo sin recrear toda la instancia. Es útil para implementar esquemas de adaptación por bloques, recuperarse de convergencias pobres, o reiniciar cuando cambian drásticamente las condiciones de la señal.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Coeffs} & Puntero a los nuevos coeficientes iniciales. Si es nullptr, se inicializan todos los coeficientes a cero.\\
+\hline
+\end{DoxyParams}
+Operaciones realizadas\+:
+\begin{DoxyEnumerate}
+\item {\bfseries{Coeficientes}}\+: Se copian los nuevos valores o se ponen a cero
+\item {\bfseries{Buffer de estados}}\+: Se reinicia completamente a cero
+\item {\bfseries{Parámetros adaptativos}}\+: Se mantienen (μ, num\+Taps, etc.)
+\item {\bfseries{No se modifica}}\+: La instancia CMSIS-\/\+DSP preserva su configuración
+\end{DoxyEnumerate}
+
+\begin{DoxyRemark}{Remarks}
+Casos de uso típicos\+:
+\begin{DoxyItemize}
+\item {\bfseries{Cambio de contexto}}\+: Nueva tarea de filtrado con características diferentes
+\item {\bfseries{Recuperación}}\+: El filtro no converge o converge a un mínimo local pobre
+\item {\bfseries{Adaptación por bloques}}\+: Reinicio periódico para evitar deriva de coeficientes
+\item {\bfseries{Detección de cambios}}\+: Reinicio cuando se detecta cambio en las estadísticas de la señal
+\end{DoxyItemize}
+\end{DoxyRemark}
+\begin{DoxyNote}{Note}
+Efectos del reinicio\+:
+\begin{DoxyItemize}
+\item Se pierde toda la "{}memoria"{} adaptativa previa
+\item El filtro debe reconverger desde el nuevo punto inicial ~\newline
+
+\item Puede haber un transitorio temporal hasta que se readapte
+\item La velocidad de reconvergencia depende del valor de μ
+\end{DoxyItemize}
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+El transitorio de reconvergencia puede durar\+:
+\begin{DoxyItemize}
+\item Filtros rápidos (μ grande)\+: Decenas de muestras
+\item Filtros lentos (μ pequeño)\+: Cientos o miles de muestras
+\end{DoxyItemize}
+\end{DoxyWarning}
+\begin{DoxyParagraph}{Reinicio automático basado en detección de cambio\+:}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{static}\ float32\_t\ previousError\ =\ 0.0f;}
+\DoxyCodeLine{\textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ poorConvergenceCounter\ =\ 0;}
+\DoxyCodeLine{}
+\DoxyCodeLine{float32\_t\ output,\ error;}
+\DoxyCodeLine{filter.processSample(input,\ reference,\ \&output,\ \&error);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Detectar\ convergencia\ pobre\ (error\ no\ decrece)}}
+\DoxyCodeLine{\textcolor{keywordflow}{if}\ (fabs(error)\ >\ fabs(previousError)\ *\ 1.1f)\ \{}
+\DoxyCodeLine{\ \ \ \ poorConvergenceCounter++;}
+\DoxyCodeLine{\}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ poorConvergenceCounter\ =\ 0;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Si\ no\ converge\ durante\ 100\ muestras\ consecutivas,\ reiniciar}}
+\DoxyCodeLine{\textcolor{keywordflow}{if}\ (poorConvergenceCounter\ >\ 100)\ \{}
+\DoxyCodeLine{\ \ \ \ Serial.println(\textcolor{stringliteral}{"{}Reiniciando\ filtro\ por\ convergencia\ pobre..."{}});}
+\DoxyCodeLine{\ \ \ \ filter.resetCoefficients();\ \textcolor{comment}{//\ Reiniciar\ a\ cero}}
+\DoxyCodeLine{\ \ \ \ poorConvergenceCounter\ =\ 0;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{previousError\ =\ error;}
+
+\end{DoxyCode}
+ 
+\end{DoxyParagraph}
+\Hypertarget{class_l_m_s_filter_a92ebe87a49cf85664f071144686da495}\index{LMSFilter@{LMSFilter}!setMu@{setMu}}
+\index{setMu@{setMu}!LMSFilter@{LMSFilter}}
+\doxysubsubsection{\texorpdfstring{setMu()}{setMu()}}
+{\footnotesize\ttfamily \label{class_l_m_s_filter_a92ebe87a49cf85664f071144686da495} 
+void LMSFilter\+::set\+Mu (\begin{DoxyParamCaption}\item[{float32\+\_\+t}]{new\+Mu}{}\end{DoxyParamCaption})}
+
+
+
+Modifica el paso de adaptación durante la operación. 
+
+Modifica el paso de adaptación durante la operación del filtro.
+
+Permite ajustar dinámicamente la velocidad de convergencia del filtro sin reinicializar toda la estructura.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Mu} & Nuevo valor del paso de adaptación\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Cambiar mu durante la operación puede ser útil para implementar esquemas de adaptación variables o para optimizar la convergencia
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+Valores de mu demasiado grandes pueden causar inestabilidad
+\end{DoxyWarning}
+Permite ajustar dinámicamente la velocidad de convergencia del filtro adaptativo sin necesidad de reinicializar toda la estructura. Esto es útil para implementar esquemas de adaptación variables o para optimizar la convergencia según las condiciones cambiantes de la señal.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Mu} & Nuevo valor del paso de adaptación (μ)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyRemark}{Remarks}
+Casos de uso para el cambio dinámico de μ\+:
+\begin{DoxyItemize}
+\item {\bfseries{Inicio rápido}}\+: μ grande inicialmente para convergencia rápida
+\item {\bfseries{Refinamiento}}\+: μ pequeño después para estabilidad y bajo ruido residual ~\newline
+
+\item {\bfseries{Adaptación a SNR}}\+: μ mayor cuando la señal es fuerte, menor con ruido alto
+\item {\bfseries{Control basado en error}}\+: μ adaptativo según la magnitud del error
+\end{DoxyItemize}
+\end{DoxyRemark}
+\begin{DoxyWarning}{Warning}
+Consideraciones de estabilidad\+:
+\begin{DoxyItemize}
+\item μ \texorpdfstring{$>$}{>} 2/λmax puede causar inestabilidad (λmax = mayor eigenvalor de la matriz de autocorrelación)
+\item Cambios abruptos de μ pueden causar transitorios temporales
+\item μ muy grande puede provocar oscilaciones en los coeficientes
+\end{DoxyItemize}
+\end{DoxyWarning}
+\begin{DoxyNote}{Note}
+La modificación toma efecto inmediatamente en la siguiente muestra procesada. No se requiere reinicialización del filtro ni pérdida del estado adaptativo.
+\end{DoxyNote}
+\begin{DoxyParagraph}{Implementación de μ adaptativo basado en el error\+:}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{float32\_t\ output,\ error;}
+\DoxyCodeLine{filter.processSample(input,\ reference,\ \&output,\ \&error);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Adaptar\ μ\ basado\ en\ la\ magnitud\ del\ error}}
+\DoxyCodeLine{float32\_t\ absError\ =\ fabs(error);}
+\DoxyCodeLine{\textcolor{keywordflow}{if}\ (absError\ >\ 0.1)\ \{}
+\DoxyCodeLine{\ \ \ \ filter.setMu(0.05f);\ \ \textcolor{comment}{//\ Error\ grande\ →\ convergencia\ rápida}}
+\DoxyCodeLine{\}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (absError\ <\ 0.01)\ \{}
+\DoxyCodeLine{\ \ \ \ filter.setMu(0.001f);\ \textcolor{comment}{//\ Error\ pequeño\ →\ estabilidad\ fina}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+\end{DoxyParagraph}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Bio\+Filter\+Lib/src/filters/\mbox{\hyperlink{_l_m_s_filter_8h}{LMSFilter.\+h}}\item 
+Bio\+Filter\+Lib/src/filters/\mbox{\hyperlink{_l_m_s_filter_8cpp}{LMSFilter.\+cpp}}\end{DoxyCompactItemize}

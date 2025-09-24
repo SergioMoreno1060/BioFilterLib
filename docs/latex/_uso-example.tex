@@ -1,0 +1,72 @@
+\doxysection{Uso}
+\hypertarget{_uso-example}{}\label{_uso-example}Procesa un buffer completo de muestras usando el filtro FIR.
+
+Procesa un buffer completo de muestras usando el filtro FIR Esta función aplica el filtro FIR a un array completo de muestras de entrada, escribiendo los resultados en el array de salida. Optimizada para procesamiento por lotes con mejor rendimiento que múltiples llamadas a process\+Sample().
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+Array} & Puntero al array de muestras de entrada \\
+\hline
+{\em output\+Array} & Puntero al array donde escribir las muestras filtradas ~\newline
+ \\
+\hline
+{\em length} & Número de muestras a procesar\\
+\hline
+\end{DoxyParams}
+\begin{DoxyRemark}{Remarks}
+Utiliza arm\+\_\+fir\+\_\+f32() para procesar el bloque completo\+:
+\begin{DoxyEnumerate}
+\item Procesa \textquotesingle{}length\textquotesingle{} muestras en una sola llamada
+\item Utiliza vectorización SIMD para máximo rendimiento
+\item Mantiene continuidad del estado entre llamadas
+\item Maneja automáticamente el solapamiento entre bloques
+\end{DoxyEnumerate}
+\end{DoxyRemark}
+\begin{DoxyNote}{Note}
+Ventajas del procesamiento por bloques\+:
+\begin{DoxyItemize}
+\item Mayor throughput debido a optimizaciones SIMD
+\item Menor overhead de llamadas a función
+\item Mejor uso de la cache del procesador
+\item Aprovechamiento de paralelismo a nivel de instrucción
+\end{DoxyItemize}
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+Consideraciones importantes\+:
+\begin{DoxyItemize}
+\item Los arrays de entrada y salida NO deben solaparse en memoria
+\item Ambos arrays deben tener al menos \textquotesingle{}length\textquotesingle{} elementos válidos
+\item El estado del filtro se preserva entre llamadas consecutivas
+\end{DoxyItemize}
+\end{DoxyWarning}
+\begin{DoxyParagraph}{Para procesamiento por bloques\+:}
+
+\begin{DoxyItemize}
+\item Throughput\+: Significativamente mayor que procesamiento individual
+\item Latencia\+: \textquotesingle{}length\textquotesingle{} muestras (todo el bloque se procesa junto)
+\item Memoria\+: Uso eficiente de cache por acceso secuencial
+
+típico para señales ECG\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ Buffer\ de\ 256\ muestras\ @\ 1000\ Hz\ =\ 256ms\ de\ datos}}
+\DoxyCodeLine{float32\_t\ ecgInput[256];}
+\DoxyCodeLine{float32\_t\ ecgFiltered[256];}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Adquirir\ datos\ del\ ADC}}
+\DoxyCodeLine{readECGSamples(ecgInput,\ 256);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Aplicar\ filtro\ pasa-\/bajas\ para\ eliminar\ ruido}}
+\DoxyCodeLine{filter.processBuffer(ecgInput,\ ecgFiltered,\ 256);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Procesar\ señal\ filtrada\ (detección\ QRS,\ etc.)}}
+\DoxyCodeLine{analyzeECG(ecgFiltered,\ 256);}
+
+\end{DoxyCode}
+
+\end{DoxyItemize}
+\end{DoxyParagraph}
+
+\begin{DoxyCodeInclude}{0}
+
+\end{DoxyCodeInclude}
+ 
