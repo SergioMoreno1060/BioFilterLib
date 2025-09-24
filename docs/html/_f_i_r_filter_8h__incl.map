@@ -1,0 +1,7 @@
+<map id="BioFilterLib/src/filters/FIRFilter.h" name="BioFilterLib/src/filters/FIRFilter.h">
+<area shape="rect" id="Node000001" title="Filtro FIR optimizado para bioseñales usando CMSIS&#45;DSP." alt="" coords="25,5,169,48"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,96,82,123"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="85,50,63,84,58,81,81,47"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="106,96,197,123"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="113,47,137,82,132,85,109,50"/>
+</map>

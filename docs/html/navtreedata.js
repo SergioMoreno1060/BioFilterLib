@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "My Project", "index.html", [
+  [ "BioFilterLib", "index.html", [
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -34,7 +34,13 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Files", "files.html", [
-      [ "File List", "files.html", "files_dup" ]
+      [ "File List", "files.html", "files_dup" ],
+      [ "File Members", "globals.html", [
+        [ "All", "globals.html", null ],
+        [ "Functions", "globals_func.html", null ],
+        [ "Variables", "globals_vars.html", null ],
+        [ "Macros", "globals_defs.html", null ]
+      ] ]
     ] ],
     [ "Examples", "examples.html", "examples" ]
   ] ]
@@ -42,7 +48,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_c_1_2_users_2_sergio_2_documents_2_platform_i_o_2_projects_200_01-_01_c_m_s_i_s_01test_2lib_2_b2e4f6e979bfd050f0aa06f64b1922aec.html"
+"_bio_filter_lib_8h.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

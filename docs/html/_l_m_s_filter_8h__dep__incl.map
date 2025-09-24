@@ -1,0 +1,13 @@
+<map id="BioFilterLib/src/filters/LMSFilter.h" name="BioFilterLib/src/filters/LMSFilter.h">
+<area shape="rect" id="Node000001" title="Filtro LMS (Least Mean Squares) adaptativo para bioseñales usando CMSIS&#45;DSP." alt="" coords="265,5,409,48"/>
+<area shape="rect" id="Node000002" href="$_bio_filter_lib_8h.html" title=" " alt="" coords="169,96,329,139"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="308,61,271,98,268,94,304,57"/>
+<area shape="rect" id="Node000006" href="$_l_m_s_filter_8cpp.html" title="Implementación del filtro LMS adaptativo optimizado para bioseñales." alt="" coords="353,96,497,139"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="370,57,407,94,403,98,366,61"/>
+<area shape="rect" id="Node000003" href="$_f_i_r___example_8cpp.html" title=" " alt="" coords="5,187,152,229"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="197,149,119,189,117,184,195,144"/>
+<area shape="rect" id="Node000004" href="$_i_i_r___example_8cpp.html" title="Ejemplo de uso de la clase IIRFilter para eliminar la deriva de línea base en una señal simulada de E..." alt="" coords="176,187,322,229"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="252,154,252,186,246,186,246,154"/>
+<area shape="rect" id="Node000005" href="$_l_m_s___example_8cpp.html" title="Ejemplo de cancelación adaptativa de interferencia de línea eléctrica usando LMSFilter." alt="" coords="347,187,493,229"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="304,144,381,184,379,189,301,149"/>
+</map>

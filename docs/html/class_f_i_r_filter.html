@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.14.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>My Project: FIRFilter Class Reference</title>
+<title>BioFilterLib: FIRFilter Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">My Project
+   <div id="projectname">BioFilterLib
    </div>
   </td>
  </tr>
@@ -126,7 +126,7 @@ Public Member Functions</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>Los coeficientes del filtro deben ser calculados externamente usando herramientas como Python/scipy, MATLAB o herramientas online de diseño de filtros.</dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>La memoria para los coeficientes debe mantenerse válida durante toda la vida del objeto <a class="el" href="class_f_i_r_filter.html" title="Wrapper C++ para filtros FIR de CMSIS-DSP optimizado para bioseñales.">FIRFilter</a>, ya que se almacena solo la referencia.</dd></dl>
 <dl class="section see"><dt>See also</dt><dd>arm_fir_f32() para más detalles sobre la implementación subyacente de CMSIS-DSP </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_c_1_2_users_2_sergio_2_documents_2_platform_i_o_2_projects_200_01-_01_c_m_s_i_s_01test_2lib_2_ba5995a94abd2c4e0bedd7fc2c5f70f57.html#_a0">C:/Users/Sergio/Documents/PlatformIO/Projects/00 - CMSIS test/lib/BioFilterLib/src/filters/FIRFilter.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_c_1_2_users_2_sergio_2_documents_2_platform_i_o_2_projects_200__c_m_s_i_s_01test_2lib_2_bio_filfe177d888bc77a3b1e9090289ef84d22.html#_a0">C:/Users/Sergio/Documents/PlatformIO/Projects/00_CMSIS test/lib/BioFilterLib/src/filters/FIRFilter.h</a>.</dd>
 </dl>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a7944c16caf70319417d3f620181ea6f8" name="a7944c16caf70319417d3f620181ea6f8"></a>
@@ -195,7 +195,6 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Destructor de la clase <a class="el" href="class_f_i_r_filter.html" title="Wrapper C++ para filtros FIR de CMSIS-DSP optimizado para bioseñales.">FIRFilter</a>. </p>
-<p>Destructor que libera recursos asignados dinámicamente.</p>
 <p>Libera automáticamente la memoria asignada para el buffer de estados interno. El destructor se encarga de limpiar todos los recursos utilizados por el filtro.</p>
 <dl class="section note"><dt>Note</dt><dd>No es necesario llamar explícitamente a funciones de limpieza.</dd></dl>
 <p>Libera la memoria asignada para el buffer de estados interno. El destructor garantiza que no hay fugas de memoria cuando el objeto <a class="el" href="class_f_i_r_filter.html" title="Wrapper C++ para filtros FIR de CMSIS-DSP optimizado para bioseñales.">FIRFilter</a> sale de scope o es eliminado explícitamente.</p>
@@ -273,16 +272,17 @@ Public Member Functions</h2></td></tr>
 </dd></dl>
 <dl class="section user"><dt>Uso típico para señales ECG:</dt><dd><div class="fragment"><div class="line"><span class="comment">// Buffer de 256 muestras @ 1000 Hz = 256ms de datos</span></div>
 <div class="line">float32_t ecgInput[256];</div>
-<div class="line">float32_t ecgFiltered[256];</div>
+<div class="line">float32_t <a class="code hl_variable" href="_l_m_s___example_8cpp.html#a9a9f0b358f01895c801e337f716cf76b">ecgFiltered</a>[256];</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Adquirir datos del ADC</span></div>
 <div class="line">readECGSamples(ecgInput, 256);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Aplicar filtro pasa-bajas para eliminar ruido</span></div>
-<div class="line">filter.processBuffer(ecgInput, ecgFiltered, 256);</div>
+<div class="line">filter.processBuffer(ecgInput, <a class="code hl_variable" href="_l_m_s___example_8cpp.html#a9a9f0b358f01895c801e337f716cf76b">ecgFiltered</a>, 256);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Procesar señal filtrada (detección QRS, etc.)</span></div>
-<div class="line">analyzeECG(ecgFiltered, 256);</div>
+<div class="line">analyzeECG(<a class="code hl_variable" href="_l_m_s___example_8cpp.html#a9a9f0b358f01895c801e337f716cf76b">ecgFiltered</a>, 256);</div>
+<div class="ttc" id="a_l_m_s___example_8cpp_html_a9a9f0b358f01895c801e337f716cf76b"><div class="ttname"><a href="_l_m_s___example_8cpp.html#a9a9f0b358f01895c801e337f716cf76b">ecgFiltered</a></div><div class="ttdeci">float32_t ecgFiltered[maxSamplesNum]</div><div class="ttdef"><b>Definition</b> LMS_Example.cpp:62</div></div>
 </div><!-- fragment --> </dd></dl>
 
 </div>

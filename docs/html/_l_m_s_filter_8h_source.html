@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.14.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>My Project: BioFilterLib/src/filters/LMSFilter.h Source File</title>
+<title>BioFilterLib: BioFilterLib/src/filters/LMSFilter.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">My Project
+   <div id="projectname">BioFilterLib
    </div>
   </td>
  </tr>
@@ -109,7 +109,7 @@ $(function(){initNavTree('_l_m_s_filter_8h_source.html','',''); });
 <div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_l_m_s_filter.html#a5b184f9a9604e3b5bb6aa0388132097a">processSample</a>(float32_t input, float32_t reference, </div>
 <div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>                          float32_t* output, float32_t* error);</div>
 <div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span></div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_l_m_s_filter.html#a223ccaf430321b1b8e6cab7ccb4d11a8">processBuffer</a>(<span class="keyword">const</span> float32_t* inputArray, <span class="keyword">const</span> float32_t* referenceArray,</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_l_m_s_filter.html#a1c5879dd258242828274218b03f5131e">processBuffer</a>(<span class="keyword">const</span> float32_t* inputArray, float32_t* referenceArray,</div>
 <div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>                          float32_t* outputArray, float32_t* errorArray, uint32_t length);</div>
 <div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span></div>
 <div class="line"><a id="l00217" name="l00217"></a><span class="lineno"><a class="line" href="class_l_m_s_filter.html#a5c625382fc774c6cb16c3ec9aad1334b">  217</a></span>        float32_t <a class="code hl_function" href="class_l_m_s_filter.html#a5c625382fc774c6cb16c3ec9aad1334b">getMu</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> _mu; }</div>
@@ -125,9 +125,9 @@ $(function(){initNavTree('_l_m_s_filter_8h_source.html','',''); });
 <div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span></div>
 <div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>        uint16_t _numTaps;</div>
 <div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span></div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        uint16_t _blockSize;</div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span></div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>        float32_t _mu;</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>        float32_t _mu;</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span></div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>        uint16_t _blockSize;</div>
 <div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span></div>
 <div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>        arm_lms_instance_f32 _lmsInstance;</div>
 <div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span> </div>
@@ -137,7 +137,7 @@ $(function(){initNavTree('_l_m_s_filter_8h_source.html','',''); });
 <div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span><span class="preprocessor">#endif </span><span class="comment">// LMS_FILTER_H</span></div>
 <div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span></div>
 <div class="ttc" id="aclass_l_m_s_filter_html_a1c54c63acad6e134132ac3530b160efd"><div class="ttname"><a href="class_l_m_s_filter.html#a1c54c63acad6e134132ac3530b160efd">LMSFilter::resetCoefficients</a></div><div class="ttdeci">void resetCoefficients(const float32_t *newCoeffs=nullptr)</div><div class="ttdoc">Reinicia los coeficientes adaptativos a valores iniciales.</div><div class="ttdef"><b>Definition</b> LMSFilter.cpp:404</div></div>
-<div class="ttc" id="aclass_l_m_s_filter_html_a223ccaf430321b1b8e6cab7ccb4d11a8"><div class="ttname"><a href="class_l_m_s_filter.html#a223ccaf430321b1b8e6cab7ccb4d11a8">LMSFilter::processBuffer</a></div><div class="ttdeci">void processBuffer(const float32_t *inputArray, const float32_t *referenceArray, float32_t *outputArray, float32_t *errorArray, uint32_t length)</div><div class="ttdoc">Procesa un buffer completo de muestras con adaptación.</div><div class="ttdef"><b>Definition</b> LMSFilter.cpp:265</div></div>
+<div class="ttc" id="aclass_l_m_s_filter_html_a1c5879dd258242828274218b03f5131e"><div class="ttname"><a href="class_l_m_s_filter.html#a1c5879dd258242828274218b03f5131e">LMSFilter::processBuffer</a></div><div class="ttdeci">void processBuffer(const float32_t *inputArray, float32_t *referenceArray, float32_t *outputArray, float32_t *errorArray, uint32_t length)</div><div class="ttdoc">Procesa un buffer completo de muestras con adaptación.</div><div class="ttdef"><b>Definition</b> LMSFilter.cpp:265</div></div>
 <div class="ttc" id="aclass_l_m_s_filter_html_a5b184f9a9604e3b5bb6aa0388132097a"><div class="ttname"><a href="class_l_m_s_filter.html#a5b184f9a9604e3b5bb6aa0388132097a">LMSFilter::processSample</a></div><div class="ttdeci">void processSample(float32_t input, float32_t reference, float32_t *output, float32_t *error)</div><div class="ttdoc">Procesa una muestra individual en tiempo real con adaptación.</div><div class="ttdef"><b>Definition</b> LMSFilter.cpp:164</div></div>
 <div class="ttc" id="aclass_l_m_s_filter_html_a5c625382fc774c6cb16c3ec9aad1334b"><div class="ttname"><a href="class_l_m_s_filter.html#a5c625382fc774c6cb16c3ec9aad1334b">LMSFilter::getMu</a></div><div class="ttdeci">float32_t getMu() const</div><div class="ttdoc">Obtiene el valor actual del paso de adaptación.</div><div class="ttdef"><b>Definition</b> LMSFilter.h:217</div></div>
 <div class="ttc" id="aclass_l_m_s_filter_html_a80e57172d4e7f3bc554843a13f6f53ee"><div class="ttname"><a href="class_l_m_s_filter.html#a80e57172d4e7f3bc554843a13f6f53ee">LMSFilter::~LMSFilter</a></div><div class="ttdeci">~LMSFilter()</div><div class="ttdoc">Destructor de la clase LMSFilter.</div><div class="ttdef"><b>Definition</b> LMSFilter.cpp:108</div></div>

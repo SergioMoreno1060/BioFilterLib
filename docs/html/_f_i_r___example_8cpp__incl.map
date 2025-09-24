@@ -1,0 +1,24 @@
+<map id="BioFilterLib/examples/FIR_Example.cpp" name="BioFilterLib/examples/FIR_Example.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="150,5,296,48"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="61,245,137,272"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="166,51,125,71,82,97,43,131,12,172,9,190,18,207,35,222,56,236,53,240,32,227,14,210,4,191,7,170,39,127,79,93,122,66,164,46"/>
+<area shape="rect" id="Node000003" href="$_bio_filter_lib_8h.html" title=" " alt="" coords="175,96,272,123"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="226,49,226,80,221,80,221,49"/>
+<area shape="rect" id="Node000008" href="$_waveforms_8h.html" title=" " alt="" coords="366,96,464,123"/>
+<area shape="poly" id="edge12_Node000001_Node000008" title=" " alt="" coords="274,46,372,87,370,92,272,51"/>
+<area shape="rect" id="Node000004" href="$_f_i_r_filter_8h.html" title="Filtro FIR optimizado para bioseñales usando CMSIS&#45;DSP." alt="" coords="22,171,142,197"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="200,126,121,166,119,161,197,121"/>
+<area shape="rect" id="Node000006" href="$_i_i_r_filter_8h.html" title="Filtro IIR de tipo Biquad en cascada, optimizado para bioseñales usando CMSIS&#45;DSP." alt="" coords="166,171,281,197"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="226,123,226,155,221,155,221,123"/>
+<area shape="rect" id="Node000007" href="$_l_m_s_filter_8h.html" title="Filtro LMS (Least Mean Squares) adaptativo para bioseñales usando CMSIS&#45;DSP." alt="" coords="305,171,429,197"/>
+<area shape="poly" id="edge9_Node000003_Node000007" title=" " alt="" coords="249,121,329,161,327,166,247,126"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="87,197,95,229,90,231,82,198"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="178,245,268,272"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="108,195,186,235,184,240,105,200"/>
+<area shape="poly" id="edge7_Node000006_Node000002" title=" " alt="" coords="203,200,135,240,132,235,200,196"/>
+<area shape="poly" id="edge8_Node000006_Node000005" title=" " alt="" coords="226,198,226,230,221,230,221,198"/>
+<area shape="poly" id="edge10_Node000007_Node000002" title=" " alt="" coords="321,200,153,246,152,240,320,195"/>
+<area shape="poly" id="edge11_Node000007_Node000005" title=" " alt="" coords="343,200,263,240,261,235,341,195"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="454,171,518,197"/>
+<area shape="poly" id="edge13_Node000008_Node000009" title=" " alt="" coords="429,121,465,158,461,161,426,125"/>
+</map>

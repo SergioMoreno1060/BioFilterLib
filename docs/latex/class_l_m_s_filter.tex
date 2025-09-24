@@ -18,7 +18,7 @@ Wrapper C++ para filtros LMS adaptativos de CMSIS-\/\+DSP, optimizado para biose
 \begin{DoxyCompactList}\small\item\em Destructor de la clase \doxylink{class_l_m_s_filter}{LMSFilter}. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_l_m_s_filter_a5b184f9a9604e3b5bb6aa0388132097a}{process\+Sample}} (float32\+\_\+t input, float32\+\_\+t reference, float32\+\_\+t \texorpdfstring{$\ast$}{*}output, float32\+\_\+t \texorpdfstring{$\ast$}{*}error)
 \begin{DoxyCompactList}\small\item\em Procesa una muestra individual en tiempo real con adaptación. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{class_l_m_s_filter_a223ccaf430321b1b8e6cab7ccb4d11a8}{process\+Buffer}} (const float32\+\_\+t \texorpdfstring{$\ast$}{*}input\+Array, const float32\+\_\+t \texorpdfstring{$\ast$}{*}reference\+Array, float32\+\_\+t \texorpdfstring{$\ast$}{*}output\+Array, float32\+\_\+t \texorpdfstring{$\ast$}{*}error\+Array, uint32\+\_\+t length)
+void \mbox{\hyperlink{class_l_m_s_filter_a1c5879dd258242828274218b03f5131e}{process\+Buffer}} (const float32\+\_\+t \texorpdfstring{$\ast$}{*}input\+Array, float32\+\_\+t \texorpdfstring{$\ast$}{*}reference\+Array, float32\+\_\+t \texorpdfstring{$\ast$}{*}output\+Array, float32\+\_\+t \texorpdfstring{$\ast$}{*}error\+Array, uint32\+\_\+t length)
 \begin{DoxyCompactList}\small\item\em Procesa un buffer completo de muestras con adaptación. \end{DoxyCompactList}\item 
 float32\+\_\+t \mbox{\hyperlink{class_l_m_s_filter_a5c625382fc774c6cb16c3ec9aad1334b}{get\+Mu}} () const
 \begin{DoxyCompactList}\small\item\em Obtiene el valor actual del paso de adaptación. \end{DoxyCompactList}\item 
@@ -223,11 +223,11 @@ float32\+\_\+t Valor actual de mu (paso de adaptación)
 \begin{DoxyNote}{Note}
 Útil para monitorear o ajustar dinámicamente la velocidad de adaptación 
 \end{DoxyNote}
-\Hypertarget{class_l_m_s_filter_a223ccaf430321b1b8e6cab7ccb4d11a8}\index{LMSFilter@{LMSFilter}!processBuffer@{processBuffer}}
+\Hypertarget{class_l_m_s_filter_a1c5879dd258242828274218b03f5131e}\index{LMSFilter@{LMSFilter}!processBuffer@{processBuffer}}
 \index{processBuffer@{processBuffer}!LMSFilter@{LMSFilter}}
 \doxysubsubsection{\texorpdfstring{processBuffer()}{processBuffer()}}
-{\footnotesize\ttfamily \label{class_l_m_s_filter_a223ccaf430321b1b8e6cab7ccb4d11a8} 
-void LMSFilter\+::process\+Buffer (\begin{DoxyParamCaption}\item[{const float32\+\_\+t \texorpdfstring{$\ast$}{*}}]{input\+Array}{, }\item[{const float32\+\_\+t \texorpdfstring{$\ast$}{*}}]{reference\+Array}{, }\item[{float32\+\_\+t \texorpdfstring{$\ast$}{*}}]{output\+Array}{, }\item[{float32\+\_\+t \texorpdfstring{$\ast$}{*}}]{error\+Array}{, }\item[{uint32\+\_\+t}]{length}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{class_l_m_s_filter_a1c5879dd258242828274218b03f5131e} 
+void LMSFilter\+::process\+Buffer (\begin{DoxyParamCaption}\item[{const float32\+\_\+t \texorpdfstring{$\ast$}{*}}]{input\+Array}{, }\item[{float32\+\_\+t \texorpdfstring{$\ast$}{*}}]{reference\+Array}{, }\item[{float32\+\_\+t \texorpdfstring{$\ast$}{*}}]{output\+Array}{, }\item[{float32\+\_\+t \texorpdfstring{$\ast$}{*}}]{error\+Array}{, }\item[{uint32\+\_\+t}]{length}{}\end{DoxyParamCaption})}
 
 
 

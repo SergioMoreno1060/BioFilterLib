@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['setmu_0',['setMu',['../class_l_m_s_filter.html#a92ebe87a49cf85664f071144686da495',1,'LMSFilter']]]
+  ['getmu_0',['getMu',['../class_l_m_s_filter.html#a5c625382fc774c6cb16c3ec9aad1334b',1,'LMSFilter']]]
 ];

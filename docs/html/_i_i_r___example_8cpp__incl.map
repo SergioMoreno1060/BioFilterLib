@@ -1,0 +1,20 @@
+<map id="BioFilterLib/examples/IIR_Example.cpp" name="BioFilterLib/examples/IIR_Example.cpp">
+<area shape="rect" id="Node000001" title="Ejemplo de uso de la clase IIRFilter para eliminar la deriva de línea base en una señal simulada de E..." alt="" coords="5,5,152,48"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="107,245,183,272"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="71,49,59,79,49,117,47,158,51,178,58,196,76,219,100,236,97,240,73,223,54,199,46,179,42,158,44,117,54,78,66,47"/>
+<area shape="rect" id="Node000003" href="$_bio_filter_lib_8h.html" title=" " alt="" coords="150,96,247,123"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="111,46,169,85,166,89,108,51"/>
+<area shape="rect" id="Node000004" href="$_f_i_r_filter_8h.html" title="Filtro FIR optimizado para bioseñales usando CMSIS&#45;DSP." alt="" coords="68,171,188,197"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="188,125,152,161,149,158,184,121"/>
+<area shape="rect" id="Node000006" href="$_i_i_r_filter_8h.html" title="Filtro IIR de tipo Biquad en cascada, optimizado para bioseñales usando CMSIS&#45;DSP." alt="" coords="212,171,327,197"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="213,121,248,158,245,161,209,125"/>
+<area shape="rect" id="Node000007" href="$_l_m_s_filter_8h.html" title="Filtro LMS (Least Mean Squares) adaptativo para bioseñales usando CMSIS&#45;DSP." alt="" coords="351,171,475,197"/>
+<area shape="poly" id="edge9_Node000003_Node000007" title=" " alt="" coords="237,121,362,163,361,168,235,126"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="133,197,141,229,136,231,128,198"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="224,245,314,272"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="154,195,232,235,230,240,151,200"/>
+<area shape="poly" id="edge7_Node000006_Node000002" title=" " alt="" coords="249,200,181,240,178,235,246,196"/>
+<area shape="poly" id="edge8_Node000006_Node000005" title=" " alt="" coords="272,198,272,230,266,230,266,198"/>
+<area shape="poly" id="edge10_Node000007_Node000002" title=" " alt="" coords="367,200,199,246,198,240,366,195"/>
+<area shape="poly" id="edge11_Node000007_Node000005" title=" " alt="" coords="389,200,309,240,307,235,387,195"/>
+</map>

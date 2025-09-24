@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.14.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>My Project: LMSFilter Class Reference</title>
+<title>BioFilterLib: LMSFilter Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">My Project
+   <div id="projectname">BioFilterLib
    </div>
   </td>
  </tr>
@@ -105,8 +105,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a80e57172d4e7f3bc554843a13f6f53ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor de la clase <a class="el" href="class_l_m_s_filter.html" title="Wrapper C++ para filtros LMS adaptativos de CMSIS-DSP, optimizado para bioseñales.">LMSFilter</a>.  <br /></td></tr>
 <tr class="memitem:a5b184f9a9604e3b5bb6aa0388132097a" id="r_a5b184f9a9604e3b5bb6aa0388132097a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5b184f9a9604e3b5bb6aa0388132097a">processSample</a> (float32_t input, float32_t reference, float32_t *output, float32_t *error)</td></tr>
 <tr class="memdesc:a5b184f9a9604e3b5bb6aa0388132097a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procesa una muestra individual en tiempo real con adaptación.  <br /></td></tr>
-<tr class="memitem:a223ccaf430321b1b8e6cab7ccb4d11a8" id="r_a223ccaf430321b1b8e6cab7ccb4d11a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a223ccaf430321b1b8e6cab7ccb4d11a8">processBuffer</a> (const float32_t *inputArray, const float32_t *referenceArray, float32_t *outputArray, float32_t *errorArray, uint32_t length)</td></tr>
-<tr class="memdesc:a223ccaf430321b1b8e6cab7ccb4d11a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procesa un buffer completo de muestras con adaptación.  <br /></td></tr>
+<tr class="memitem:a1c5879dd258242828274218b03f5131e" id="r_a1c5879dd258242828274218b03f5131e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c5879dd258242828274218b03f5131e">processBuffer</a> (const float32_t *inputArray, float32_t *referenceArray, float32_t *outputArray, float32_t *errorArray, uint32_t length)</td></tr>
+<tr class="memdesc:a1c5879dd258242828274218b03f5131e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procesa un buffer completo de muestras con adaptación.  <br /></td></tr>
 <tr class="memitem:a5c625382fc774c6cb16c3ec9aad1334b" id="r_a5c625382fc774c6cb16c3ec9aad1334b"><td class="memItemLeft" align="right" valign="top">float32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5c625382fc774c6cb16c3ec9aad1334b">getMu</a> () const</td></tr>
 <tr class="memdesc:a5c625382fc774c6cb16c3ec9aad1334b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene el valor actual del paso de adaptación.  <br /></td></tr>
 <tr class="memitem:a92ebe87a49cf85664f071144686da495" id="r_a92ebe87a49cf85664f071144686da495"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a92ebe87a49cf85664f071144686da495">setMu</a> (float32_t newMu)</td></tr>
@@ -295,8 +295,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a223ccaf430321b1b8e6cab7ccb4d11a8" name="a223ccaf430321b1b8e6cab7ccb4d11a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a223ccaf430321b1b8e6cab7ccb4d11a8">&#9670;&#160;</a></span>processBuffer()</h2>
+<a id="a1c5879dd258242828274218b03f5131e" name="a1c5879dd258242828274218b03f5131e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c5879dd258242828274218b03f5131e">&#9670;&#160;</a></span>processBuffer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -309,7 +309,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const float32_t *</td>          <td class="paramname"><span class="paramname"><em>referenceArray</em></span>, </td>
+          <td class="paramtype">float32_t *</td>          <td class="paramname"><span class="paramname"><em>referenceArray</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -410,19 +410,19 @@ Public Member Functions</h2></td></tr>
 <div class="line">float32_t eegSignal[512];        <span class="comment">// EEG contaminado con parpadeo</span></div>
 <div class="line">float32_t blinkReference[512];   <span class="comment">// Señal EOG como referencia</span></div>
 <div class="line">float32_t cleanEEG[512];         <span class="comment">// EEG limpio (salida)</span></div>
-<div class="line">float32_t adaptationError[512];  <span class="comment">// Error de adaptación</span></div>
+<div class="line">float32_t <a class="code hl_variable" href="_l_m_s___example_8cpp.html#a7a6ff3a789ccbf8dcf5aaf56bbee398a">adaptationError</a>[512];  <span class="comment">// Error de adaptación</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Adquirir datos de los ADCs</span></div>
 <div class="line">readEEGBuffer(eegSignal, 512);</div>
 <div class="line">readEOGBuffer(blinkReference, 512);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Aplicar filtro adaptativo para cancelar artefactos de parpadeo</span></div>
-<div class="line">lmsFilter.processBuffer(eegSignal, blinkReference, cleanEEG, adaptationError, 512);</div>
+<div class="line">lmsFilter.processBuffer(eegSignal, blinkReference, cleanEEG, <a class="code hl_variable" href="_l_m_s___example_8cpp.html#a7a6ff3a789ccbf8dcf5aaf56bbee398a">adaptationError</a>, 512);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Analizar la efectividad de la adaptación</span></div>
 <div class="line">float32_t meanSquareError = 0.0f;</div>
 <div class="line"><span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; 512; i++) {</div>
-<div class="line">    meanSquareError += adaptationError[i] * adaptationError[i];</div>
+<div class="line">    meanSquareError += <a class="code hl_variable" href="_l_m_s___example_8cpp.html#a7a6ff3a789ccbf8dcf5aaf56bbee398a">adaptationError</a>[i] * <a class="code hl_variable" href="_l_m_s___example_8cpp.html#a7a6ff3a789ccbf8dcf5aaf56bbee398a">adaptationError</a>[i];</div>
 <div class="line">}</div>
 <div class="line">meanSquareError /= 512;</div>
 <div class="line"> </div>
@@ -431,6 +431,7 @@ Public Member Functions</h2></td></tr>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Si MSE decrece → buena adaptación</span></div>
 <div class="line"><span class="comment">// Si MSE oscila → considerar reducir μ</span></div>
+<div class="ttc" id="a_l_m_s___example_8cpp_html_a7a6ff3a789ccbf8dcf5aaf56bbee398a"><div class="ttname"><a href="_l_m_s___example_8cpp.html#a7a6ff3a789ccbf8dcf5aaf56bbee398a">adaptationError</a></div><div class="ttdeci">float32_t adaptationError[maxSamplesNum]</div><div class="ttdef"><b>Definition</b> LMS_Example.cpp:63</div></div>
 </div><!-- fragment --> </dd></dl>
 
 </div>
