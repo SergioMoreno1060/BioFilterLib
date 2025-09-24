@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BioFilterLib - Librería de Filtros en C/C++</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+      color: #333;
+    }
+    header {
+      background: #222;
+      color: #fff;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+    }
+    nav {
+      background: #444;
+      padding: 0.5rem;
+      text-align: center;
+    }
+    nav a {
+      color: #fff;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+    main {
+      max-width: 900px;
+      margin: auto;
+      padding: 2rem;
+      background: white;
+    }
+    pre {
+      background: #eee;
+      padding: 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+      background: #222;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>BioFilterLib</h1>
+    <p>Librería en C/C++ para filtros digitales (FIR, IIR, y más)</p>
+  </header>
+
+  <nav>
+    <a href="#instalacion">Instalación</a>
+    <a href="#uso">Ejemplo de Uso</a>
+    <a href="#estructura">Estructura</a>
+    <a href="https://github.com/TUUSUARIO/BioFilterLib" target="_blank">GitHub</a>
+  </nav>
+
+  <main>
+    <section id="instalacion">
+      <h2>Instalación</h2>
+      <p>Para usar la librería en Arduino IDE:</p>
+      <ol>
+        <li>Descarga este repositorio como <code>.zip</code>.</li>
+        <li>En Arduino IDE, ve a <strong>Programa → Incluir librería → Añadir biblioteca .ZIP</strong>.</li>
+        <li>Selecciona el archivo descargado.</li>
+      </ol>
+    </section>
+
+    <section id="uso">
+      <h2>Ejemplo de Uso</h2>
+      <p>Un ejemplo básico de uso con un filtro FIR:</p>
+      <pre><code>#include &lt;BioFilterLib.h&gt;
+
+FIRFilter myFilter;
+
+void setup() {
+  Serial.begin(9600);
+  float coeffs[3] = {0.25, 0.5, 0.25};
+  myFilter.init(coeffs, 3);
+}
+
+void loop() {
+  float input = analogRead(A0);
+  float output = myFilter.process(input);
+  Serial.println(output);
+  delay(10);
+}</code></pre>
+      <p>También puedes ver el ejemplo completo en:  
+      <code>/examples/FIR_Example/FIR_Example.ino</code>.</p>
+    </section>
+
+    <section id="estructura">
+      <h2>Estructura del Repositorio</h2>
+      <pre><code>BioFilterLib/
+├── docs/              → Documentación web (GitHub Pages)
+├── examples/          → Ejemplos de uso en Arduino
+│   └── FIR_Example/
+│       └── FIR_Example.ino
+├── src/               → Código fuente de la librería
+│   ├── BioFilterLib.h
+│   ├── library.properties
+│   ├── filters/
+│   │   ├── FIRFilter.cpp
+│   │   └── FIRFilter.h
+│   └── utils/
+│       └── Waveforms.h
+</code></pre>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 BioFilterLib - Creado por <a href="https://github.com/SergioMoreno1060" target="_blank">TUUSUARIO</a></p>
+  </footer>
+</body>
+</html>
