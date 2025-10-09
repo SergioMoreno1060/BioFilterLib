@@ -17,6 +17,7 @@
 #include <Arduino.h>
 #include <BioFilterLib.h>
 #include "Waveforms.h"
+#include "utils.h"
 
 // ========== CONFIGURACIÓN DE PRUEBAS ==========
 
@@ -59,73 +60,6 @@ float32_t referenceSignal[maxSamplesNum];// Señal de referencia (limpia estimad
 FIRFilter* filterSample;   // Procesamiento muestra por muestra
 FIRFilter* filterBlock32;  // Procesamiento por bloques de 32
 FIRFilter* filterBlock128; // Procesamiento por bloques de 128
-
-// ========== FUNCIONES AUXILIARES ==========
-
-/**
- * @brief Calcula la Relación Señal-Ruido (SNR) en dB
- */
-float32_t calculateSNR(const float32_t* signal, const float32_t* noise, uint32_t length) {
-    float32_t signalPower = 0.0f;
-    float32_t noisePower = 0.0f;
-    
-    for (uint32_t i = 0; i < length; i++) {
-        signalPower += signal[i] * signal[i];
-        float32_t error = signal[i] - noise[i];
-        noisePower += error * error;
-    }
-    
-    signalPower /= length;
-    noisePower /= length;
-    
-    if (noisePower < 1e-10f) return 999.9f; // Evitar división por cero
-    
-    return 10.0f * log10(signalPower / noisePower);
-}
-
-/**
- * @brief Calcula el Error Cuadrático Medio (MSE)
- */
-float32_t calculateMSE(const float32_t* signal1, const float32_t* signal2, uint32_t length) {
-    float32_t mse = 0.0f;
-    
-    for (uint32_t i = 0; i < length; i++) {
-        float32_t error = signal1[i] - signal2[i];
-        mse += error * error;
-    }
-    
-    return mse / length;
-}
-
-/**
- * @brief Calcula el coeficiente de correlación de Pearson
- */
-float32_t calculateCorrelation(const float32_t* signal1, const float32_t* signal2, uint32_t length) {
-    float32_t mean1 = 0.0f, mean2 = 0.0f;
-    
-    // Calcular medias
-    for (uint32_t i = 0; i < length; i++) {
-        mean1 += signal1[i];
-        mean2 += signal2[i];
-    }
-    mean1 /= length;
-    mean2 /= length;
-    
-    // Calcular correlación
-    float32_t numerator = 0.0f;
-    float32_t denom1 = 0.0f, denom2 = 0.0f;
-    
-    for (uint32_t i = 0; i < length; i++) {
-        float32_t diff1 = signal1[i] - mean1;
-        float32_t diff2 = signal2[i] - mean2;
-        numerator += diff1 * diff2;
-        denom1 += diff1 * diff1;
-        denom2 += diff2 * diff2;
-    }
-    
-    float32_t denominator = sqrt(denom1 * denom2);
-    return (denominator > 1e-10f) ? (numerator / denominator) : 0.0f;
-}
 
 /**
  * @brief Genera señal de referencia "limpia" (promediando múltiples ciclos)
