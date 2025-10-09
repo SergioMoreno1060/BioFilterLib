@@ -171,8 +171,12 @@ void printMemoryStats() {
     Serial.print((NUM_TAPS + BLOCK_SIZE_128 - 1) * sizeof(float32_t));
     Serial.println(" bytes");
     
-    Serial.println("\nNOTA: Arduino Due tiene 96KB de SRAM");
-    Serial.println("      Medición de RAM libre no disponible en ARM");
+    extern unsigned int __heap_start;
+    extern void *__brkval;
+    int freeRAM = (int)&freeRAM - (__brkval == 0 ? (int)&__heap_start : (int)__brkval);
+    Serial.print("RAM libre aproximada: ");
+    Serial.print(freeRAM);
+    Serial.println(" bytes");
 }
 
 /**

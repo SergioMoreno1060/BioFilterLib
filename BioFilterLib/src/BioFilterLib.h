@@ -8,6 +8,7 @@
  #include "filters/FIRFilter.h"
  #include "filters/IIRFilter.h"
  #include "filters/LMSFilter.h"
+ #include "filters/WaveletFilter.h"
  
  #endif // BIOFILTERLIB_H
  
