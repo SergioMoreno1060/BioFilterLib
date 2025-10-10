@@ -46,7 +46,7 @@ Por defecto, la biblioteca está configurada para el **Arduino Due** (basado en 
 Si utilizas un microcontrolador diferente (por ejemplo, Cortex-M4 o Cortex-M0), debes modificar el *macro* en el archivo `BioFilterLib.h`:
 
 ```cpp
-// Archivo: BioFilterLib.h
+// Archivo: BioFilterLib_IDE/src/BioFilterLib.h
 
 // Por defecto:
 #define ARM_MATH_CM3
@@ -79,5 +79,6 @@ Esta biblioteca se distribuye bajo la licencia especificada en el repositorio or
 ## 📬 Contacto
 
 Para reportar errores o contribuir al desarrollo, abre un *issue* o un *pull request* en el repositorio oficial.
+
 
 
