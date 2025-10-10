@@ -80,6 +80,4 @@ Esta biblioteca se distribuye bajo la licencia especificada en el repositorio or
 
 Para reportar errores o contribuir al desarrollo, abre un *issue* o un *pull request* en el repositorio oficial.
 
-```
-
 
