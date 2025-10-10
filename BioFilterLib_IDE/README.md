@@ -1,4 +1,3 @@
-````markdown
 # BioFilterLib para Arduino IDE
 
 **BioFilterLib** es una biblioteca diseñada para procesar y filtrar señales biológicas en plataformas basadas en **ARM Cortex**.  
@@ -83,3 +82,4 @@ Para reportar errores o contribuir al desarrollo, abre un *issue* o un *pull req
 
 ```
 ```
+
