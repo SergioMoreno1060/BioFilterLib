@@ -1,12 +1,48 @@
+/**
+ * @file Waveforms.h
+ * @brief Señales de prueba para BioFilterLib
+ * @author Sergio
+ * @version 2.0.0
+ * @date 2025
+ * 
+ * Señales disponibles:
+ * - "sine"               - Señal senoidal
+ * - "triangular"         - Señal triangular
+ * - "sawtooth"           - Señal diente de sierra
+ * - "square"             - Señal cuadrada
+ * - "ecg_clean"          - ECG limpio, fs=1000Hz
+ * - "ecg_60hz_noised"    - ECG con ruido 60Hz, fs=1000Hz
+ * - "ecg_white_noised"   - ECG con ruido blanco
+ * - "ecg_60hz_noised_fs240"- ECG con ruido 60Hz, fs=240Hz
+ */
+
 #ifndef WAVEFORMS_H
 #define WAVEFORMS_H
 
+#include <Arduino.h>
 #include <stdint.h>
+#include <arm_math.h>
 
-#define maxWaveform 8
-#define maxSamplesNum 3000
 
-static const uint16_t waveformsTable[maxWaveform][maxSamplesNum] = {
+// Tamaño de las señales
+const uint16_t maxSamplesNum = 3000;
+
+// Tabla de señales de prueba (valores 12-bit: 0-4095)
+// [0] = Señal senoidal
+// [1] = Señal triangular
+// [2] = Señal diente de sierra
+// [3] = Señal cuadrada
+// [4] = ECG limpio, fs=1000Hz
+// [5] = ECG con ruido 60Hz, fs=1000Hz
+// [6] = ECG con ruido blanco
+// [7] = ECG con ruido 60Hz, fs=240Hz
+
+// ====================
+// DATOS DE EJEMPLO
+// ====================
+
+
+static const uint16_t waveformsTable[8][maxSamplesNum] PROGMEM = {
   // Sin wave
   {
     0x7ff, 0x86a, 0x8d5, 0x93f, 0x9a9, 0xa11, 0xa78, 0xadd, 0xb40, 0xba1,
@@ -1085,5 +1121,85 @@ static const uint16_t waveformsTable[maxWaveform][maxSamplesNum] = {
     }
 
 };
+
+// ====================
+// FUNCIONES
+// ====================
+
+/**
+ * @brief Carga una señal de prueba
+ * 
+ * @param tag Etiqueta de la señal: "triangular", "sawtooth", "square", "sine", "ecg_clean", "ecg_60hz_noised", "ecg_white_noised", "ecg_60hz_noised_fs240"
+  *            También se puede usar el índice: "0" a "7"
+ * @param buffer Array donde se guardará la señal normalizada
+ * @return true si se cargó correctamente
+ * 
+ * @example
+ * float32_t signal[maxSamplesNum];
+ * loadSignal("60hz", signal);
+ */
+inline bool loadSignal(const char* tag, float32_t* buffer) {
+    if (buffer == nullptr) return false;
+    
+    // Determinar índice según el tag
+    int index = -1;
+    String t = String(tag);
+    t.toLowerCase();
+    
+    if (t == "sine" || t == "0") index = 0;
+    else if (t == "triangular" || t == "1") index = 1;
+    else if (t == "sawtooth" || t == "2") index = 2;
+    else if (t == "square" || t == "3") index = 3;
+    else if (t == "ecg_clean" || t == "4") index = 4;
+    else if (t == "ecg_60hz_noised" || t == "5") index = 5;
+    else if (t == "ecg_white_noised" || t == "6") index = 6;
+    else if (t == "ecg_60hz_noised_fs240" || t == "7") index = 7;
+    
+    if (index < 0) return false;
+    
+    // Copiar y normalizar (0-4095 -> ±1.0)
+    for (int i = 0; i < maxSamplesNum; i++) {
+        buffer[i] = ((float32_t)waveformsTable[index][i] - 2048.0f) / 2048.0f;
+    }
+    
+    return true;
+}
+
+/**
+ * @brief Obtiene el nombre descriptivo de una señal
+ * 
+ * @param tag Etiqueta de la señal
+ * @return Nombre descriptivo
+ */
+inline const char* getSignalName(const char* tag) {
+    String t = String(tag);
+    t.toLowerCase();
+    
+    if (t == "sine" || t == "0") return "Sine wave";
+    if (t == "triangular" || t == "1") return "Triangular wave";
+    if (t == "sawtooth" || t == "2") return "Sawtooth wave";
+    if (t == "square" || t == "3") return "Square wave";
+    if (t == "ecg_clean" || t == "4") return "Clean ECG";
+    if (t == "ecg_60hz_noised" || t == "5") return "ECG with 60Hz noise";
+    if (t == "ecg_white_noised" || t == "6") return "ECG with white noise";
+    if (t == "ecg_60hz_noised_fs240" || t == "7") return "ECG with 60Hz noise (fs=240Hz)";
+    
+    return "Desconocida";
+}
+
+/**
+ * @brief Muestra lista de señales disponibles
+ */
+inline void printSignals() {
+    Serial.println("Señales disponibles:");
+    Serial.println("  'sine'    - Sine wave");
+    Serial.println("  'triangular' - Triangular wave");
+    Serial.println("  'sawtooth'   - Sawtooth wave");
+    Serial.println("  'square'     - Square wave");
+    Serial.println("  'ecg_clean'  - Clean ECG");
+    Serial.println("  'ecg_60hz_noised' - ECG with 60Hz noise");
+    Serial.println("  'ecg_white_noised' - ECG with white noise");
+    Serial.println("  'ecg_60hz_noised_fs240' - ECG with 60Hz noise (fs=240Hz)");
+}
 
 #endif // WAVEFORMS_H

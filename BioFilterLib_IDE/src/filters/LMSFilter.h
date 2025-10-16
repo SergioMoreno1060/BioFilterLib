@@ -33,8 +33,7 @@
 #ifndef LMS_FILTER_H
 #define LMS_FILTER_H
 
-#include <Arduino.h>
-#include <BioFilterLib.h> // CMSIS-DSP
+#include <arm_math.h> // CMSIS-DSP
 
 /**
  * @class LMSFilter

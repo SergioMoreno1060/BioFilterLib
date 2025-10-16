@@ -30,8 +30,9 @@
 #ifndef IIR_FILTER_H
 #define IIR_FILTER_H
 
-#include <Arduino.h>
-#include <BioFilterLib.h> // CMSIS-DSP
+// #include <Arduino.h>
+#include <arm_math.h>   // CMSIS-DSP
+#include "utils/Waveforms.h"
 
 /**
  * @class IIRFilter

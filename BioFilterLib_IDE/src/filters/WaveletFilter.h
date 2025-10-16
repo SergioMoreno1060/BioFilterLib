@@ -35,8 +35,7 @@
 #define WAVELET_FILTER_H
 #define ARM_MATH_CM3
 
-#include <Arduino.h>
-#include <BioFilterLib.h>  // CMSIS-DSP
+#include <arm_math.h>
 
 class FIRFilter;  // Forward declaration
 

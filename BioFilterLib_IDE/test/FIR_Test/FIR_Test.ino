@@ -1,17 +1,17 @@
-    /**
- * @file FIR_Test.cpp
- * @brief Pruebas de rendimiento y calidad para FIRFilter
+/**
+ * @file FIR_Test.ino
+ * @brief Pruebas de rendimiento y calidad para FIRFilter usando TestRunner
  * @author Sergio Moreno
- * @version 1.0.0
+ * @version 2.0.0
  * @date 2025
  *
  * @details
  * Realiza pruebas exhaustivas del filtro FIR evaluando:
  * 1. Velocidad de procesamiento (muestra individual vs buffer)
  * 2. Consumo de recursos (RAM, stack)
- * 3. Calidad de filtrado (SNR, MSE, correlación)
+ * 3. Calidad de filtrado (SNR, MSE, correlación) usando TestRunner
  * 
- * Prueba con señal ECG real con ruido a 60Hz del archivo Waveforms.h
+ * Usa señal ECG con ruido 60Hz (waveformsTable[7]) @ 240Hz con 900 samples
  */
 
 #include <Arduino.h>
@@ -19,80 +19,51 @@
 
 // ========== CONFIGURACIÓN DE PRUEBAS ==========
 
-// Configuración de señal: waveformsTable[6] - ECG con ruido 60Hz @ 250Hz (900 samples)
-#define SIGNAL_INDEX    6       // Índice en waveformsTable
-#define NUM_SAMPLES     900     // 900 muestras @ 250Hz = 3.6 segundos
+// Señal de prueba: waveformsTable[7] - ECG con ruido 60Hz @ 240Hz (900 samples)
+#define SIGNAL_TAG      "ecg_60hz_noised_fs240"
+#define NUM_SAMPLES     900     // Usar solo las primeras 900 muestras
 
 // Configuración del filtro FIR pasa-bajas para eliminar ruido de 60Hz
-#define NUM_TAPS        51      // Número de coeficientes
-#define BLOCK_SIZE_1    1       // Procesamiento muestra por muestra
-#define BLOCK_SIZE_32   32      // Procesamiento por bloques pequeños
-#define BLOCK_SIZE_128  128     // Procesamiento por bloques grandes
-#define SAMPLE_RATE     250.0f  // Hz - frecuencia de muestreo
+#define NUM_TAPS        51      
+#define BLOCK_SIZE_1    1       
+#define BLOCK_SIZE_32   32      
+#define BLOCK_SIZE_128  128     
+#define SAMPLE_RATE     240.0f  // Hz - frecuencia de muestreo
 #define CUTOFF_FREQ     40.0f   // Hz - frecuencia de corte (elimina 60Hz)
 
 // Número de iteraciones para pruebas de velocidad
 #define SPEED_TEST_ITERATIONS 100
 
-// Coeficientes FIR pasa-bajas (fc=40Hz, fs=250Hz, 51 taps)
-// Generados con scipy.signal.firwin(51, 40, fs=250)
+// Coeficientes FIR pasa-bajas (fc=40Hz, fs=240Hz, 51 taps)
 float32_t firCoeffs[NUM_TAPS] = {
-  1.01602337e-03,  1.05219578e-03,  1.05485683e-03,  9.52665359e-04,
-  6.39612342e-04, -6.52666866e-19, -1.05692964e-03, -2.55869546e-03,
-  -4.43506165e-03, -6.49496992e-03, -8.42139827e-03, -9.78815640e-03,
-  -1.00992192e-02, -8.84737843e-03, -5.58538708e-03,  2.65242472e-18,
-  8.02209630e-03,  1.83472206e-02,  3.05752787e-02,  4.40532964e-02,
-  5.79227190e-02,  7.11964426e-02,  8.28570731e-02,  9.19645190e-02,
-  9.77592660e-02,  9.97478615e-02,  9.77592660e-02,  9.19645190e-02,
-  8.28570731e-02,  7.11964426e-02,  5.79227190e-02,  4.40532964e-02,
-  3.05752787e-02,  1.83472206e-02,  8.02209630e-03,  2.65242472e-18,
-  -5.58538708e-03, -8.84737843e-03, -1.00992192e-02, -9.78815640e-03,
-  -8.42139827e-03, -6.49496992e-03, -4.43506165e-03, -2.55869546e-03,
-  -1.05692964e-03, -6.52666866e-19,  6.39612342e-04,  9.52665359e-04,
-  1.05485683e-03,  1.05219578e-03,  1.01602337e-03
+  0.001f, 0.001f, 0.001f, 0.001f, 0.001f, -0.001f, -0.002f, -0.004f,
+  -0.006f, -0.008f, -0.010f, -0.010f, -0.009f, -0.006f, 0.0f, 0.008f,
+  0.018f, 0.031f, 0.044f, 0.058f, 0.071f, 0.083f, 0.092f, 0.098f,
+  0.100f, 0.098f, 0.092f, 0.083f, 0.071f, 0.058f, 0.044f, 0.031f,
+  0.018f, 0.008f, 0.0f, -0.006f, -0.009f, -0.010f, -0.010f, -0.008f,
+  -0.006f, -0.004f, -0.002f, -0.001f, 0.001f, 0.001f, 0.001f, 0.001f,
+  0.001f, 0.001f, 0.001f
 };
 
 // ========== BUFFERS DE DATOS ==========
 
-float32_t inputSignal[NUM_SAMPLES];    // Señal ECG con ruido
-float32_t filteredSignal[NUM_SAMPLES]; // Señal filtrada
-float32_t referenceSignal[NUM_SAMPLES];// Señal de referencia (limpia estimada)
+float32_t inputSignal[NUM_SAMPLES];
+float32_t filteredSignal[NUM_SAMPLES];
 
 // Instancias de filtros para diferentes configuraciones
-FIRFilter* filterSample;   // Procesamiento muestra por muestra
-FIRFilter* filterBlock32;  // Procesamiento por bloques de 32
-FIRFilter* filterBlock128; // Procesamiento por bloques de 128
+FIRFilter* filterSample;
+FIRFilter* filterBlock32;
+FIRFilter* filterBlock128;
 
-/**
- * @brief Genera señal de referencia "limpia" (promediando múltiples ciclos)
- */
-void generateReferenceSignal() {
-    // Para esta prueba, usamos un filtrado muy agresivo como referencia
-    // En un caso real, se usaría una señal limpia capturada sin ruido
-    
-    // Copiar señal de entrada como aproximación
-    for (uint32_t i = 0; i < NUM_SAMPLES; i++) {
-        referenceSignal[i] = inputSignal[i];
-    }
-    
-    // Aplicar promedio móvil simple como referencia de "señal limpia"
-    const uint32_t windowSize = 5;
-    for (uint32_t i = windowSize; i < NUM_SAMPLES - windowSize; i++) {
-        float32_t sum = 0.0f;
-        for (uint32_t j = 0; j < windowSize; j++) {
-            sum += inputSignal[i - windowSize/2 + j];
-        }
-        referenceSignal[i] = sum / windowSize;
-    }
-}
+// TestRunner para pruebas automáticas
+TestRunner testRunner;
 
-/**
- * @brief Imprime estadísticas de memoria
- */
+// ========== FUNCIONES DE TEST ==========
+
 void printMemoryStats() {
     Serial.println("\n=== CONSUMO DE RECURSOS ===");
     Serial.print("RAM usado por buffers: ");
-    Serial.print((NUM_SAMPLES * 3 * sizeof(float32_t)) / 1024.0f);
+    Serial.print((NUM_SAMPLES * 2 * sizeof(float32_t)) / 1024.0f, 2);
     Serial.println(" KB");
     
     Serial.print("RAM por instancia FIR (1 sample): ");
@@ -103,19 +74,11 @@ void printMemoryStats() {
     Serial.print((NUM_TAPS + BLOCK_SIZE_32 - 1) * sizeof(float32_t));
     Serial.println(" bytes");
     
-    Serial.print("RAM por instancia FIR (128 samples): ");
-    Serial.print((NUM_TAPS + BLOCK_SIZE_128 - 1) * sizeof(float32_t));
-    Serial.println(" bytes");
-    
     Serial.println("\nNOTA: Arduino Due tiene 96KB de SRAM");
-    Serial.println("      Medición de RAM libre no disponible en ARM");
 }
 
-/**
- * @brief Prueba de velocidad para procesamiento muestra por muestra
- */
 void testSpeedSampleBySample() {
-    Serial.println("\n=== PRUEBA DE VELOCIDAD: Muestra por Muestra ===");
+    Serial.println("\n=== PRUEBA DE VELOCIDAD: Muestra por muestra ===");
     
     unsigned long totalTime = 0;
     
@@ -134,28 +97,22 @@ void testSpeedSampleBySample() {
     float32_t timePerSample = avgTime / NUM_SAMPLES;
     float32_t maxSampleRate = 1000000.0f / timePerSample;
     
-    Serial.print("Tiempo promedio total: ");
-    Serial.print(avgTime);
+    Serial.print("Tiempo promedio: ");
+    Serial.print(avgTime, 2);
     Serial.println(" µs");
-    
-    Serial.print("Tiempo por muestra: ");
-    Serial.print(timePerSample);
+    Serial.print("Tiempo/muestra: ");
+    Serial.print(timePerSample, 3);
     Serial.println(" µs");
-    
-    Serial.print("Frecuencia de muestreo máxima: ");
-    Serial.print(maxSampleRate);
+    Serial.print("Fs máxima: ");
+    Serial.print(maxSampleRate, 0);
     Serial.println(" Hz");
-    
     Serial.print("Throughput: ");
-    Serial.print(NUM_SAMPLES / (avgTime / 1000000.0f));
-    Serial.println(" samples/sec");
+    Serial.print(NUM_SAMPLES / (avgTime / 1000000.0f), 0);
+    Serial.println(" samples/s");
 }
 
-/**
- * @brief Prueba de velocidad para procesamiento por bloques
- */
 void testSpeedBlockProcessing(FIRFilter* filter, uint32_t blockSize, const char* name) {
-    Serial.print("\n=== PRUEBA DE VELOCIDAD: ");
+    Serial.print("\n=== VELOCIDAD: ");
     Serial.print(name);
     Serial.println(" ===");
     
@@ -180,79 +137,19 @@ void testSpeedBlockProcessing(FIRFilter* filter, uint32_t blockSize, const char*
     float32_t avgTime = (float32_t)totalTime / SPEED_TEST_ITERATIONS;
     float32_t timePerSample = avgTime / NUM_SAMPLES;
     float32_t maxSampleRate = 1000000.0f / timePerSample;
-    float32_t speedup = (1000000.0f / timePerSample) / (1000000.0f / (avgTime / NUM_SAMPLES));
     
-    Serial.print("Tiempo promedio total: ");
-    Serial.print(avgTime);
+    Serial.print("Tiempo promedio: ");
+    Serial.print(avgTime, 2);
     Serial.println(" µs");
-    
-    Serial.print("Tiempo por muestra: ");
-    Serial.print(timePerSample);
+    Serial.print("Tiempo/muestra: ");
+    Serial.print(timePerSample, 3);
     Serial.println(" µs");
-    
-    Serial.print("Frecuencia de muestreo máxima: ");
-    Serial.print(maxSampleRate);
+    Serial.print("Fs máxima: ");
+    Serial.print(maxSampleRate, 0);
     Serial.println(" Hz");
-    
-    Serial.print("Throughput: ");
-    Serial.print(NUM_SAMPLES / (avgTime / 1000000.0f));
-    Serial.println(" samples/sec");
-}
-
-/**
- * @brief Prueba de calidad de filtrado
- */
-void testFilterQuality() {
-    Serial.println("\n=== PRUEBA DE CALIDAD DE FILTRADO ===");
-    
-    // Procesar señal con filtro
-    uint32_t samplesProcessed = 0;
-    while (samplesProcessed < NUM_SAMPLES) {
-        uint32_t currentBlockSize = min((uint32_t)BLOCK_SIZE_32, NUM_SAMPLES - samplesProcessed);
-        filterBlock32->processBuffer(&inputSignal[samplesProcessed], 
-                                    &filteredSignal[samplesProcessed], 
-                                    currentBlockSize);
-        samplesProcessed += currentBlockSize;
-    }
-    
-    // Calcular métricas
-    float32_t snr = calculateSNR(filteredSignal, inputSignal, NUM_SAMPLES);
-    float32_t mse = calculateMSE(filteredSignal, referenceSignal, NUM_SAMPLES);
-    float32_t correlation = calculateCorrelation(filteredSignal, referenceSignal, NUM_SAMPLES);
-    
-    // Calcular potencia de señal y ruido
-    float32_t inputPower = 0.0f;
-    float32_t outputPower = 0.0f;
-    for (uint32_t i = 0; i < NUM_SAMPLES; i++) {
-        inputPower += inputSignal[i] * inputSignal[i];
-        outputPower += filteredSignal[i] * filteredSignal[i];
-    }
-    inputPower /= NUM_SAMPLES;
-    outputPower /= NUM_SAMPLES;
-    
-    Serial.print("SNR de mejora: ");
-    Serial.print(snr);
-    Serial.println(" dB");
-    
-    Serial.print("MSE vs referencia: ");
-    Serial.print(mse, 6);
-    Serial.println();
-    
-    Serial.print("Correlación con referencia: ");
-    Serial.print(correlation, 4);
-    Serial.println();
-    
-    Serial.print("Potencia entrada: ");
-    Serial.print(inputPower, 6);
-    Serial.println();
-    
-    Serial.print("Potencia salida: ");
-    Serial.print(outputPower, 6);
-    Serial.println();
-    
-    Serial.print("Atenuación: ");
-    Serial.print(10.0f * log10(outputPower / inputPower));
-    Serial.println(" dB");
+    Serial.print("Speedup vs muestra individual: ");
+    Serial.print(100.0f * (1.0f - timePerSample / (avgTime / NUM_SAMPLES)), 1);
+    Serial.println("%");
 }
 
 // ========== SETUP Y LOOP ==========
@@ -266,27 +163,24 @@ void setup() {
     Serial.println("\n========================================");
     Serial.println("  FIR FILTER - PRUEBAS DE RENDIMIENTO  ");
     Serial.println("========================================");
-    Serial.println("\nBioFilterLib Test Suite v1.0");
+    Serial.println("\nBioFilterLib Test Suite v2.0");
     Serial.println("Plataforma: Arduino Due");
     Serial.println("Filtro: FIR pasa-bajas 51 taps, fc=40Hz");
-    Serial.print("Señal: waveformsTable[");
-    Serial.print(SIGNAL_INDEX);
-    Serial.print("] - ");
+    Serial.print("Señal: ");
+    Serial.print(getSignalName(SIGNAL_TAG));
+    Serial.print(" (");
     Serial.print(NUM_SAMPLES);
-    Serial.println(" samples @ 250Hz");
+    Serial.println(" samples)");
     
-    // Convertir señal ECG a float y normalizar
-    Serial.println("\nCargando señal ECG con ruido...");
-    for (uint32_t i = 0; i < NUM_SAMPLES; i++) {
-        inputSignal[i] = ((float32_t)waveformsTable[SIGNAL_INDEX][i] - 2048.0f) / 2048.0f;
+    // Cargar señal de prueba
+    Serial.println("\nCargando señal de prueba...");
+    if (!loadSignal(SIGNAL_TAG, inputSignal)) {
+        Serial.println("ERROR: No se pudo cargar la señal");
+        while(1);
     }
     
     Serial.print("Muestras cargadas: ");
     Serial.println(NUM_SAMPLES);
-    
-    // Generar señal de referencia
-    Serial.println("Generando señal de referencia...");
-    generateReferenceSignal();
     
     // Crear instancias de filtros
     Serial.println("Inicializando filtros...");
@@ -294,12 +188,17 @@ void setup() {
     filterBlock32 = new FIRFilter(firCoeffs, NUM_TAPS, BLOCK_SIZE_32);
     filterBlock128 = new FIRFilter(firCoeffs, NUM_TAPS, BLOCK_SIZE_128);
     
+    if (!filterSample || !filterBlock32 || !filterBlock128) {
+        Serial.println("ERROR: No se pudieron crear los filtros");
+        while(1);
+    }
+    
     Serial.println("Filtros inicializados correctamente.");
     
     // Imprimir estadísticas de memoria
     printMemoryStats();
     
-    // Ejecutar pruebas de velocidad
+    // ===== PRUEBAS DE VELOCIDAD =====
     delay(1000);
     testSpeedSampleBySample();
     
@@ -309,17 +208,27 @@ void setup() {
     delay(500);
     testSpeedBlockProcessing(filterBlock128, BLOCK_SIZE_128, "Bloques de 128 muestras");
     
-    // Ejecutar pruebas de calidad
+    // ===== PRUEBAS DE CALIDAD CON TESTRUNNER =====
+    delay(1000);
+    Serial.println("\n========================================");
+    Serial.println("  PRUEBAS DE CALIDAD (TestRunner)");
+    Serial.println("========================================");
+    
+    // Probar con la señal configurada
+    Serial.println("\n--- Prueba individual ---");
+    testRunner.testFIR(filterBlock32, SIGNAL_TAG);
+    
+    // Probar todas las señales disponibles
     delay(500);
-    testFilterQuality();
+    testRunner.testAllFIR(filterBlock32);
     
     Serial.println("\n========================================");
     Serial.println("    PRUEBAS COMPLETADAS CON ÉXITO     ");
     Serial.println("========================================");
-    Serial.println("\nResultados guardados. Sistema listo.");
+    Serial.println("\nSistema listo.");
 }
 
 void loop() {
-    // Las pruebas se ejecutan una sola vez en setup()
+    // Nada que hacer aquí
     delay(1000);
 }

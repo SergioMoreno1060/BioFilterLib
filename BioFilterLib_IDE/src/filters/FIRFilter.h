@@ -31,8 +31,8 @@
 #ifndef FIR_FILTER_H
 #define FIR_FILTER_H
 
-#include <Arduino.h>
-#include <BioFilterLib.h>  // CMSIS-DSP
+// #include <Arduino.h>
+#include <arm_math.h>  // CMSIS-DSP
 
 /**
  * @class FIRFilter

@@ -1,7 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include <BioFilterLib.h>  // Tipos CMSIS-DSP (float32_t, etc.)
+#include <arm_math.h>
 
 #ifdef __cplusplus
 extern "C" {
