@@ -49,8 +49,6 @@ Si utilizas un microcontrolador diferente (por ejemplo, Cortex-M4 o Cortex-M0), 
 // Archivo: "C:\Users\{Nombre}\AppData\Local\Arduino15\packages\arduino\hardware\sam\{version}\platform.txt"
 
 // Por defecto:
-
-# These can be overridden in platform.local.txt
 compiler.c.extra_flags=
 compiler.cpp.extra_flags=
 
@@ -83,6 +81,7 @@ Esta biblioteca se distribuye bajo la licencia especificada en el repositorio or
 ## 📬 Contacto
 
 Para reportar errores o contribuir al desarrollo, abre un *issue* o un *pull request* en el repositorio oficial.
+
 
 
 
