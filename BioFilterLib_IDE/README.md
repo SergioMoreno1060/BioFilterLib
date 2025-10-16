@@ -43,17 +43,21 @@ Esa es la carpeta que contiene la versión compatible con Arduino IDE.
 
 Por defecto, la biblioteca está configurada para el **Arduino Due** (basado en **ARM Cortex-M3**).
 
-Si utilizas un microcontrolador diferente (por ejemplo, Cortex-M4 o Cortex-M0), debes modificar el *macro* en el archivo `BioFilterLib.h`:
+Si utilizas un microcontrolador diferente (por ejemplo, Cortex-M4 o Cortex-M0), debes modificar el archivo platform.txt del core SAM:
 
 ```cpp
-// Archivo: BioFilterLib_IDE/src/BioFilterLib.h
+// Archivo: "C:\Users\{Nombre}\AppData\Local\Arduino15\packages\arduino\hardware\sam\{version}\platform.txt"
 
 // Por defecto:
-#define ARM_MATH_CM3
+
+# These can be overridden in platform.local.txt
+compiler.c.extra_flags=
+compiler.cpp.extra_flags=
 
 // Cambiar según tu plataforma:
-#define ARM_MATH_CM4   // Para ARM Cortex-M4
-#define ARM_MATH_CM0   // Para ARM Cortex-M0
+compiler.c.extra_flags=-DARM_MATH_CM3
+compiler.cpp.extra_flags=-DARM_MATH_CM3
+
 ```
 
 Guarda los cambios antes de compilar el proyecto.
@@ -79,6 +83,7 @@ Esta biblioteca se distribuye bajo la licencia especificada en el repositorio or
 ## 📬 Contacto
 
 Para reportar errores o contribuir al desarrollo, abre un *issue* o un *pull request* en el repositorio oficial.
+
 
 
 
