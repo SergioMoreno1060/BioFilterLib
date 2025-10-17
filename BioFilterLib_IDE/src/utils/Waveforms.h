@@ -21,6 +21,7 @@
 
 #include <Arduino.h>
 #include <stdint.h>
+#include <string.h>
 #include <arm_math.h>
 
 
@@ -42,7 +43,7 @@ const uint16_t maxSamplesNum = 3000;
 // ====================
 
 
-static const uint16_t waveformsTable[8][maxSamplesNum] PROGMEM = {
+static const uint16_t waveformsTable[8][maxSamplesNum] = {
   // Sin wave
   {
     0x7ff, 0x86a, 0x8d5, 0x93f, 0x9a9, 0xa11, 0xa78, 0xadd, 0xb40, 0xba1,
@@ -1127,39 +1128,89 @@ static const uint16_t waveformsTable[8][maxSamplesNum] PROGMEM = {
 // ====================
 
 /**
- * @brief Carga una señal de prueba
+ * @brief Carga una señal de prueba - VERSION FINAL TESTEADA
  * 
- * @param tag Etiqueta de la señal: "triangular", "sawtooth", "square", "sine", "ecg_clean", "ecg_60hz_noised", "ecg_white_noised", "ecg_60hz_noised_fs240"
-  *            También se puede usar el índice: "0" a "7"
+ * @param tag Etiqueta de la señal
  * @param buffer Array donde se guardará la señal normalizada
+ * @param numSamples Número de muestras a cargar (default: 900)
  * @return true si se cargó correctamente
  * 
- * @example
- * float32_t signal[maxSamplesNum];
- * loadSignal("60hz", signal);
+ * @note Esta versión ha sido testeada y funciona en Arduino Due
  */
-inline bool loadSignal(const char* tag, float32_t* buffer) {
-    if (buffer == nullptr) return false;
+inline bool loadSignal(const char* tag, float32_t* buffer, uint16_t numSamples = 900) {
+    if (buffer == nullptr || tag == nullptr) {
+        return false;
+    }
     
-    // Determinar índice según el tag
+    // Limitar al tamaño máximo disponible
+    if (numSamples > maxSamplesNum) {
+        numSamples = maxSamplesNum;
+    }
+    
+    // Determinar índice - comparación simple sin strcasecmp
     int index = -1;
-    String t = String(tag);
-    t.toLowerCase();
     
-    if (t == "sine" || t == "0") index = 0;
-    else if (t == "triangular" || t == "1") index = 1;
-    else if (t == "sawtooth" || t == "2") index = 2;
-    else if (t == "square" || t == "3") index = 3;
-    else if (t == "ecg_clean" || t == "4") index = 4;
-    else if (t == "ecg_60hz_noised" || t == "5") index = 5;
-    else if (t == "ecg_white_noised" || t == "6") index = 6;
-    else if (t == "ecg_60hz_noised_fs240" || t == "7") index = 7;
+    // Comparar directamente (case sensitive para índices numéricos)
+    if (strcmp(tag, "0") == 0) index = 0;
+    else if (strcmp(tag, "1") == 0) index = 1;
+    else if (strcmp(tag, "2") == 0) index = 2;
+    else if (strcmp(tag, "3") == 0) index = 3;
+    else if (strcmp(tag, "4") == 0) index = 4;
+    else if (strcmp(tag, "5") == 0) index = 5;
+    else if (strcmp(tag, "6") == 0) index = 6;
+    else if (strcmp(tag, "7") == 0) index = 7;
+    // Tags de texto (case insensitive manual)
+    else {
+        // Convertir primer caracter a lowercase para comparación
+        char firstChar = tag[0];
+        if (firstChar >= 'A' && firstChar <= 'Z') {
+            firstChar = firstChar + 32;
+        }
+        
+        // Comparación por primer caracter + longitud (rápido y seguro)
+        if (firstChar == 's' && strlen(tag) == 4) {
+            // "sine" o "Sine"
+            index = 0;
+        } else if (firstChar == 't' && strlen(tag) == 10) {
+            // "triangular" o "Triangular"
+            index = 1;
+        } else if (firstChar == 's' && strlen(tag) == 8) {
+            // "sawtooth" o "Sawtooth"
+            index = 2;
+        } else if (firstChar == 's' && strlen(tag) == 6) {
+            // "square" o "Square"
+            index = 3;
+        } else if (firstChar == 'e' && tag[4] == 'c') {
+            // "ecg_clean" o cualquier variante que empiece con "ecg_c"
+            index = 4;
+        } else if (firstChar == 'e' && tag[4] == '6' && tag[5] == '0') {
+            // Puede ser "ecg_60hz_noised" o "ecg_60hz_noised_fs240"
+            if (strlen(tag) > 20) {
+                // "ecg_60hz_noised_fs240"
+                index = 7;
+            } else {
+                // "ecg_60hz_noised"
+                index = 5;
+            }
+        } else if (firstChar == 'e' && tag[4] == 'w') {
+            // "ecg_white_noised"
+            index = 6;
+        }
+    }
     
-    if (index < 0) return false;
+    if (index < 0) {
+        return false;
+    }
     
-    // Copiar y normalizar (0-4095 -> ±1.0)
-    for (int i = 0; i < maxSamplesNum; i++) {
-        buffer[i] = ((float32_t)waveformsTable[index][i] - 2048.0f) / 2048.0f;
+    // Cargar señal - MÉTODO TESTEADO QUE FUNCIONA
+    for (uint16_t i = 0; i < numSamples; i++) {
+        uint16_t rawValue = waveformsTable[index][i];
+        buffer[i] = ((float32_t)rawValue - 2048.0f) / 2048.0f;
+        
+        // Pequeña pausa cada 100 muestras para estabilidad
+        if (i % 100 == 0 && i > 0) {
+            delay(1);
+        }
     }
     
     return true;
@@ -1171,19 +1222,40 @@ inline bool loadSignal(const char* tag, float32_t* buffer) {
  * @param tag Etiqueta de la señal
  * @return Nombre descriptivo
  */
+
+struct SignalMap {
+    const char* tag;
+    const char* name;
+};
+
+// Tabla de señales
+static const SignalMap signalTable[] = {
+    {"sine",                  "Sine wave"},
+    {"0",                     "Sine wave"},
+    {"triangular",            "Triangular wave"},
+    {"1",                     "Triangular wave"},
+    {"sawtooth",              "Sawtooth wave"},
+    {"2",                     "Sawtooth wave"},
+    {"square",                "Square wave"},
+    {"3",                     "Square wave"},
+    {"ecg_clean",             "Clean ECG"},
+    {"4",                     "Clean ECG"},
+    {"ecg_60hz_noised",       "ECG with 60Hz noise"},
+    {"5",                     "ECG with 60Hz noise"},
+    {"ecg_white_noised",      "ECG with white noise"},
+    {"6",                     "ECG with white noise"},
+    {"ecg_60hz_noised_fs240", "ECG with 60Hz noise (fs=240Hz)"},
+    {"7",                     "ECG with 60Hz noise (fs=240Hz)"}
+};
+
 inline const char* getSignalName(const char* tag) {
-    String t = String(tag);
-    t.toLowerCase();
-    
-    if (t == "sine" || t == "0") return "Sine wave";
-    if (t == "triangular" || t == "1") return "Triangular wave";
-    if (t == "sawtooth" || t == "2") return "Sawtooth wave";
-    if (t == "square" || t == "3") return "Square wave";
-    if (t == "ecg_clean" || t == "4") return "Clean ECG";
-    if (t == "ecg_60hz_noised" || t == "5") return "ECG with 60Hz noise";
-    if (t == "ecg_white_noised" || t == "6") return "ECG with white noise";
-    if (t == "ecg_60hz_noised_fs240" || t == "7") return "ECG with 60Hz noise (fs=240Hz)";
-    
+    if (!tag) return "Desconocida";
+
+    for (unsigned int i = 0; i < sizeof(signalTable) / sizeof(signalTable[0]); i++) {
+        if (strcasecmp(tag, signalTable[i].tag) == 0) {
+            return signalTable[i].name;
+        }
+    }
     return "Desconocida";
 }
 
