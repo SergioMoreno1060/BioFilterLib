@@ -15,7 +15,7 @@
  #include "filters/WaveletFilter.h"
  #include "utils/utils.h"
  #include "utils/Waveforms.h"
- #include "utils/TestRunner.h"
+ #include "utils/utils_extended.h"
  
  #endif // BIOFILTERLIB_H
  
