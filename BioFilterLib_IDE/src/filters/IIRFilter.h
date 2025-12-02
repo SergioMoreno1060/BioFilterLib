@@ -30,9 +30,17 @@
 #ifndef IIR_FILTER_H
 #define IIR_FILTER_H
 
-// #include <Arduino.h>
-#include <arm_math.h>   // CMSIS-DSP
-#include "utils/Waveforms.h"
+// YA PROBE LO SIGUIENTE Y TAMPOCO FUNCIONA:
+// #include <arm_math.h>   // CMSIS-DSP
+// #ifdef __cplusplus
+// extern "C" {
+// #endif
+//   #include <arm_math.h>
+// #ifdef __cplusplus
+// }
+// #endif
+
+#include <arm_math.h>
 
 /**
  * @class IIRFilter
@@ -111,6 +119,7 @@ class IIRFilter {
         void processBuffer(float32_t* inputArray, float32_t* outputArray, uint32_t length);
 
     private:
+
         /**
          * @brief Puntero a los coeficientes del filtro IIR.
          * * Referencia constante al array de coeficientes, formateado para CMSIS-DSP Biquad.

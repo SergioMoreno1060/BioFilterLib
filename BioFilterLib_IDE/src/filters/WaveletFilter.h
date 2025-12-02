@@ -33,7 +33,6 @@
 
 #ifndef WAVELET_FILTER_H
 #define WAVELET_FILTER_H
-#define ARM_MATH_CM3
 
 #include <arm_math.h>
 

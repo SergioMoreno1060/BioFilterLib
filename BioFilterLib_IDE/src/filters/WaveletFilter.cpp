@@ -36,9 +36,17 @@
  * - Frecuencia de corte aproximada: Fs/4
  */
 float32_t WaveletFilter::_approxCoeffs[8] = {
-    0.23037781f,  0.71484657f,  0.63088077f, -0.02798377f,
-   -0.18703481f,  0.03084138f,  0.03288301f, -0.01059740f
+    -0.01059740f, 0.03288301f, 0.03084138f, -0.18703481f,
+   -0.02798377f, 0.63088077f, 0.71484657f, 0.23037781f
 };
+// Daubechies-8 Analysis LP
+// float32_t WaveletFilter::_approxCoeffs[16] = {
+//     -0.00011748f, 0.00067545f, -0.00039174f, -0.00487035f,
+//     0.00874609f, 0.01398103f, -0.04408825f, -0.01736930f,
+//     0.12874743f, 0.00047248f, -0.28401554f, -0.01582911f,
+//     0.58535468f, 0.67563074f, 0.31287159f, 0.05441584f
+// };
+
 
 /**
  * @brief Coeficientes Daubechies-4 para filtro de detalle (análisis pasa-alto)
@@ -54,9 +62,16 @@ float32_t WaveletFilter::_approxCoeffs[8] = {
  * - Rango de frecuencia: Fs/4 a Fs/2
  */
 float32_t WaveletFilter::_detailCoeffs[8] = {
-   -0.01059740f, -0.03288301f,  0.03084138f,  0.18703481f,
-   -0.02798377f, -0.63088077f,  0.71484657f, -0.23037781f
+   -0.23037781f, 0.71484657f, -0.63088077f, -0.02798377f,
+   0.18703481f, 0.03084138f, -0.03288301f, -0.01059740f
 };
+// Daubechies-8 Analysis HP
+// float32_t WaveletFilter::_detailCoeffs[16] = {
+//    -0.05441584f, 0.31287159f, -0.67563074f, 0.58535468f,
+//     0.01582911f, -0.28401554f, -0.00047248f, 0.12874743f,
+//     0.01736930f, -0.04408825f, -0.01398103f, 0.00874609f,
+//     0.00487035f, -0.00039174f, -0.00067545f, -0.00011748f
+// };
 
 /**
  * @brief Coeficientes de síntesis para reconstrucción de aproximación
@@ -66,9 +81,16 @@ float32_t WaveletFilter::_detailCoeffs[8] = {
  * de análisis en orden inverso para garantizar reconstrucción perfecta.
  */
 float32_t WaveletFilter::_synthApproxCoeffs[8] = {
-   -0.01059740f,  0.03288301f,  0.03084138f, -0.18703481f,
-   -0.02798377f,  0.63088077f,  0.71484657f,  0.23037781f
+   0.23037781f, 0.71484657f, 0.63088077f, -0.02798377f,
+   -0.18703481f, 0.03084138f, 0.03288301f, -0.01059740f
 };
+// Daubechies-8 Synthesis LP
+// float32_t WaveletFilter::_synthApproxCoeffs[16] = {
+//    0.05441584f, 0.31287159f, 0.67563074f, 0.58535468f,
+//     -0.01582911f, -0.28401554f, 0.00047248f, 0.12874743f,
+//     -0.01736930f, -0.04408825f, 0.01398103f, 0.00874609f,
+//     -0.00487035f, -0.00039174f, 0.00067545f, -0.00011748f
+// };
 
 /**
  * @brief Coeficientes de síntesis para reconstrucción de detalle
@@ -78,9 +100,16 @@ float32_t WaveletFilter::_synthApproxCoeffs[8] = {
  * para lograr reconstrucción perfecta.
  */
 float32_t WaveletFilter::_synthDetailCoeffs[8] = {
-    0.23037781f, -0.71484657f,  0.63088077f,  0.02798377f,
-   -0.18703481f, -0.03084138f,  0.03288301f,  0.01059740f
+    -0.01059740f, -0.03288301f, 0.03084138f, 0.18703481f,
+   -0.02798377f, -0.63088077f, 0.71484657f, -0.23037781f
 };
+// Daubechies-8 Synthesis HP
+// float32_t WaveletFilter::_synthDetailCoeffs[16] = {
+//     -0.00011748f, -0.00067545f, -0.00039174f, 0.00487035f,
+//     0.00874609f, -0.01398103f, -0.04408825f, 0.01736930f,
+//     0.12874743f, -0.00047248f, -0.28401554f, 0.01582911f,
+//     0.58535468f, -0.67563074f, 0.31287159f, -0.05441584f
+// };
 
 /**
  * @brief Constructor que inicializa el banco de filtros wavelet Daubechies-4

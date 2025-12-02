@@ -23,7 +23,7 @@
 // Delay de grupo del filtro FIR (siempre N/2 para FIR simétrico)
 #define FILTER_GROUP_DELAY (FILTERTAPS/2)
 
-// Coeficientes del filtro paso-bajo (fc=40Hz @ fs=960Hz, 51 taps)
+// Coeficientes del filtro paso-bajo (fc=40Hz @ fs=960Hz, 51 taps, window='hann')
 float32_t coefs[FILTERTAPS] = {
     +0.00096226f, +0.00110652f, +0.00123488f, +0.00128605f, +0.00115012f, +0.00068979f, -0.00022373f, -0.00166613f,
     -0.00361514f, -0.00591523f, -0.00826092f, -0.01020548f, -0.01119776f, -0.01064514f, -0.00799553f, -0.00282748f,

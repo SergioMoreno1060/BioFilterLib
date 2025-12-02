@@ -312,7 +312,7 @@ class LMSFilter {
          * @note No debe ser modificada directamente, se gestiona a través de las
          * funciones de CMSIS-DSP.
          */
-        arm_lms_instance_f32 _lmsInstance;
+        arm_lms_norm_instance_f32 _lmsInstance;
 
 }; // class LMSFilter
 
