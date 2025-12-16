@@ -97,16 +97,28 @@ $(function(){initNavTree('_bio_filter_lib_8h_source.html','',''); });
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor"> #ifndef BIOFILTERLIB_H</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor"> #define BIOFILTERLIB_H</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor"> #include &quot;<a class="code" href="_f_i_r_filter_8h.html">filters/FIRFilter.h</a>&quot;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor"> #include &quot;<a class="code" href="_i_i_r_filter_8h.html">filters/IIRFilter.h</a>&quot;</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor"> #include &quot;<a class="code" href="_l_m_s_filter_8h.html">filters/LMSFilter.h</a>&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">//  #define ARM_MATH_CM3 // Definir el core Cortex-M3 (Arduino Due), para Cortex-M4 o Cortex-M0 usar ARM_MATH_CM4 o ARM_MATH_CM0</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor"> #include &lt;Arduino.h&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor"> #include &lt;arm_math.h&gt;</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor"> #endif </span><span class="comment">// BIOFILTERLIB_H</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor"> #include &quot;<a class="code" href="_f_i_r_filter_8h.html">filters/FIRFilter.h</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor"> #include &quot;<a class="code" href="_i_i_r_filter_8h.html">filters/IIRFilter.h</a>&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor"> #include &quot;<a class="code" href="_l_m_s_filter_8h.html">filters/LMSFilter.h</a>&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor"> #include &quot;<a class="code" href="_wavelet_filter_8h.html">filters/WaveletFilter.h</a>&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor"> #include &quot;<a class="code" href="utils_8h.html">utils/utils.h</a>&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor"> #include &quot;<a class="code" href="_waveforms_8h.html">utils/Waveforms.h</a>&quot;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor"> #include &quot;<a class="code" href="utils__extended_8h.html">utils/utils_extended.h</a>&quot;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor"> #endif </span><span class="comment">// BIOFILTERLIB_H</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
 <div class="ttc" id="a_f_i_r_filter_8h_html"><div class="ttname"><a href="_f_i_r_filter_8h.html">FIRFilter.h</a></div><div class="ttdoc">Filtro FIR optimizado para bioseñales usando CMSIS-DSP.</div></div>
 <div class="ttc" id="a_i_i_r_filter_8h_html"><div class="ttname"><a href="_i_i_r_filter_8h.html">IIRFilter.h</a></div><div class="ttdoc">Filtro IIR de tipo Biquad en cascada, optimizado para bioseñales usando CMSIS-DSP.</div></div>
 <div class="ttc" id="a_l_m_s_filter_8h_html"><div class="ttname"><a href="_l_m_s_filter_8h.html">LMSFilter.h</a></div><div class="ttdoc">Filtro LMS (Least Mean Squares) adaptativo para bioseñales usando CMSIS-DSP.</div></div>
+<div class="ttc" id="a_waveforms_8h_html"><div class="ttname"><a href="_waveforms_8h.html">Waveforms.h</a></div><div class="ttdoc">Señales de prueba para BioFilterLib.</div></div>
+<div class="ttc" id="a_wavelet_filter_8h_html"><div class="ttname"><a href="_wavelet_filter_8h.html">WaveletFilter.h</a></div><div class="ttdoc">Filtro Wavelet de banco de filtros optimizado para bioseñales usando CMSIS-DSP.</div></div>
+<div class="ttc" id="autils_8h_html"><div class="ttname"><a href="utils_8h.html">utils.h</a></div></div>
+<div class="ttc" id="autils__extended_8h_html"><div class="ttname"><a href="utils__extended_8h.html">utils_extended.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

@@ -1,0 +1,11 @@
+<map id="arm_fir_f32" name="arm_fir_f32">
+<area shape="rect" id="Node000001" title=" " alt="" coords="432,31,518,57"/>
+<area shape="rect" id="Node000002" href="$class_f_i_r_filter.html#af599ccbbe4f8f37b18061da9ff80d4b5" title="Procesa un buffer completo de muestras usando el filtro FIR." alt="" coords="219,5,379,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="416,38,379,33,380,28,417,33"/>
+<area shape="rect" id="Node000004" href="$class_f_i_r_filter.html#a2ec31d5f400abe1ffd69ad2d9f912e59" title="Procesa una muestra individual usando el filtro FIR." alt="" coords="214,56,384,83"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="417,55,385,60,384,54,416,50"/>
+<area shape="rect" id="Node000003" href="$utils__extended_8cpp.html#a2e952530f833e6013b2f16584a2491fe" title="Prueba de rendimiento: mide velocidad de filtrado por buffer." alt="" coords="10,5,161,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="203,21,161,21,161,16,203,16"/>
+<area shape="rect" id="Node000005" href="$utils__extended_8cpp.html#a0be3755f52937416650eca7cfd5d70d4" title="Prueba de rendimiento: mide velocidad de filtrado muestra por muestra." alt="" coords="5,56,166,83"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="198,72,166,72,166,67,198,67"/>
+</map>

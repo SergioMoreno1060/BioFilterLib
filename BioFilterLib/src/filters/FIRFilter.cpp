@@ -45,7 +45,7 @@
  * @warning Si la asignación de memoria falla, el comportamiento es indefinido.
  * En producción se debería verificar el retorno de 'new'.
  */
-FIRFilter::FIRFilter(const float32_t* coeffs, uint16_t numTaps, uint16_t blockSize)
+FIRFilter::FIRFilter(float32_t* coeffs, uint16_t numTaps, uint16_t blockSize)
     : _coeffs(coeffs),           // Almacenar referencia a coeficientes
       _numTaps(numTaps),         // Número de coeficientes del filtro
       _blockSize(blockSize),     // Tamaño de bloque para procesamiento
@@ -191,7 +191,7 @@ float32_t FIRFilter::processSample(float32_t input) {
  * analyzeECG(ecgFiltered, 256);
  * @endcode
  */
-void FIRFilter::processBuffer(const float32_t* inputArray, 
+void FIRFilter::processBuffer(float32_t* inputArray, 
                              float32_t* outputArray, 
                              uint32_t length) {
     // Procesar el buffer completo usando la función optimizada de CMSIS-DSP

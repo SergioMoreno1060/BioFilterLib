@@ -30,8 +30,17 @@
 #ifndef IIR_FILTER_H
 #define IIR_FILTER_H
 
-#include <Arduino.h>
-#include <arm_math.h> // CMSIS-DSP
+// YA PROBE LO SIGUIENTE Y TAMPOCO FUNCIONA:
+// #include <arm_math.h>   // CMSIS-DSP
+// #ifdef __cplusplus
+// extern "C" {
+// #endif
+//   #include <arm_math.h>
+// #ifdef __cplusplus
+// }
+// #endif
+
+#include <arm_math.h>
 
 /**
  * @class IIRFilter
@@ -81,7 +90,7 @@ class IIRFilter {
          * IIRFilter notchFilter(notchCoeffs, 2, 1); // 2 etapas, tiempo real
          * @endcode
          */
-        IIRFilter(const float32_t* coeffs, uint8_t numStages, uint16_t blockSize);
+        IIRFilter(float32_t* coeffs, uint8_t numStages, uint16_t blockSize);
 
         /**
          * @brief Destructor de la clase IIRFilter
@@ -107,15 +116,16 @@ class IIRFilter {
          * @param length Número de muestras a procesar.
          * * @warning Los arrays de entrada y salida no deben solaparse en memoria.
          */
-        void processBuffer(const float32_t* inputArray, float32_t* outputArray, uint32_t length);
+        void processBuffer(float32_t* inputArray, float32_t* outputArray, uint32_t length);
 
     private:
+
         /**
          * @brief Puntero a los coeficientes del filtro IIR.
          * * Referencia constante al array de coeficientes, formateado para CMSIS-DSP Biquad.
          * La memoria es gestionada externamente.
          */
-        const float32_t* _coeffs;
+        float32_t* _coeffs;
 
         /**
          * @brief Buffer de estados interno del filtro.

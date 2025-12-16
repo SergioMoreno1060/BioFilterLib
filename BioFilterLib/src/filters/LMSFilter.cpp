@@ -80,7 +80,7 @@ LMSFilter::LMSFilter(float32_t* coeffs, uint16_t numTaps, float32_t mu, uint16_t
     // Inicializar la estructura del filtro LMS adaptativo de CMSIS-DSP
     // Esta función configura todos los parámetros necesarios para
     // el procesamiento adaptativo optimizado
-    arm_lms_init_f32(&_lmsInstance,    // Puntero a la instancia del filtro LMS
+    arm_lms_norm_init_f32(&_lmsInstance,    // Puntero a la instancia del filtro LMS
                      _numTaps,         // Número de coeficientes adaptativos
                      _coeffs,          // Puntero a coeficientes (serán modificados)
                      _state,           // Puntero al buffer de estados
@@ -177,7 +177,7 @@ void LMSFilter::processSample(float32_t input, float32_t reference,
     // - output: puntero donde escribir la salida filtrada
     // - error: puntero donde escribir el error de adaptación
     // - 1: procesar exactamente 1 muestra
-    arm_lms_f32(&_lmsInstance,    // Instancia del filtro previamente inicializada
+    arm_lms_norm_f32(&_lmsInstance,    // Instancia del filtro previamente inicializada
                 &input,           // Dirección de la muestra de entrada
                 &reference,       // Dirección de la muestra de referencia  
                 output,           // Dirección donde escribir la salida filtrada
@@ -262,7 +262,7 @@ void LMSFilter::processSample(float32_t input, float32_t reference,
  * // Si MSE oscila → considerar reducir μ
  * @endcode
  */
-void LMSFilter::processBuffer(const float32_t* inputArray, float32_t* referenceArray,
+void LMSFilter::processBuffer(float32_t* inputArray, float32_t* referenceArray,
                              float32_t* outputArray, float32_t* errorArray, uint32_t length) {
     // Procesar el buffer completo usando la función optimizada de CMSIS-DSP
     // Esta implementación aprovecha completamente las optimizaciones vectoriales (SIMD)
@@ -275,7 +275,7 @@ void LMSFilter::processBuffer(const float32_t* inputArray, float32_t* referenceA
     // - outputArray: puntero al primer elemento del buffer de salida filtrada
     // - errorArray: puntero al primer elemento del buffer de error
     // - length: número total de muestras a procesar adaptativamente
-    arm_lms_f32(&_lmsInstance,        // Instancia previamente inicializada
+    arm_lms_norm_f32(&_lmsInstance,        // Instancia previamente inicializada
                 inputArray,           // Buffer de entrada (solo lectura)
                 referenceArray,       // Buffer de referencia (solo lectura)
                 outputArray,          // Buffer de salida filtrada (escritura)

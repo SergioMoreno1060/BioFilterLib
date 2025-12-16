@@ -1,4 +1,8 @@
 var searchData=
 [
-  ['getmu_0',['getMu',['../class_l_m_s_filter.html#a5c625382fc774c6cb16c3ec9aad1334b',1,'LMSFilter']]]
+  ['calculatecorrelation_0',['calculateCorrelation',['../utils_8cpp.html#a1b738c7b67034c83238047d8e1bdbce6',1,'calculateCorrelation(const float32_t *signal1, const float32_t *signal2, uint32_t length):&#160;utils.cpp'],['../utils_8h.html#a1b738c7b67034c83238047d8e1bdbce6',1,'calculateCorrelation(const float32_t *signal1, const float32_t *signal2, uint32_t length):&#160;utils.cpp']]],
+  ['calculatemse_1',['calculateMSE',['../utils_8cpp.html#ac36f58b46eb5fad45f9f1cb6b380c0e0',1,'calculateMSE(const float32_t *signal1, const float32_t *signal2, uint32_t length):&#160;utils.cpp'],['../utils_8h.html#ac36f58b46eb5fad45f9f1cb6b380c0e0',1,'calculateMSE(const float32_t *signal1, const float32_t *signal2, uint32_t length):&#160;utils.cpp']]],
+  ['calculaterms_2',['calculateRMS',['../utils_8cpp.html#ac460c4cb195894fcb30fcb0f2eb5b92d',1,'calculateRMS(const float32_t *signal, uint32_t length):&#160;utils.cpp'],['../utils_8h.html#ac460c4cb195894fcb30fcb0f2eb5b92d',1,'calculateRMS(const float32_t *signal, uint32_t length):&#160;utils.cpp']]],
+  ['calculatesnr_3',['calculateSNR',['../utils_8cpp.html#a1f0c25b54d7f1c9f5894d83c92b5624a',1,'calculateSNR(const float32_t *signal, const float32_t *noise, uint32_t length):&#160;utils.cpp'],['../utils_8h.html#a1f0c25b54d7f1c9f5894d83c92b5624a',1,'calculateSNR(const float32_t *signal, const float32_t *noise, uint32_t length):&#160;utils.cpp']]],
+  ['calculatestddev_4',['calculateStdDev',['../utils_8cpp.html#abd083f918a52e39e63062ece8c0c35ef',1,'calculateStdDev(const float32_t *signal, uint32_t length):&#160;utils.cpp'],['../utils_8h.html#abd083f918a52e39e63062ece8c0c35ef',1,'calculateStdDev(const float32_t *signal, uint32_t length):&#160;utils.cpp']]]
 ];

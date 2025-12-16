@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['highpasscoeffs_0',['highpassCoeffs',['../_i_i_r___example_8cpp.html#a8790a779274e7a0f198de53b1f3f7375',1,'IIR_Example.cpp']]]
+  ['maxsamplesnum_0',['maxSamplesNum',['../_waveforms_8h.html#aff48acef47e12263a56c603bdd4a6109',1,'Waveforms.h']]],
+  ['mse_1',['mse',['../struct_quality_metrics.html#af18975d7af1cddb854c850210fdeca58',1,'QualityMetrics']]]
 ];

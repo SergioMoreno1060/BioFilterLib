@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['lmsfilter_0',['LMSFilter',['../class_l_m_s_filter.html#aa0e54de3a994c6584151bb59b1ebe5ec',1,'LMSFilter']]],
-  ['loop_1',['loop',['../_f_i_r___example_8cpp.html#afe461d27b9c48d5921c00d521181f12f',1,'loop():&#160;FIR_Example.cpp'],['../_i_i_r___example_8cpp.html#afe461d27b9c48d5921c00d521181f12f',1,'loop():&#160;IIR_Example.cpp'],['../_l_m_s___example_8cpp.html#afe461d27b9c48d5921c00d521181f12f',1,'loop():&#160;LMS_Example.cpp']]]
+  ['getfreeram_0',['getFreeRAM',['../utils__extended_8cpp.html#aa80e3e2be57e015fe4a241937be9cc96',1,'getFreeRAM():&#160;utils_extended.cpp'],['../utils__extended_8h.html#aa80e3e2be57e015fe4a241937be9cc96',1,'getFreeRAM():&#160;utils_extended.cpp']]],
+  ['getmu_1',['getMu',['../class_l_m_s_filter.html#a5c625382fc774c6cb16c3ec9aad1334b',1,'LMSFilter']]],
+  ['getsignalname_2',['getSignalName',['../_waveforms_8h.html#a2554963cd318060d2bf289249847fb47',1,'Waveforms.h']]]
 ];

@@ -1,8 +1,12 @@
 <map id="BioFilterLib/src" name="BioFilterLib/src">
-<area shape="rect" id="node2" href="dir_31f48fcb3e63697f9abfff27ddbbeabb.html" title="filters" alt="" coords="37,139,91,165"/>
-<area shape="poly" id="edge1" href="dir_000003_000002.html" alt="" coords="61,90,64,123,59,123,56,91"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000003_000002.html" title="3" alt="" coords="66,111,73,127"/>
-<area shape="rect" id="node3" href="dir_79eb1283d10442480ec740f15b633c21.html" title="utils" alt="" coords="101,64,147,91"/>
-<area shape="rect" id="clust2" href="dir_cf2d2d89b25171adcc837a035958fff1.html" alt="" coords="27,53,157,176"/>
-<area shape="rect" id="clust1" href="dir_1655117421e3017fedef51bdcc3db1dd.html" title="BioFilterLib" alt="" coords="16,16,168,187"/>
+<area shape="rect" id="node2" href="dir_31f48fcb3e63697f9abfff27ddbbeabb.html" title="filters" alt="" coords="47,213,100,240"/>
+<area shape="poly" id="edge1" href="dir_000002_000001.html" alt="" coords="69,91,57,125,54,145,55,165,64,198,59,200,49,166,49,144,52,123,64,89"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000002_000001.html" title="5" alt="" coords="65,185,72,201"/>
+<area shape="rect" id="node3" href="dir_79eb1283d10442480ec740f15b633c21.html" title="utils" alt="" coords="64,139,109,165"/>
+<area shape="poly" id="edge2" href="dir_000002_000003.html" alt="" coords="77,90,84,123,78,124,72,91"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000002_000003.html" title="3" alt="" coords="85,111,92,127"/>
+<area shape="poly" id="edge3" href="dir_000003_000001.html" alt="" coords="87,166,81,199,76,198,82,165"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000003_000001.html" title="1" alt="" coords="84,189,91,205"/>
+<area shape="rect" id="clust2" href="dir_cf2d2d89b25171adcc837a035958fff1.html" alt="" coords="27,53,120,251"/>
+<area shape="rect" id="clust1" href="dir_1655117421e3017fedef51bdcc3db1dd.html" title="BioFilterLib" alt="" coords="16,16,131,261"/>
 </map>

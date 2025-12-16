@@ -28,7 +28,7 @@
  * * @warning Si la asignación de memoria falla, el comportamiento es indefinido.
  * Es recomendable añadir una comprobación de puntero nulo en un sistema de producción.
  */
-IIRFilter::IIRFilter(const float32_t* coeffs, uint8_t numStages, uint16_t blockSize)
+IIRFilter::IIRFilter(float32_t* coeffs, uint8_t numStages, uint16_t blockSize)
     : _coeffs(coeffs),
       _numStages(numStages),
       _blockSize(blockSize)
@@ -103,7 +103,7 @@ float32_t IIRFilter::processSample(float32_t input) {
  * arm_biquad_cascade_df1_f32 está altamente optimizada para arquitecturas ARM
  * y ofrece un rendimiento significativamente mejor para bloques de datos grandes.
  */
-void IIRFilter::processBuffer(const float32_t* inputArray, float32_t* outputArray, uint32_t length) {
+void IIRFilter::processBuffer(float32_t* inputArray, float32_t* outputArray, uint32_t length) {
     // Procesar el buffer completo en una sola llamada a la función de CMSIS-DSP.
     // Esto es mucho más eficiente que un bucle llamando a processSample,
     // ya que reduce el overhead de llamadas y aprovecha las instrucciones SIMD.

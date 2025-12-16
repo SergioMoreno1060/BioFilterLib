@@ -91,48 +91,182 @@ $(function(){initNavTree('_waveforms_8h.html','',''); });
   <div class="headertitle"><div class="title">Waveforms.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+
+<p>Señales de prueba para BioFilterLib.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;Arduino.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;arm_math.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for Waveforms.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="_waveforms_8h__incl.svg" width="147" height="128"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="_waveforms_8h__incl.svg" width="379" height="128"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="_waveforms_8h__dep__incl.svg" width="328" height="144"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="_waveforms_8h__dep__incl.svg" width="171" height="144"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 <p><a href="_waveforms_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a70c11fdf0edd003c5366605c64cb3a32" id="r_a70c11fdf0edd003c5366605c64cb3a32"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a70c11fdf0edd003c5366605c64cb3a32">maxWaveform</a>&#160;&#160;&#160;5</td></tr>
-<tr class="memitem:a343599792bcd3cf3d67d1c58db047eee" id="r_a343599792bcd3cf3d67d1c58db047eee"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a343599792bcd3cf3d67d1c58db047eee">maxSamplesNum</a>&#160;&#160;&#160;3000</td></tr>
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:SignalMap" id="r_SignalMap"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_signal_map.html">SignalMap</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene el nombre descriptivo de una señal.  <a href="struct_signal_map.html#details">More...</a><br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a994b264b5b7df0089c3b9003fc7ecf11" id="r_a994b264b5b7df0089c3b9003fc7ecf11"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a994b264b5b7df0089c3b9003fc7ecf11">loadSignal</a> (float32_t *buffer, const char *tag, uint16_t numSamples=1500)</td></tr>
+<tr class="memdesc:a994b264b5b7df0089c3b9003fc7ecf11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene el tipo de señal a partir de una etiqueta de texto.  <br /></td></tr>
+<tr class="memitem:a2554963cd318060d2bf289249847fb47" id="r_a2554963cd318060d2bf289249847fb47"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2554963cd318060d2bf289249847fb47">getSignalName</a> (const char *tag)</td></tr>
+<tr class="memdesc:a2554963cd318060d2bf289249847fb47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene el nombre descriptivo de una señal.  <br /></td></tr>
+<tr class="memitem:a06805c2615c5da001187b76759692f2e" id="r_a06805c2615c5da001187b76759692f2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a06805c2615c5da001187b76759692f2e">printSignals</a> ()</td></tr>
+<tr class="memdesc:a06805c2615c5da001187b76759692f2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Muestra lista de señales disponibles.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:aff48acef47e12263a56c603bdd4a6109" id="r_aff48acef47e12263a56c603bdd4a6109"><td class="memItemLeft" align="right" valign="top">const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aff48acef47e12263a56c603bdd4a6109">maxSamplesNum</a> = 3000</td></tr>
 </table>
-<a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Macro Definition Documentation</h2>
-<a id="a343599792bcd3cf3d67d1c58db047eee" name="a343599792bcd3cf3d67d1c58db047eee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a343599792bcd3cf3d67d1c58db047eee">&#9670;&#160;</a></span>maxSamplesNum</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Señales de prueba para BioFilterLib. </p>
+<dl class="section author"><dt>Author</dt><dd>Sergio </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>2.0.0 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2025 </dd></dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
+<a id="a2554963cd318060d2bf289249847fb47" name="a2554963cd318060d2bf289249847fb47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2554963cd318060d2bf289249847fb47">&#9670;&#160;</a></span>getSignalName()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">#define maxSamplesNum&#160;&#160;&#160;3000</td>
+          <td class="memname">const char * getSignalName </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>tag</em></span></td><td>)</td>
+          <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
+
+<p>Obtiene el nombre descriptivo de una señal. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>Etiqueta de la señal. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Nombre descriptivo </dd></dl>
 
 </div>
 </div>
-<a id="a70c11fdf0edd003c5366605c64cb3a32" name="a70c11fdf0edd003c5366605c64cb3a32"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70c11fdf0edd003c5366605c64cb3a32">&#9670;&#160;</a></span>maxWaveform</h2>
+<a id="a994b264b5b7df0089c3b9003fc7ecf11" name="a994b264b5b7df0089c3b9003fc7ecf11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a994b264b5b7df0089c3b9003fc7ecf11">&#9670;&#160;</a></span>loadSignal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool loadSignal </td>
+          <td>(</td>
+          <td class="paramtype">float32_t *</td>          <td class="paramname"><span class="paramname"><em>buffer</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>tag</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>numSamples</em></span><span class="paramdefsep"> = </span><span class="paramdefval">1500</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Obtiene el tipo de señal a partir de una etiqueta de texto. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>Etiqueta de la señal (ej. "ecg_clean"). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>El tipo de señal correspondiente o UNKNOWN_SIGNAL si no se encuentra.</dd></dl>
+<p>Carga una señal de prueba en un buffer y la normaliza.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>Etiqueta de la señal a cargar. </td></tr>
+    <tr><td class="paramname">buffer</td><td>Puntero al buffer de flotantes donde se guardará la señal. </td></tr>
+    <tr><td class="paramname">numSamples</td><td>Número de muestras a cargar. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> si la señal se cargó correctamente, <span class="tt">false</span> en caso contrario.</dd></dl>
+<p>Carga TODAS las muestras de una señal en un buffer y la normaliza.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>Etiqueta de la señal a cargar. </td></tr>
+    <tr><td class="paramname">buffer</td><td>Puntero al buffer de flotantes donde se guardará la señal. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> si la señal se cargó correctamente, <span class="tt">false</span> en caso contrario. </dd></dl>
+
+</div>
+</div>
+<a id="a06805c2615c5da001187b76759692f2e" name="a06805c2615c5da001187b76759692f2e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06805c2615c5da001187b76759692f2e">&#9670;&#160;</a></span>printSignals()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void printSignals </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Muestra lista de señales disponibles. </p>
+
+</div>
+</div>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="aff48acef47e12263a56c603bdd4a6109" name="aff48acef47e12263a56c603bdd4a6109"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff48acef47e12263a56c603bdd4a6109">&#9670;&#160;</a></span>maxSamplesNum</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define maxWaveform&#160;&#160;&#160;5</td>
+          <td class="memname">const uint16_t maxSamplesNum = 3000</td>
         </tr>
       </table>
 </div><div class="memdoc">

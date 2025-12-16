@@ -12,9 +12,9 @@
 <g id="Node000001" class="node">
 <title>Node1</title>
 <g id="a_Node000001"><a xlink:title="Filtro FIR optimizado para bioseñales usando CMSIS&#45;DSP.">
-<polygon fill="#999999" stroke="#666666" points="303,-168 194.75,-168 194.75,-136 303,-136 303,-168"/>
-<text xml:space="preserve" text-anchor="start" x="202.75" y="-154.5" font-family="Helvetica,sans-Serif" font-size="10.00">BioFilterLib/src/filters</text>
-<text xml:space="preserve" text-anchor="middle" x="248.88" y="-142.5" font-family="Helvetica,sans-Serif" font-size="10.00">/FIRFilter.h</text>
+<polygon fill="#999999" stroke="#666666" points="185.83,-168 77.58,-168 77.58,-136 185.83,-136 185.83,-168"/>
+<text xml:space="preserve" text-anchor="start" x="85.58" y="-154.5" font-family="Helvetica,sans-Serif" font-size="10.00">BioFilterLib/src/filters</text>
+<text xml:space="preserve" text-anchor="middle" x="131.7" y="-142.5" font-family="Helvetica,sans-Serif" font-size="10.00">/FIRFilter.h</text>
 </a>
 </g>
 </g>
@@ -22,9 +22,9 @@
 <g id="Node000002" class="node">
 <title>Node2</title>
 <g id="a_Node000002"><a xlink:href="_bio_filter_lib_8h.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="243,-100 122.75,-100 122.75,-68 243,-68 243,-100"/>
-<text xml:space="preserve" text-anchor="start" x="130.75" y="-86.5" font-family="Helvetica,sans-Serif" font-size="10.00">BioFilterLib/src/BioFilter</text>
-<text xml:space="preserve" text-anchor="middle" x="182.88" y="-74.5" font-family="Helvetica,sans-Serif" font-size="10.00">Lib.h</text>
+<polygon fill="white" stroke="#666666" points="147.83,-32 27.58,-32 27.58,0 147.83,0 147.83,-32"/>
+<text xml:space="preserve" text-anchor="start" x="35.58" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">BioFilterLib/src/BioFilter</text>
+<text xml:space="preserve" text-anchor="middle" x="87.7" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">Lib.h</text>
 </a>
 </g>
 </g>
@@ -32,84 +32,93 @@
 <g id="edge1_Node000001_Node000002" class="edge">
 <title>Node1&#45;&gt;Node2</title>
 <g id="a_edge1_Node000001_Node000002"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M225.58,-127.71C216.46,-118.59 206.25,-108.37 198.1,-100.22"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="222.95,-130.03 232.5,-134.62 227.9,-125.08 222.95,-130.03"/>
-</a>
-</g>
-</g>
-<!-- Node6 -->
-<g id="Node000006" class="node">
-<title>Node6</title>
-<g id="a_Node000006"><a xlink:href="_f_i_r_filter_8cpp.html" target="_top" xlink:title="Implementación del filtro FIR optimizado para bioseñales.">
-<polygon fill="white" stroke="#666666" points="369,-100 260.75,-100 260.75,-68 369,-68 369,-100"/>
-<text xml:space="preserve" text-anchor="start" x="268.75" y="-86.5" font-family="Helvetica,sans-Serif" font-size="10.00">BioFilterLib/src/filters</text>
-<text xml:space="preserve" text-anchor="middle" x="314.88" y="-74.5" font-family="Helvetica,sans-Serif" font-size="10.00">/FIRFilter.cpp</text>
-</a>
-</g>
-</g>
-<!-- Node1&#45;&gt;Node6 -->
-<g id="edge5_Node000001_Node000006" class="edge">
-<title>Node1&#45;&gt;Node6</title>
-<g id="a_edge5_Node000001_Node000006"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M272.17,-127.71C281.29,-118.59 291.5,-108.37 299.65,-100.22"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="269.85,-125.08 265.25,-134.62 274.8,-130.03 269.85,-125.08"/>
+<path fill="none" stroke="#63b8ff" d="M66.29,-140.12C43.19,-132.79 19.54,-120.53 5.7,-100 -2.25,-88.21 -1.21,-80.43 5.7,-68 14.58,-52.03 30.76,-40.41 46.42,-32.34"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="65.15,-143.44 75.72,-142.83 67.08,-136.71 65.15,-143.44"/>
 </a>
 </g>
 </g>
 <!-- Node3 -->
 <g id="Node000003" class="node">
 <title>Node3</title>
-<g id="a_Node000003"><a xlink:href="_f_i_r___example_8cpp.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="109.75,-32 0,-32 0,0 109.75,0 109.75,-32"/>
-<text xml:space="preserve" text-anchor="start" x="8" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">BioFilterLib/examples</text>
-<text xml:space="preserve" text-anchor="middle" x="54.88" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">/FIR_Example.cpp</text>
+<g id="a_Node000003"><a xlink:href="_f_i_r_filter_8cpp.html" target="_top" xlink:title="Implementación del filtro FIR optimizado para bioseñales.">
+<polygon fill="white" stroke="#666666" points="122.83,-100 14.58,-100 14.58,-68 122.83,-68 122.83,-100"/>
+<text xml:space="preserve" text-anchor="start" x="22.58" y="-86.5" font-family="Helvetica,sans-Serif" font-size="10.00">BioFilterLib/src/filters</text>
+<text xml:space="preserve" text-anchor="middle" x="68.7" y="-74.5" font-family="Helvetica,sans-Serif" font-size="10.00">/FIRFilter.cpp</text>
 </a>
 </g>
 </g>
-<!-- Node2&#45;&gt;Node3 -->
-<g id="edge2_Node000002_Node000003" class="edge">
-<title>Node2&#45;&gt;Node3</title>
-<g id="a_edge2_Node000002_Node000003"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M142.8,-62.34C124.01,-52.65 102,-41.3 84.7,-32.38"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="141.03,-65.36 151.52,-66.83 144.24,-59.14 141.03,-65.36"/>
+<!-- Node1&#45;&gt;Node3 -->
+<g id="edge2_Node000001_Node000003" class="edge">
+<title>Node1&#45;&gt;Node3</title>
+<g id="a_edge2_Node000001_Node000003"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M109.2,-127.43C100.56,-118.38 90.93,-108.29 83.23,-100.22"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="106.61,-129.78 116.04,-134.6 111.67,-124.95 106.61,-129.78"/>
 </a>
 </g>
 </g>
 <!-- Node4 -->
 <g id="Node000004" class="node">
 <title>Node4</title>
-<g id="a_Node000004"><a xlink:href="_i_i_r___example_8cpp.html" target="_top" xlink:title="Ejemplo de uso de la clase IIRFilter para eliminar la deriva de línea base en una señal simulada de E...">
-<polygon fill="white" stroke="#666666" points="237.75,-32 128,-32 128,0 237.75,0 237.75,-32"/>
-<text xml:space="preserve" text-anchor="start" x="136" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">BioFilterLib/examples</text>
-<text xml:space="preserve" text-anchor="middle" x="182.88" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">/IIR_Example.cpp</text>
+<g id="a_Node000004"><a xlink:href="_wavelet_filter_8cpp.html" target="_top" xlink:title="Implementación del filtro Wavelet optimizado para bioseñales.">
+<polygon fill="white" stroke="#666666" points="248.83,-100 140.58,-100 140.58,-68 248.83,-68 248.83,-100"/>
+<text xml:space="preserve" text-anchor="start" x="148.58" y="-86.5" font-family="Helvetica,sans-Serif" font-size="10.00">BioFilterLib/src/filters</text>
+<text xml:space="preserve" text-anchor="middle" x="194.7" y="-74.5" font-family="Helvetica,sans-Serif" font-size="10.00">/WaveletFilter.cpp</text>
 </a>
 </g>
 </g>
-<!-- Node2&#45;&gt;Node4 -->
-<g id="edge3_Node000002_Node000004" class="edge">
-<title>Node2&#45;&gt;Node4</title>
-<g id="a_edge3_Node000002_Node000004"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M182.88,-56.31C182.88,-48.12 182.88,-39.38 182.88,-32.22"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="179.38,-56.18 182.88,-66.18 186.38,-56.18 179.38,-56.18"/>
+<!-- Node1&#45;&gt;Node4 -->
+<g id="edge3_Node000001_Node000004" class="edge">
+<title>Node1&#45;&gt;Node4</title>
+<g id="a_edge3_Node000001_Node000004"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M154.2,-127.43C162.84,-118.38 172.47,-108.29 180.17,-100.22"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="151.73,-124.95 147.36,-134.6 156.8,-129.78 151.73,-124.95"/>
 </a>
 </g>
 </g>
 <!-- Node5 -->
 <g id="Node000005" class="node">
 <title>Node5</title>
-<g id="a_Node000005"><a xlink:href="_l_m_s___example_8cpp.html" target="_top" xlink:title="Ejemplo de cancelación adaptativa de interferencia de línea eléctrica usando LMSFilter.">
-<polygon fill="white" stroke="#666666" points="365.75,-32 256,-32 256,0 365.75,0 365.75,-32"/>
-<text xml:space="preserve" text-anchor="start" x="264" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">BioFilterLib/examples</text>
-<text xml:space="preserve" text-anchor="middle" x="310.88" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">/LMS_Example.cpp</text>
+<g id="a_Node000005"><a xlink:href="utils__extended_8h.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="#666666" points="368.83,-100 266.58,-100 266.58,-68 368.83,-68 368.83,-100"/>
+<text xml:space="preserve" text-anchor="start" x="274.58" y="-86.5" font-family="Helvetica,sans-Serif" font-size="10.00">BioFilterLib/src/utils</text>
+<text xml:space="preserve" text-anchor="middle" x="317.7" y="-74.5" font-family="Helvetica,sans-Serif" font-size="10.00">/utils_extended.h</text>
 </a>
 </g>
 </g>
-<!-- Node2&#45;&gt;Node5 -->
-<g id="edge4_Node000002_Node000005" class="edge">
-<title>Node2&#45;&gt;Node5</title>
-<g id="a_edge4_Node000002_Node000005"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M222.95,-62.34C241.74,-52.65 263.75,-41.3 281.05,-32.38"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="221.51,-59.14 214.23,-66.83 224.72,-65.36 221.51,-59.14"/>
+<!-- Node1&#45;&gt;Node5 -->
+<g id="edge4_Node000001_Node000005" class="edge">
+<title>Node1&#45;&gt;Node5</title>
+<g id="a_edge4_Node000001_Node000005"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M186.13,-131.69C214.12,-121.76 247.78,-109.81 274.04,-100.49"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="184.99,-128.38 176.74,-135.02 187.33,-134.97 184.99,-128.38"/>
+</a>
+</g>
+</g>
+<!-- Node5&#45;&gt;Node2 -->
+<g id="edge5_Node000005_Node000002" class="edge">
+<title>Node5&#45;&gt;Node2</title>
+<g id="a_edge5_Node000005_Node000002"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M255.34,-65.1C219.76,-54.89 175.6,-42.22 141.54,-32.45"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="254.05,-68.38 264.63,-67.77 255.98,-61.65 254.05,-68.38"/>
+</a>
+</g>
+</g>
+<!-- Node6 -->
+<g id="Node000006" class="node">
+<title>Node6</title>
+<g id="a_Node000006"><a xlink:href="utils__extended_8cpp.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="#666666" points="368.83,-32 266.58,-32 266.58,0 368.83,0 368.83,-32"/>
+<text xml:space="preserve" text-anchor="start" x="274.58" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">BioFilterLib/src/utils</text>
+<text xml:space="preserve" text-anchor="middle" x="317.7" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">/utils_extended.cpp</text>
+</a>
+</g>
+</g>
+<!-- Node5&#45;&gt;Node6 -->
+<g id="edge6_Node000005_Node000006" class="edge">
+<title>Node5&#45;&gt;Node6</title>
+<g id="a_edge6_Node000005_Node000006"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M317.7,-56.31C317.7,-48.12 317.7,-39.38 317.7,-32.22"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="314.2,-56.18 317.7,-66.18 321.2,-56.18 314.2,-56.18"/>
 </a>
 </g>
 </g>

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['resetcoefficients_0',['resetCoefficients',['../class_l_m_s_filter.html#a1c54c63acad6e134132ac3530b160efd',1,'LMSFilter']]]
+  ['lmsfilter_0',['LMSFilter',['../class_l_m_s_filter.html#aa0e54de3a994c6584151bb59b1ebe5ec',1,'LMSFilter']]],
+  ['loadsignal_1',['loadSignal',['../_waveforms_8h.html#a994b264b5b7df0089c3b9003fc7ecf11',1,'Waveforms.h']]]
 ];

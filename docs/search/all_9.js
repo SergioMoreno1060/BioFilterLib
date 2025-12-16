@@ -1,9 +1,12 @@
 var searchData=
 [
-  ['lms_5fexample_2ecpp_0',['LMS_Example.cpp',['../_l_m_s___example_8cpp.html',1,'']]],
-  ['lmscoefficients_1',['lmsCoefficients',['../_l_m_s___example_8cpp.html#a64d8bc6e4de677ae540967b451bedc82',1,'LMS_Example.cpp']]],
-  ['lmsfilter_2',['LMSFilter',['../class_l_m_s_filter.html',1,'LMSFilter'],['../class_l_m_s_filter.html#aa0e54de3a994c6584151bb59b1ebe5ec',1,'LMSFilter::LMSFilter()']]],
-  ['lmsfilter_2ecpp_3',['LMSFilter.cpp',['../_l_m_s_filter_8cpp.html',1,'']]],
-  ['lmsfilter_2eh_4',['LMSFilter.h',['../_l_m_s_filter_8h.html',1,'']]],
-  ['loop_5',['loop',['../_f_i_r___example_8cpp.html#afe461d27b9c48d5921c00d521181f12f',1,'loop():&#160;FIR_Example.cpp'],['../_i_i_r___example_8cpp.html#afe461d27b9c48d5921c00d521181f12f',1,'loop():&#160;IIR_Example.cpp'],['../_l_m_s___example_8cpp.html#afe461d27b9c48d5921c00d521181f12f',1,'loop():&#160;LMS_Example.cpp']]]
+  ['performancemetrics_0',['PerformanceMetrics',['../struct_performance_metrics.html',1,'']]],
+  ['printperformancemetrics_1',['printPerformanceMetrics',['../utils__extended_8cpp.html#a0f6718e4c382e67f1e69e359ef5089f6',1,'printPerformanceMetrics(const PerformanceMetrics &amp;metrics):&#160;utils_extended.cpp'],['../utils__extended_8h.html#a0f6718e4c382e67f1e69e359ef5089f6',1,'printPerformanceMetrics(const PerformanceMetrics &amp;metrics):&#160;utils_extended.cpp']]],
+  ['printqualitymetrics_2',['printQualityMetrics',['../utils__extended_8cpp.html#a5a8feea54562a3022d6871af4ec18040',1,'printQualityMetrics(const QualityMetrics &amp;metrics):&#160;utils_extended.cpp'],['../utils__extended_8h.html#a5a8feea54562a3022d6871af4ec18040',1,'printQualityMetrics(const QualityMetrics &amp;metrics):&#160;utils_extended.cpp']]],
+  ['printseparator_3',['printSeparator',['../utils__extended_8cpp.html#aa8165246642991f007f24facccf818ae',1,'printSeparator():&#160;utils_extended.cpp'],['../utils__extended_8h.html#aa8165246642991f007f24facccf818ae',1,'printSeparator():&#160;utils_extended.cpp']]],
+  ['printsignals_4',['printSignals',['../_waveforms_8h.html#a06805c2615c5da001187b76759692f2e',1,'Waveforms.h']]],
+  ['printtestheader_5',['printTestHeader',['../utils__extended_8cpp.html#ab0f8891afbde7169a475ae2058fb656b',1,'printTestHeader(const char *testName):&#160;utils_extended.cpp'],['../utils__extended_8h.html#ab0f8891afbde7169a475ae2058fb656b',1,'printTestHeader(const char *testName):&#160;utils_extended.cpp']]],
+  ['processbuffer_6',['processBuffer',['../class_f_i_r_filter.html#af599ccbbe4f8f37b18061da9ff80d4b5',1,'FIRFilter::processBuffer()'],['../class_i_i_r_filter.html#a2cb9556d1e9ea45c98dc139e886fa168',1,'IIRFilter::processBuffer()'],['../class_l_m_s_filter.html#a51788e5f407781f33485ad15742b8192',1,'LMSFilter::processBuffer()'],['../class_wavelet_filter.html#adbe682b27b7937e979043b4423a30415',1,'WaveletFilter::processBuffer()']]],
+  ['processingtimemicros_7',['processingTimeMicros',['../struct_performance_metrics.html#a466debb547176e033c5c9b7ace082d7a',1,'PerformanceMetrics']]],
+  ['processsample_8',['processSample',['../class_f_i_r_filter.html#a2ec31d5f400abe1ffd69ad2d9f912e59',1,'FIRFilter::processSample()'],['../class_i_i_r_filter.html#a363659816d5bf72842b95b6b3e85ad7e',1,'IIRFilter::processSample()'],['../class_l_m_s_filter.html#a5b184f9a9604e3b5bb6aa0388132097a',1,'LMSFilter::processSample()'],['../class_wavelet_filter.html#a94fcca31b3add15772e780ef9fdd54b5',1,'WaveletFilter::processSample()']]]
 ];

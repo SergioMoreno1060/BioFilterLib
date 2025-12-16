@@ -1,0 +1,11 @@
+<map id="sbrk" name="sbrk">
+<area shape="rect" id="Node000001" title=" " alt="" coords="357,56,403,83"/>
+<area shape="rect" id="Node000002" href="$utils__extended_8cpp.html#aa80e3e2be57e015fe4a241937be9cc96" title="Obtiene la RAM libre disponible en el Arduino Due." alt="" coords="214,56,309,83"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="341,72,310,72,310,67,341,67"/>
+<area shape="rect" id="Node000003" href="$utils__extended_8cpp.html#a2e952530f833e6013b2f16584a2491fe" title="Prueba de rendimiento: mide velocidad de filtrado por buffer." alt="" coords="10,5,161,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="198,54,134,35,135,30,200,49"/>
+<area shape="rect" id="Node000004" href="$utils__extended_8cpp.html#a0be3755f52937416650eca7cfd5d70d4" title="Prueba de rendimiento: mide velocidad de filtrado muestra por muestra." alt="" coords="5,56,166,83"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="198,72,166,72,166,67,198,67"/>
+<area shape="rect" id="Node000005" href="$utils__extended_8cpp.html#a30c5740388a9bae35218206e568f8327" title="Prueba de consumo de memoria: reporta uso de RAM antes y después." alt="" coords="21,107,150,133"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="200,90,135,109,134,104,198,85"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="FIRFilter::processBuffer" name="FIRFilter::processBuffer">
+<area shape="rect" id="Node000001" title="Procesa un buffer completo de muestras usando el filtro FIR." alt="" coords="204,5,364,32"/>
+<area shape="rect" id="Node000002" href="$utils__extended_8cpp.html#a2e952530f833e6013b2f16584a2491fe" title="Prueba de rendimiento: mide velocidad de filtrado por buffer." alt="" coords="5,5,156,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="188,21,156,21,156,16,188,16"/>
+</map>

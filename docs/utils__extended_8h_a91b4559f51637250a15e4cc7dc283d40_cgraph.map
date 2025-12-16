@@ -1,0 +1,11 @@
+<map id="testFilterSpeed_Sample" name="testFilterSpeed_Sample">
+<area shape="rect" id="Node000001" title="Prueba de rendimiento: mide velocidad de filtrado muestra por muestra." alt="" coords="5,31,166,57"/>
+<area shape="rect" id="Node000002" href="$utils__extended_8cpp.html#aa80e3e2be57e015fe4a241937be9cc96" title="Obtiene la RAM libre disponible en el Arduino Due." alt="" coords="251,5,346,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="166,32,236,23,237,29,166,37"/>
+<area shape="rect" id="Node000004" href="$class_f_i_r_filter.html#a2ec31d5f400abe1ffd69ad2d9f912e59" title="Procesa una muestra individual usando el filtro FIR." alt="" coords="214,56,384,83"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="166,51,198,55,198,60,166,56"/>
+<area shape="rect" id="Node000003" href="$utils__extended_8cpp.html#ae6727605038d56c99955e14284be21ef" title=" " alt="" coords="452,5,498,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="347,16,436,16,436,21,347,21"/>
+<area shape="rect" id="Node000005" href="$group___f_i_r.html#gae8fb334ea67eb6ecbd31824ddc14cd6a" title=" " alt="" coords="432,56,518,83"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="384,67,417,67,417,72,384,72"/>
+</map>

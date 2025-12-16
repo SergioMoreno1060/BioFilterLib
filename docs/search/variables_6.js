@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['inputsignal_0',['inputSignal',['../_f_i_r___example_8cpp.html#a24e3dfc6479d7b7d22cc357a2fb44cc9',1,'FIR_Example.cpp']]]
+  ['samplerate_0',['sampleRate',['../struct_performance_metrics.html#a891669c5400cbef7ec0e8f0221f1509d',1,'PerformanceMetrics']]],
+  ['snr_1',['snr',['../struct_quality_metrics.html#a522f228adf4638116176a9b823ad8982',1,'QualityMetrics']]]
 ];

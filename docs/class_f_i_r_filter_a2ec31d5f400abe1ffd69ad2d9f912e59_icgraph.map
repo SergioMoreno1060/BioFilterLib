@@ -1,0 +1,5 @@
+<map id="FIRFilter::processSample" name="FIRFilter::processSample">
+<area shape="rect" id="Node000001" title="Procesa una muestra individual usando el filtro FIR." alt="" coords="214,5,384,32"/>
+<area shape="rect" id="Node000002" href="$utils__extended_8cpp.html#a0be3755f52937416650eca7cfd5d70d4" title="Prueba de rendimiento: mide velocidad de filtrado muestra por muestra." alt="" coords="5,5,166,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,21,166,21,166,16,198,16"/>
+</map>

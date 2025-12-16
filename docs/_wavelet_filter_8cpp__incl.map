@@ -1,0 +1,10 @@
+<map id="BioFilterLib/src/filters/WaveletFilter.cpp" name="BioFilterLib/src/filters/WaveletFilter.cpp">
+<area shape="rect" id="Node000001" title="Implementación del filtro Wavelet optimizado para bioseñales." alt="" coords="47,5,192,48"/>
+<area shape="rect" id="Node000002" href="$_wavelet_filter_8h.html" title="Filtro Wavelet de banco de filtros optimizado para bioseñales usando CMSIS&#45;DSP." alt="" coords="5,96,114,123"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="106,50,80,85,76,82,102,47"/>
+<area shape="rect" id="Node000004" href="$_f_i_r_filter_8h.html" title="Filtro FIR optimizado para bioseñales usando CMSIS&#45;DSP." alt="" coords="138,96,221,123"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="137,47,163,82,159,85,133,50"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="74,171,165,197"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="72,122,102,157,98,161,68,125"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="171,125,141,161,137,157,167,122"/>
+</map>

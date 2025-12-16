@@ -96,22 +96,22 @@ $(function(){initNavTree('_f_i_r_filter_8h_source.html','',''); });
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#ifndef FIR_FILTER_H</span></div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#define FIR_FILTER_H</span></div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#include &lt;Arduino.h&gt;</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="comment">// #include &lt;Arduino.h&gt;</span></div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &lt;arm_math.h&gt;</span>  <span class="comment">// CMSIS-DSP</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span></div>
 <div class="foldopen" id="foldopen00064" data-start="{" data-end="};">
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="class_f_i_r_filter.html">   64</a></span><span class="keyword">class </span><a class="code hl_function" href="class_f_i_r_filter.html#a7944c16caf70319417d3f620181ea6f8">FIRFilter</a> {</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="class_f_i_r_filter.html">   64</a></span><span class="keyword">class </span><a class="code hl_function" href="class_f_i_r_filter.html#a4a7a10252f6ead0423561d6b099e0822">FIRFilter</a> {</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        <a class="code hl_function" href="class_f_i_r_filter.html#a7944c16caf70319417d3f620181ea6f8">FIRFilter</a>(<span class="keyword">const</span> float32_t* coeffs, uint16_t numTaps, uint16_t blockSize);</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        <a class="code hl_function" href="class_f_i_r_filter.html#a4a7a10252f6ead0423561d6b099e0822">FIRFilter</a>(float32_t* coeffs, uint16_t numTaps, uint16_t blockSize);</div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span></div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        <a class="code hl_function" href="class_f_i_r_filter.html#a7d376351ab71190d49b8b7abaa304767">~FIRFilter</a>();</div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span></div>
 <div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        float32_t <a class="code hl_function" href="class_f_i_r_filter.html#a2ec31d5f400abe1ffd69ad2d9f912e59">processSample</a>(float32_t input);</div>
 <div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span></div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_f_i_r_filter.html#a3478d4c3b1c3d11250a6ee43fa5d6664">processBuffer</a>(<span class="keyword">const</span> float32_t* inputArray, float32_t* outputArray, uint32_t length);</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_f_i_r_filter.html#af599ccbbe4f8f37b18061da9ff80d4b5">processBuffer</a>(float32_t* inputArray, float32_t* outputArray, uint32_t length);</div>
 <div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        <span class="keyword">const</span> float32_t* _coeffs;</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        float32_t* _coeffs;</div>
 <div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span></div>
 <div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        float32_t* _state;</div>
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span></div>
@@ -128,9 +128,9 @@ $(function(){initNavTree('_f_i_r_filter_8h_source.html','',''); });
 <div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> </div>
 <div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span><span class="preprocessor">#endif </span><span class="comment">// FIR_FILTER_H</span></div>
 <div class="ttc" id="aclass_f_i_r_filter_html_a2ec31d5f400abe1ffd69ad2d9f912e59"><div class="ttname"><a href="class_f_i_r_filter.html#a2ec31d5f400abe1ffd69ad2d9f912e59">FIRFilter::processSample</a></div><div class="ttdeci">float32_t processSample(float32_t input)</div><div class="ttdoc">Procesa una muestra individual usando el filtro FIR.</div><div class="ttdef"><b>Definition</b> FIRFilter.cpp:126</div></div>
-<div class="ttc" id="aclass_f_i_r_filter_html_a3478d4c3b1c3d11250a6ee43fa5d6664"><div class="ttname"><a href="class_f_i_r_filter.html#a3478d4c3b1c3d11250a6ee43fa5d6664">FIRFilter::processBuffer</a></div><div class="ttdeci">void processBuffer(const float32_t *inputArray, float32_t *outputArray, uint32_t length)</div><div class="ttdoc">Procesa un buffer completo de muestras usando el filtro FIR.</div><div class="ttdef"><b>Definition</b> FIRFilter.cpp:194</div></div>
-<div class="ttc" id="aclass_f_i_r_filter_html_a7944c16caf70319417d3f620181ea6f8"><div class="ttname"><a href="class_f_i_r_filter.html#a7944c16caf70319417d3f620181ea6f8">FIRFilter::FIRFilter</a></div><div class="ttdeci">FIRFilter(const float32_t *coeffs, uint16_t numTaps, uint16_t blockSize)</div><div class="ttdoc">Constructor que inicializa el filtro FIR con parámetros específicos.</div><div class="ttdef"><b>Definition</b> FIRFilter.cpp:48</div></div>
+<div class="ttc" id="aclass_f_i_r_filter_html_a4a7a10252f6ead0423561d6b099e0822"><div class="ttname"><a href="class_f_i_r_filter.html#a4a7a10252f6ead0423561d6b099e0822">FIRFilter::FIRFilter</a></div><div class="ttdeci">FIRFilter(float32_t *coeffs, uint16_t numTaps, uint16_t blockSize)</div><div class="ttdoc">Constructor que inicializa el filtro FIR con parámetros específicos.</div><div class="ttdef"><b>Definition</b> FIRFilter.cpp:48</div></div>
 <div class="ttc" id="aclass_f_i_r_filter_html_a7d376351ab71190d49b8b7abaa304767"><div class="ttname"><a href="class_f_i_r_filter.html#a7d376351ab71190d49b8b7abaa304767">FIRFilter::~FIRFilter</a></div><div class="ttdeci">~FIRFilter()</div><div class="ttdoc">Destructor de la clase FIRFilter.</div><div class="ttdef"><b>Definition</b> FIRFilter.cpp:88</div></div>
+<div class="ttc" id="aclass_f_i_r_filter_html_af599ccbbe4f8f37b18061da9ff80d4b5"><div class="ttname"><a href="class_f_i_r_filter.html#af599ccbbe4f8f37b18061da9ff80d4b5">FIRFilter::processBuffer</a></div><div class="ttdeci">void processBuffer(float32_t *inputArray, float32_t *outputArray, uint32_t length)</div><div class="ttdoc">Procesa un buffer completo de muestras usando el filtro FIR.</div><div class="ttdef"><b>Definition</b> FIRFilter.cpp:194</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

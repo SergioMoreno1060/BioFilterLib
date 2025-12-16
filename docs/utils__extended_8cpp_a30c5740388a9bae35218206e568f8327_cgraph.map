@@ -1,0 +1,7 @@
+<map id="testMemoryUsage" name="testMemoryUsage">
+<area shape="rect" id="Node000001" title="Prueba de consumo de memoria: reporta uso de RAM antes y después." alt="" coords="5,5,134,32"/>
+<area shape="rect" id="Node000002" href="$utils__extended_8cpp.html#aa80e3e2be57e015fe4a241937be9cc96" title="Obtiene la RAM libre disponible en el Arduino Due." alt="" coords="182,5,277,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="134,16,166,16,166,21,134,21"/>
+<area shape="rect" id="Node000003" href="$utils__extended_8cpp.html#ae6727605038d56c99955e14284be21ef" title=" " alt="" coords="325,5,371,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="278,16,310,16,310,21,278,21"/>
+</map>

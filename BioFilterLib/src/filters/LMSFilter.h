@@ -33,7 +33,6 @@
 #ifndef LMS_FILTER_H
 #define LMS_FILTER_H
 
-#include <Arduino.h>
 #include <arm_math.h> // CMSIS-DSP
 
 /**
@@ -204,7 +203,7 @@ class LMSFilter {
          * Serial.println(meanError);
          * @endcode
          */
-        void processBuffer(const float32_t* inputArray, float32_t* referenceArray,
+        void processBuffer(float32_t* inputArray, float32_t* referenceArray,
                           float32_t* outputArray, float32_t* errorArray, uint32_t length);
 
         /**
@@ -313,7 +312,7 @@ class LMSFilter {
          * @note No debe ser modificada directamente, se gestiona a través de las
          * funciones de CMSIS-DSP.
          */
-        arm_lms_instance_f32 _lmsInstance;
+        arm_lms_norm_instance_f32 _lmsInstance;
 
 }; // class LMSFilter
 

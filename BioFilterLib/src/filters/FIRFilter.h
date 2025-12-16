@@ -31,7 +31,7 @@
 #ifndef FIR_FILTER_H
 #define FIR_FILTER_H
 
-#include <Arduino.h>
+// #include <Arduino.h>
 #include <arm_math.h>  // CMSIS-DSP
 
 /**
@@ -89,7 +89,7 @@ class FIRFilter {
          * FIRFilter ecgFilter(ecgCoeffs, 51, 1);  // Tiempo real
          * @endcode
          */
-        FIRFilter(const float32_t* coeffs, uint16_t numTaps, uint16_t blockSize);
+        FIRFilter(float32_t* coeffs, uint16_t numTaps, uint16_t blockSize);
 
         /**
          * @brief Destructor de la clase FIRFilter
@@ -167,7 +167,7 @@ class FIRFilter {
          * processEMGData(outputBuffer, 512);
          * @endcode
          */
-        void processBuffer(const float32_t* inputArray, float32_t* outputArray, uint32_t length);
+        void processBuffer(float32_t* inputArray, float32_t* outputArray, uint32_t length);
 
     private:
         /**
@@ -178,7 +178,7 @@ class FIRFilter {
          * 
          * @note Esta es solo una referencia, la memoria debe ser gestionada externamente.
          */
-        const float32_t* _coeffs;
+        float32_t* _coeffs;
 
         /**
          * @brief Buffer de estados interno del filtro

@@ -99,14 +99,14 @@ $(function(){initNavTree('class_f_i_r_filter.html','','class_f_i_r_filter-member
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7944c16caf70319417d3f620181ea6f8" id="r_a7944c16caf70319417d3f620181ea6f8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7944c16caf70319417d3f620181ea6f8">FIRFilter</a> (const float32_t *coeffs, uint16_t numTaps, uint16_t blockSize)</td></tr>
-<tr class="memdesc:a7944c16caf70319417d3f620181ea6f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor que inicializa el filtro FIR con parámetros específicos.  <br /></td></tr>
+<tr class="memitem:a4a7a10252f6ead0423561d6b099e0822" id="r_a4a7a10252f6ead0423561d6b099e0822"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4a7a10252f6ead0423561d6b099e0822">FIRFilter</a> (float32_t *coeffs, uint16_t numTaps, uint16_t blockSize)</td></tr>
+<tr class="memdesc:a4a7a10252f6ead0423561d6b099e0822"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor que inicializa el filtro FIR con parámetros específicos.  <br /></td></tr>
 <tr class="memitem:a7d376351ab71190d49b8b7abaa304767" id="r_a7d376351ab71190d49b8b7abaa304767"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7d376351ab71190d49b8b7abaa304767">~FIRFilter</a> ()</td></tr>
 <tr class="memdesc:a7d376351ab71190d49b8b7abaa304767"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor de la clase <a class="el" href="class_f_i_r_filter.html" title="Wrapper C++ para filtros FIR de CMSIS-DSP optimizado para bioseñales.">FIRFilter</a>.  <br /></td></tr>
 <tr class="memitem:a2ec31d5f400abe1ffd69ad2d9f912e59" id="r_a2ec31d5f400abe1ffd69ad2d9f912e59"><td class="memItemLeft" align="right" valign="top">float32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2ec31d5f400abe1ffd69ad2d9f912e59">processSample</a> (float32_t input)</td></tr>
 <tr class="memdesc:a2ec31d5f400abe1ffd69ad2d9f912e59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procesa una muestra individual usando el filtro FIR.  <br /></td></tr>
-<tr class="memitem:a3478d4c3b1c3d11250a6ee43fa5d6664" id="r_a3478d4c3b1c3d11250a6ee43fa5d6664"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3478d4c3b1c3d11250a6ee43fa5d6664">processBuffer</a> (const float32_t *inputArray, float32_t *outputArray, uint32_t length)</td></tr>
-<tr class="memdesc:a3478d4c3b1c3d11250a6ee43fa5d6664"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procesa un buffer completo de muestras usando el filtro FIR.  <br /></td></tr>
+<tr class="memitem:af599ccbbe4f8f37b18061da9ff80d4b5" id="r_af599ccbbe4f8f37b18061da9ff80d4b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af599ccbbe4f8f37b18061da9ff80d4b5">processBuffer</a> (float32_t *inputArray, float32_t *outputArray, uint32_t length)</td></tr>
+<tr class="memdesc:af599ccbbe4f8f37b18061da9ff80d4b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procesa un buffer completo de muestras usando el filtro FIR.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Wrapper C++ para filtros FIR de CMSIS-DSP optimizado para bioseñales. </p>
@@ -125,12 +125,12 @@ Public Member Functions</h2></td></tr>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>Los coeficientes del filtro deben ser calculados externamente usando herramientas como Python/scipy, MATLAB o herramientas online de diseño de filtros.</dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>La memoria para los coeficientes debe mantenerse válida durante toda la vida del objeto <a class="el" href="class_f_i_r_filter.html" title="Wrapper C++ para filtros FIR de CMSIS-DSP optimizado para bioseñales.">FIRFilter</a>, ya que se almacena solo la referencia.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd>arm_fir_f32() para más detalles sobre la implementación subyacente de CMSIS-DSP </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_c_1_2_users_2_sergio_2_documents_2_platform_i_o_2_projects_200__c_m_s_i_s_01test_2lib_2_bio_filfe177d888bc77a3b1e9090289ef84d22.html#_a0">C:/Users/Sergio/Documents/PlatformIO/Projects/00_CMSIS test/lib/BioFilterLib/src/filters/FIRFilter.h</a>.</dd>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group___f_i_r.html#gae8fb334ea67eb6ecbd31824ddc14cd6a">arm_fir_f32()</a> para más detalles sobre la implementación subyacente de CMSIS-DSP </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_c_1_2_users_2_sergio_2_documents_2_platform_i_o_2_projects_200__c_m_s_i_s_test_2lib_2_bio_filteeab672fc18864463dbb75fbe42b5eaee.html#_a0">C:/Users/Sergio/Documents/PlatformIO/Projects/00_CMSIS_test/lib/BioFilterLib/src/filters/FIRFilter.h</a>, <a class="el" href="_c_1_2_users_2_sergio_2_documents_2_platform_i_o_2_projects_200__c_m_s_i_s_test_2lib_2_bio_filte58df60bfda536a90643bc15ddaaf9c2e.html#_a1">C:/Users/Sergio/Documents/PlatformIO/Projects/00_CMSIS_test/lib/BioFilterLib/src/filters/WaveletFilter.cpp</a>, and <a class="el" href="_c_1_2_users_2_sergio_2_documents_2_platform_i_o_2_projects_200__c_m_s_i_s_test_2lib_2_bio_filtef458a5991c52a91628e026ae47a0f882.html#_a1">C:/Users/Sergio/Documents/PlatformIO/Projects/00_CMSIS_test/lib/BioFilterLib/src/filters/WaveletFilter.h</a>.</dd>
 </dl>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a7944c16caf70319417d3f620181ea6f8" name="a7944c16caf70319417d3f620181ea6f8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7944c16caf70319417d3f620181ea6f8">&#9670;&#160;</a></span>FIRFilter()</h2>
+<a id="a4a7a10252f6ead0423561d6b099e0822" name="a4a7a10252f6ead0423561d6b099e0822"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a7a10252f6ead0423561d6b099e0822">&#9670;&#160;</a></span>FIRFilter()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -138,7 +138,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">FIRFilter::FIRFilter </td>
           <td>(</td>
-          <td class="paramtype">const float32_t *</td>          <td class="paramname"><span class="paramname"><em>coeffs</em></span>, </td>
+          <td class="paramtype">float32_t *</td>          <td class="paramname"><span class="paramname"><em>coeffs</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -169,13 +169,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section remark"><dt>Remarks</dt><dd>El tamaño del buffer de estados se calcula como (numTaps + blockSize - 1) según los requerimientos de CMSIS-DSP para evitar aliasing y permitir procesamiento eficiente en bloques.</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>La función arm_fir_init_f32() configura internamente:<ul>
+<dl class="section note"><dt>Note</dt><dd>La función <a class="el" href="group___f_i_r.html#ga98d13def6427e29522829f945d0967db">arm_fir_init_f32()</a> configura internamente:<ul>
 <li>Punteros a coeficientes y buffer de estados</li>
 <li>Parámetros de longitud para optimizaciones SIMD</li>
 <li>Configuración de acceso circular al buffer</li>
 </ul>
 </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Si la asignación de memoria falla, el comportamiento es indefinido. En producción se debería verificar el retorno de 'new'. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_c_1_2_users_2_sergio_2_documents_2_platform_i_o_2_projects_200__c_m_s_i_s_test_2lib_2_bio_filteeab672fc18864463dbb75fbe42b5eaee.html#a1">C:/Users/Sergio/Documents/PlatformIO/Projects/00_CMSIS_test/lib/BioFilterLib/src/filters/FIRFilter.h</a>.</dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="class_f_i_r_filter_a4a7a10252f6ead0423561d6b099e0822_cgraph.svg" width="300" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>
@@ -205,12 +212,14 @@ Public Member Functions</h2></td></tr>
 </ul>
 </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>CMSIS-DSP no requiere funciones de limpieza específicas para la estructura arm_fir_instance_f32. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_c_1_2_users_2_sergio_2_documents_2_platform_i_o_2_projects_200__c_m_s_i_s_test_2lib_2_bio_filteeab672fc18864463dbb75fbe42b5eaee.html#a2">C:/Users/Sergio/Documents/PlatformIO/Projects/00_CMSIS_test/lib/BioFilterLib/src/filters/FIRFilter.h</a>.</dd>
+</dl>
 
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a3478d4c3b1c3d11250a6ee43fa5d6664" name="a3478d4c3b1c3d11250a6ee43fa5d6664"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3478d4c3b1c3d11250a6ee43fa5d6664">&#9670;&#160;</a></span>processBuffer()</h2>
+<a id="af599ccbbe4f8f37b18061da9ff80d4b5" name="af599ccbbe4f8f37b18061da9ff80d4b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af599ccbbe4f8f37b18061da9ff80d4b5">&#9670;&#160;</a></span>processBuffer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -218,7 +227,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void FIRFilter::processBuffer </td>
           <td>(</td>
-          <td class="paramtype">const float32_t *</td>          <td class="paramname"><span class="paramname"><em>inputArray</em></span>, </td>
+          <td class="paramtype">float32_t *</td>          <td class="paramname"><span class="paramname"><em>inputArray</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -244,7 +253,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section remark"><dt>Remarks</dt><dd>Utiliza arm_fir_f32() para procesar el bloque completo:<ol type="1">
+<dl class="section remark"><dt>Remarks</dt><dd>Utiliza <a class="el" href="group___f_i_r.html#gae8fb334ea67eb6ecbd31824ddc14cd6a">arm_fir_f32()</a> para procesar el bloque completo:<ol type="1">
 <li>Procesa 'length' muestras en una sola llamada</li>
 <li>Utiliza vectorización SIMD para máximo rendimiento</li>
 <li>Mantiene continuidad del estado entre llamadas</li>
@@ -272,18 +281,29 @@ Public Member Functions</h2></td></tr>
 </dd></dl>
 <dl class="section user"><dt>Uso típico para señales ECG:</dt><dd><div class="fragment"><div class="line"><span class="comment">// Buffer de 256 muestras @ 1000 Hz = 256ms de datos</span></div>
 <div class="line">float32_t ecgInput[256];</div>
-<div class="line">float32_t <a class="code hl_variable" href="_l_m_s___example_8cpp.html#a9a9f0b358f01895c801e337f716cf76b">ecgFiltered</a>[256];</div>
+<div class="line">float32_t ecgFiltered[256];</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Adquirir datos del ADC</span></div>
 <div class="line">readECGSamples(ecgInput, 256);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Aplicar filtro pasa-bajas para eliminar ruido</span></div>
-<div class="line">filter.processBuffer(ecgInput, <a class="code hl_variable" href="_l_m_s___example_8cpp.html#a9a9f0b358f01895c801e337f716cf76b">ecgFiltered</a>, 256);</div>
+<div class="line">filter.processBuffer(ecgInput, ecgFiltered, 256);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Procesar señal filtrada (detección QRS, etc.)</span></div>
-<div class="line">analyzeECG(<a class="code hl_variable" href="_l_m_s___example_8cpp.html#a9a9f0b358f01895c801e337f716cf76b">ecgFiltered</a>, 256);</div>
-<div class="ttc" id="a_l_m_s___example_8cpp_html_a9a9f0b358f01895c801e337f716cf76b"><div class="ttname"><a href="_l_m_s___example_8cpp.html#a9a9f0b358f01895c801e337f716cf76b">ecgFiltered</a></div><div class="ttdeci">float32_t ecgFiltered[maxSamplesNum]</div><div class="ttdef"><b>Definition</b> LMS_Example.cpp:62</div></div>
+<div class="line">analyzeECG(ecgFiltered, 256);</div>
 </div><!-- fragment --> </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_c_1_2_users_2_sergio_2_documents_2_platform_i_o_2_projects_200__c_m_s_i_s_test_2lib_2_bio_filteeab672fc18864463dbb75fbe42b5eaee.html#a4">C:/Users/Sergio/Documents/PlatformIO/Projects/00_CMSIS_test/lib/BioFilterLib/src/filters/FIRFilter.h</a>.</dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="class_f_i_r_filter_af599ccbbe4f8f37b18061da9ff80d4b5_cgraph.svg" width="306" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="class_f_i_r_filter_af599ccbbe4f8f37b18061da9ff80d4b5_icgraph.svg" width="370" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>
@@ -311,14 +331,14 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>float32_t Muestra filtrada de salida</dd></dl>
-<dl class="section user"><dt>Detalles de implementación</dt><dd>Internamente utiliza arm_fir_f32() con longitud 1, lo que:<ol type="1">
+<dl class="section user"><dt>Detalles de implementación</dt><dd>Internamente utiliza <a class="el" href="group___f_i_r.html#gae8fb334ea67eb6ecbd31824ddc14cd6a">arm_fir_f32()</a> con longitud 1, lo que:<ol type="1">
 <li>Actualiza el buffer de estados con la nueva muestra</li>
 <li>Calcula la convolución FIR: y[n] = Σ(b[k] * x[n-k])</li>
 <li>Mantiene el estado para la próxima muestra</li>
 <li>Utiliza optimizaciones SIMD si están disponibles</li>
 </ol>
 </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>La función arm_fir_f32() maneja automáticamente:<ul>
+<dl class="section note"><dt>Note</dt><dd>La función <a class="el" href="group___f_i_r.html#gae8fb334ea67eb6ecbd31824ddc14cd6a">arm_fir_f32()</a> maneja automáticamente:<ul>
 <li>Gestión circular del buffer de estados</li>
 <li>Optimizaciones específicas del procesador ARM</li>
 <li>Manejo eficiente de la aritmética de punto flotante</li>
@@ -330,6 +350,18 @@ Public Member Functions</h2></td></tr>
 <li>Memoria: Uso eficiente del buffer de estados </li>
 </ul>
 </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_c_1_2_users_2_sergio_2_documents_2_platform_i_o_2_projects_200__c_m_s_i_s_test_2lib_2_bio_filteeab672fc18864463dbb75fbe42b5eaee.html#a3">C:/Users/Sergio/Documents/PlatformIO/Projects/00_CMSIS_test/lib/BioFilterLib/src/filters/FIRFilter.h</a>.</dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="class_f_i_r_filter_a2ec31d5f400abe1ffd69ad2d9f912e59_cgraph.svg" width="316" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="class_f_i_r_filter_a2ec31d5f400abe1ffd69ad2d9f912e59_icgraph.svg" width="390" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>

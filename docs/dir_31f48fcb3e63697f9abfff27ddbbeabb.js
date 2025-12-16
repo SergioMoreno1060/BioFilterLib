@@ -5,5 +5,7 @@ var dir_31f48fcb3e63697f9abfff27ddbbeabb =
     [ "IIRFilter.cpp", "_i_i_r_filter_8cpp.html", null ],
     [ "IIRFilter.h", "_i_i_r_filter_8h.html", "_i_i_r_filter_8h" ],
     [ "LMSFilter.cpp", "_l_m_s_filter_8cpp.html", null ],
-    [ "LMSFilter.h", "_l_m_s_filter_8h.html", "_l_m_s_filter_8h" ]
+    [ "LMSFilter.h", "_l_m_s_filter_8h.html", "_l_m_s_filter_8h" ],
+    [ "WaveletFilter.cpp", "_wavelet_filter_8cpp.html", null ],
+    [ "WaveletFilter.h", "_wavelet_filter_8h.html", "_wavelet_filter_8h" ]
 ];

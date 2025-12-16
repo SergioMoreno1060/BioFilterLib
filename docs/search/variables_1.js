@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['baselinefilter_0',['baselineFilter',['../_i_i_r___example_8cpp.html#aaec106d823756c23b24cb2cbb4027e3d',1,'IIR_Example.cpp']]]
+  ['freeram_0',['freeRAM',['../struct_performance_metrics.html#ab108b3ea4c18510038f7da8bd9261382',1,'PerformanceMetrics']]]
 ];

@@ -34,9 +34,9 @@
 #ifndef WAVELET_FILTER_H
 #define WAVELET_FILTER_H
 
-#include <Arduino.h>
-#include <arm_math.h>  // CMSIS-DSP
-#include "FIRFilter.h" // Usar los filtros FIR existentes para el banco de filtros
+#include <arm_math.h>
+
+class FIRFilter;  // Forward declaration
 
 /**
  * @class WaveletFilter
@@ -201,7 +201,7 @@ class WaveletFilter {
          * }
          * @endcode
          */
-        void processBuffer(const float32_t* inputArray, float32_t* approxArray, 
+        void processBuffer(float32_t* inputArray, float32_t* approxArray, 
                           float32_t* detailArray, uint32_t length);
 
         /**
@@ -292,7 +292,7 @@ class WaveletFilter {
          * - Respuesta optimizada para señales biomédicas
          * - Reconstrucción perfecta cuando se combina con filtro de detalle
          */
-        static const float32_t _approxCoeffs[8];
+        static float32_t _approxCoeffs[8];
 
         /**
          * @brief Coeficientes del filtro de detalle Daubechies-4 (pasa-alto)
@@ -306,7 +306,7 @@ class WaveletFilter {
          * - Ortogonalidad con el filtro de aproximación
          * - Detección óptima de transitorios y bordes
          */
-        static const float32_t _detailCoeffs[8];
+        static float32_t _detailCoeffs[8];
 
         /**
          * @brief Coeficientes para reconstrucción de aproximación
@@ -314,7 +314,7 @@ class WaveletFilter {
          * Coeficientes del filtro FIR usado en la síntesis para reconstruir
          * la componente de aproximación durante la reconstrucción wavelet.
          */
-        static const float32_t _synthApproxCoeffs[8];
+        static float32_t _synthApproxCoeffs[8];
 
         /**
          * @brief Coeficientes para reconstrucción de detalle
@@ -322,7 +322,7 @@ class WaveletFilter {
          * Coeficientes del filtro FIR usado en la síntesis para reconstruir
          * la componente de detalle durante la reconstrucción wavelet.
          */
-        static const float32_t _synthDetailCoeffs[8];
+        static float32_t _synthDetailCoeffs[8];
 
         /**
          * @brief Instancia del filtro FIR de aproximación
