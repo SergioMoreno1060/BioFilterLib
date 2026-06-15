@@ -1,105 +1,675 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<!DOCTYPE html>
+<html class="dark" lang="es">
 <head>
-<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.14.0"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>BioFilterLib: Main Page</title>
-<link href="tabs.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="jquery.js"></script>
-<script type="text/javascript" src="dynsections.js"></script>
-<script type="text/javascript" src="clipboard.js"></script>
-<link href="navtree.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="navtreedata.js"></script>
-<script type="text/javascript" src="navtree.js"></script>
-<script type="text/javascript" src="cookie.js"></script>
-<link href="search/search.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="search/searchdata.js"></script>
-<script type="text/javascript" src="search/search.js"></script>
-<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BioFilterLib | Filtros Digitales Biomédicos para Arduino Due</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@600;700;800&family=JetBrains+Mono:wght@400;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"/>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+<style>
+  .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; vertical-align:middle; }
+  .glass-card { background:rgba(19,27,46,0.7); backdrop-filter:blur(12px); border:1px solid rgba(107,216,203,0.1); transition:border-color 0.2s,transform 0.2s; }
+  .glass-card:hover { border-color:rgba(107,216,203,0.4); transform:translateY(-2px); }
+  .math-block { font-family:'JetBrains Mono',monospace; background:rgba(107,216,203,0.04); border-left:3px solid #6bd8cb; }
+  .uml-node { transition:transform 0.2s ease,border-color 0.2s ease; }
+  .uml-node:hover { transform:translateY(-2px); border-color:#6bd8cb; }
+  .arrow-down { width:2px; background:rgba(107,216,203,0.4); margin:0 auto; }
+  ::-webkit-scrollbar { width:8px; height:8px; }
+  ::-webkit-scrollbar-track { background:#0b1326; }
+  ::-webkit-scrollbar-thumb { background:#2d3449; border-radius:4px; }
+  body { scroll-behavior:smooth; }
+  .sidebar-scroll::-webkit-scrollbar { width:4px; }
+  .sidebar-scroll::-webkit-scrollbar-thumb { background:#3d4947; border-radius:10px; }
+</style>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode:"class",
+    theme:{
+      extend:{
+        colors:{
+          "on-primary":"#003732","on-secondary-fixed":"#001e2f","error-container":"#93000a",
+          "on-primary-fixed":"#00201d","on-error":"#690005","inverse-primary":"#006a61",
+          "secondary-fixed-dim":"#89ceff","on-tertiary-container":"#340080",
+          "on-tertiary-fixed":"#23005c","primary-fixed-dim":"#6bd8cb",
+          "on-secondary-container":"#00344e","surface-variant":"#2d3449",
+          "surface-container-lowest":"#060e20","on-primary-container":"#00302b",
+          "secondary":"#89ceff","on-surface":"#dae2fd","on-secondary":"#00344d",
+          "inverse-on-surface":"#283044","surface-container-high":"#222a3d",
+          "surface-tint":"#6bd8cb","on-surface-variant":"#bcc9c6","on-tertiary":"#3c0091",
+          "tertiary-fixed":"#e9ddff","primary-fixed":"#89f5e7","on-error-container":"#ffdad6",
+          "background":"#0b1326","outline":"#879391","inverse-surface":"#dae2fd",
+          "secondary-fixed":"#c9e6ff","error":"#ffb4ab","on-primary-fixed-variant":"#005049",
+          "on-background":"#dae2fd","on-tertiary-fixed-variant":"#5516be",
+          "surface-container-low":"#131b2e","secondary-container":"#00a2e6",
+          "tertiary-container":"#a078ff","primary-container":"#29a195",
+          "primary":"#6bd8cb","surface-dim":"#0b1326","on-secondary-fixed-variant":"#004c6e",
+          "surface-container-highest":"#2d3449","surface-bright":"#31394d",
+          "tertiary":"#d0bcff","surface":"#0b1326","outline-variant":"#3d4947",
+          "tertiary-fixed-dim":"#d0bcff","surface-container":"#171f33"
+        },
+        borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},
+        spacing:{"section-gap":"4rem","sidebar-width":"280px","base-unit":"4px","gutter":"24px","content-max-width":"800px"},
+        fontFamily:{"body-lg":["Inter"],"headline-lg":["Geist"],"label-caps":["JetBrains Mono"],"display":["Geist"],"body-md":["Inter"],"headline-md":["Geist"],"code-block":["JetBrains Mono"]},
+        fontSize:{
+          "body-lg":["18px",{"lineHeight":"1.75","fontWeight":"400"}],
+          "headline-lg":["32px",{"lineHeight":"1.2","fontWeight":"600"}],
+          "label-caps":["12px",{"lineHeight":"1.0","letterSpacing":"0.05em","fontWeight":"600"}],
+          "display":["48px",{"lineHeight":"1.1","letterSpacing":"-0.02em","fontWeight":"700"}],
+          "body-md":["16px",{"lineHeight":"1.6","fontWeight":"400"}],
+          "headline-md":["24px",{"lineHeight":"1.3","fontWeight":"600"}],
+          "code-block":["14px",{"lineHeight":"1.5","fontWeight":"400"}]
+        }
+      }
+    }
+  }
+</script>
 </head>
-<body>
-<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
-<div id="titlearea">
-<table cellspacing="0" cellpadding="0">
- <tbody>
- <tr id="projectrow">
-  <td id="projectalign">
-   <div id="projectname">BioFilterLib
-   </div>
-  </td>
- </tr>
- </tbody>
-</table>
-</div>
-<!-- end header part -->
-<!-- Generated by Doxygen 1.14.0 -->
-<script type="text/javascript">
-var searchBox = new SearchBox("searchBox", "search/",'.html');
-</script>
-<script type="text/javascript">
-$(function() { codefold.init(); });
-</script>
-<script type="text/javascript" src="menudata.js"></script>
-<script type="text/javascript" src="menu.js"></script>
-<script type="text/javascript">
-$(function() {
-  initMenu('',true,false,'search.php','Search',true);
-  $(function() { init_search(); });
-});
-</script>
-<div id="main-nav"></div>
-</div><!-- top -->
-<div id="side-nav" class="ui-resizable side-nav-resizable">
-  <div id="nav-tree">
-    <div id="nav-tree-contents">
-      <div id="nav-sync" class="sync"></div>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+
+<!-- Top Navigation -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-background border-b border-outline-variant transition-all duration-200" id="topnav">
+  <div class="flex items-center gap-8">
+    <a href="index.html" class="font-headline-md text-headline-md text-primary font-extrabold tracking-tighter">BioFilterLib</a>
+    <div class="hidden md:flex gap-6">
+      <a href="index.html" class="font-body-md text-primary font-bold border-b-2 border-primary pb-1">Docs</a>
+      <a href="ejemplos.html" class="font-body-md text-on-surface-variant hover:text-primary transition-colors">Ejemplos</a>
+      <a href="api.html" class="font-body-md text-on-surface-variant hover:text-primary transition-colors">API</a>
     </div>
   </div>
-  <div id="splitbar" style="-moz-user-select:none;" 
-       class="ui-resizable-handle">
+  <div class="flex items-center gap-3">
+    <a href="https://github.com" target="_blank" class="hidden sm:flex items-center gap-2 text-sm text-on-surface-variant hover:text-primary transition-colors border border-outline-variant px-3 py-1.5 rounded-lg">
+      <span class="material-symbols-outlined text-[18px]">terminal</span> GitHub
+    </a>
+    <button onclick="document.getElementById('mobilemenu').classList.toggle('hidden')" class="md:hidden p-2 text-on-surface-variant hover:text-primary">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
   </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobilemenu" class="hidden fixed top-16 left-0 w-full bg-surface-container-low border-b border-outline-variant z-40 p-4 flex flex-col gap-2">
+  <a href="index.html" class="flex items-center gap-3 px-3 py-2 text-primary bg-primary-container/10 font-bold rounded-lg">
+    <span class="material-symbols-outlined">info</span> Introducción
+  </a>
+  <a href="filtros-fir-iir.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg">
+    <span class="material-symbols-outlined">filter_alt</span> Filtros FIR &amp; IIR
+  </a>
+  <a href="filtros-avanzados.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg">
+    <span class="material-symbols-outlined">analytics</span> Wavelet &amp; LMS
+  </a>
+  <a href="ejemplos.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg">
+    <span class="material-symbols-outlined">lightbulb</span> Ejemplos
+  </a>
+  <a href="api.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg">
+    <span class="material-symbols-outlined">menu_book</span> API Reference
+  </a>
 </div>
-<script type="text/javascript">
-$(function(){initNavTree('index.html','',''); });
+
+<!-- Sidebar -->
+<aside class="hidden lg:flex flex-col border-r border-outline-variant w-sidebar-width fixed left-0 top-16 h-[calc(100vh-64px)] p-4 bg-surface-container-low overflow-y-auto sidebar-scroll z-40">
+  <div class="flex items-center gap-3 mb-8">
+    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+      <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">biotech</span>
+    </div>
+    <div>
+      <h3 class="font-headline-md text-on-surface text-lg leading-tight">Library Docs</h3>
+      <p class="text-on-surface-variant text-xs font-label-caps">v1.0.0 · Arduino Due</p>
+    </div>
+  </div>
+  <nav class="flex flex-col gap-1 flex-grow">
+    <a href="index.html" class="flex items-center gap-3 px-3 py-2 text-primary bg-primary-container/10 font-bold rounded-lg">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">info</span>
+      <span>Introducción</span>
+    </a>
+    <div class="mt-4 mb-1 px-3">
+      <span class="text-[10px] font-bold text-outline tracking-widest uppercase">Filtros Digitales</span>
+    </div>
+    <a href="filtros-fir-iir.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 transition-colors rounded-lg">
+      <span class="material-symbols-outlined">filter_alt</span>
+      <span>FIR &amp; IIR</span>
+    </a>
+    <a href="filtros-avanzados.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 transition-colors rounded-lg">
+      <span class="material-symbols-outlined">analytics</span>
+      <span>Wavelet &amp; LMS</span>
+    </a>
+    <div class="mt-4 mb-1 px-3">
+      <span class="text-[10px] font-bold text-outline tracking-widest uppercase">Guías</span>
+    </div>
+    <a href="ejemplos.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 transition-colors rounded-lg">
+      <span class="material-symbols-outlined">lightbulb</span>
+      <span>Ejemplos</span>
+    </a>
+    <a href="api.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 transition-colors rounded-lg">
+      <span class="material-symbols-outlined">menu_book</span>
+      <span>API Reference</span>
+    </a>
+  </nav>
+  <div class="mt-auto pt-6 border-t border-outline-variant space-y-3">
+    <a href="https://github.com" target="_blank" class="w-full bg-primary text-on-primary py-2 px-4 rounded-lg font-bold hover:brightness-110 transition-all flex items-center justify-center gap-2">
+      <span class="material-symbols-outlined text-sm">download</span> Ver en GitHub
+    </a>
+    <p class="text-[10px] font-label-caps text-on-surface-variant text-center">Arduino Due · ARM Cortex-M3</p>
+  </div>
+</aside>
+
+<!-- Main Content -->
+<main class="lg:ml-sidebar-width pt-16 min-h-screen">
+
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden py-20 px-gutter flex flex-col items-center justify-center text-center">
+    <div class="relative z-10 max-w-3xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3 py-1 bg-primary-container/20 border border-primary/30 text-primary rounded-full mb-6 font-label-caps text-[10px]">
+        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+        VERSIÓN 1.0.0 · CMSIS-DSP INTEGRADO
+      </div>
+      <h1 class="font-display text-display text-on-surface mb-6 leading-tight">
+        BioFilterLib para<br/>Arduino Due
+      </h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-2xl mx-auto">
+        Una librería C++ que envuelve las funciones de <strong class="text-primary">CMSIS-DSP</strong> para filtrar señales biomédicas (ECG, EMG, EEG) en tiempo real. Diseñada para estudiantes de Ingeniería Biomédica.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="filtros-fir-iir.html" class="w-full sm:w-auto bg-primary text-on-primary font-bold py-3 px-8 rounded-full hover:shadow-[0_0_20px_rgba(107,216,203,0.4)] transition-all">
+          Explorar Filtros
+        </a>
+        <a href="ejemplos.html" class="w-full sm:w-auto border border-outline text-on-surface font-bold py-3 px-8 rounded-full hover:bg-surface-variant/20 transition-all flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined">lightbulb</span> Ver Ejemplos
+        </a>
+      </div>
+    </div>
+    <!-- Decorative background blur -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+  </section>
+
+  <!-- Stats Bar -->
+  <section class="max-w-content-max-width mx-auto px-gutter mb-section-gap">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-surface-container rounded-xl p-4 text-center border border-outline-variant">
+        <div class="text-2xl font-bold text-primary font-headline-lg">4</div>
+        <div class="text-xs font-label-caps text-on-surface-variant mt-1">TIPOS DE FILTRO</div>
+      </div>
+      <div class="bg-surface-container rounded-xl p-4 text-center border border-outline-variant">
+        <div class="text-2xl font-bold text-secondary font-headline-lg">84 MHz</div>
+        <div class="text-xs font-label-caps text-on-surface-variant mt-1">ARM CORTEX-M3</div>
+      </div>
+      <div class="bg-surface-container rounded-xl p-4 text-center border border-outline-variant">
+        <div class="text-2xl font-bold text-tertiary font-headline-lg">float32</div>
+        <div class="text-xs font-label-caps text-on-surface-variant mt-1">PRECISIÓN FP</div>
+      </div>
+      <div class="bg-surface-container rounded-xl p-4 text-center border border-outline-variant">
+        <div class="text-2xl font-bold text-primary font-headline-lg">MIT</div>
+        <div class="text-xs font-label-caps text-on-surface-variant mt-1">LICENCIA LIBRE</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Cards -->
+  <section class="max-w-content-max-width mx-auto px-gutter mb-section-gap">
+    <div class="flex items-center gap-4 mb-8">
+      <span class="font-label-caps text-primary">01. CARACTERÍSTICAS</span>
+      <div class="h-px flex-1 bg-outline-variant"></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="glass-card p-6 rounded-xl flex flex-col gap-4 group">
+        <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors">
+          <span class="material-symbols-outlined text-primary group-hover:text-on-primary" style="font-variation-settings:'FILL' 1;">speed</span>
+        </div>
+        <h3 class="font-headline-md text-headline-md text-on-surface">CMSIS-DSP Optimizado</h3>
+        <p class="text-on-surface-variant font-body-md">
+          Cada clase envuelve estructuras nativas de CMSIS-DSP (<code class="bg-surface-container px-1 rounded text-primary text-sm">arm_fir_instance_f32</code>, etc.) con instrucciones SIMD del Cortex-M3.
+        </p>
+      </div>
+      <div class="glass-card p-6 rounded-xl flex flex-col gap-4 group">
+        <div class="w-12 h-12 rounded-lg bg-secondary/10 flex items-center justify-center group-hover:bg-secondary transition-colors">
+          <span class="material-symbols-outlined text-secondary group-hover:text-on-secondary" style="font-variation-settings:'FILL' 1;">monitor_heart</span>
+        </div>
+        <h3 class="font-headline-md text-headline-md text-on-surface">Señales Biomédicas</h3>
+        <p class="text-on-surface-variant font-body-md">
+          Diseñada para ECG (electrocardio), EMG (electromiografía) y EEG (encefalografía). Parámetros documentados para cada modalidad.
+        </p>
+      </div>
+      <div class="glass-card p-6 rounded-xl flex flex-col gap-4 group">
+        <div class="w-12 h-12 rounded-lg bg-tertiary/10 flex items-center justify-center group-hover:bg-tertiary transition-colors">
+          <span class="material-symbols-outlined text-tertiary group-hover:text-on-tertiary" style="font-variation-settings:'FILL' 1;">school</span>
+        </div>
+        <h3 class="font-headline-md text-headline-md text-on-surface">Para Estudiantes</h3>
+        <p class="text-on-surface-variant font-body-md">
+          API intuitiva con ejemplos completos. Incluye funciones de prueba (<code class="bg-surface-container px-1 rounded text-tertiary text-sm">utils_extended</code>) para evaluar el rendimiento y la calidad del filtrado.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Start -->
+  <section class="max-w-content-max-width mx-auto px-gutter mb-section-gap" id="inicio-rapido">
+    <div class="flex items-center gap-4 mb-8">
+      <span class="font-label-caps text-primary">02. INICIO RÁPIDO</span>
+      <div class="h-px flex-1 bg-outline-variant"></div>
+    </div>
+    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-8">Primeros pasos con BioFilterLib</h2>
+    <div class="space-y-10">
+
+      <!-- Step 1 -->
+      <div class="flex gap-6">
+        <div class="flex flex-col items-center shrink-0">
+          <div class="w-8 h-8 rounded-full border-2 border-primary flex items-center justify-center text-primary font-bold text-sm">1</div>
+          <div class="w-px flex-1 bg-outline-variant mt-2"></div>
+        </div>
+        <div class="pb-8 flex-1">
+          <h4 class="font-headline-md text-headline-md mb-2">Instalar la Librería</h4>
+          <p class="text-on-surface-variant mb-4">Descarga el repositorio y colócalo en tu carpeta de librerías de Arduino, luego incluye el header principal.</p>
+          <div class="bg-surface-container rounded-lg overflow-hidden border border-outline-variant">
+            <div class="bg-surface-container-high px-4 py-2 flex justify-between items-center">
+              <span class="text-xs font-label-caps text-on-surface-variant">BioFilterLib.h</span>
+              <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+            </div>
+            <pre class="p-4 font-code-block text-code-block text-primary overflow-x-auto">#include &lt;BioFilterLib.h&gt;</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="flex gap-6">
+        <div class="flex flex-col items-center shrink-0">
+          <div class="w-8 h-8 rounded-full border-2 border-primary flex items-center justify-center text-primary font-bold text-sm">2</div>
+          <div class="w-px flex-1 bg-outline-variant mt-2"></div>
+        </div>
+        <div class="pb-8 flex-1">
+          <h4 class="font-headline-md text-headline-md mb-2">Crear un Filtro FIR</h4>
+          <p class="text-on-surface-variant mb-4">Define los coeficientes (genera con Python/scipy o MATLAB) e instancia el filtro con el número de taps y el tamaño de bloque.</p>
+          <div class="bg-surface-container rounded-lg overflow-hidden border border-outline-variant">
+            <div class="bg-surface-container-high px-4 py-2 flex justify-between items-center">
+              <span class="text-xs font-label-caps text-on-surface-variant">FIR_ECG.ino</span>
+              <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+            </div>
+            <pre class="p-4 font-code-block text-code-block text-secondary overflow-x-auto"><span class="text-outline">// Coeficientes pasa-bajas 40 Hz, Fs=960 Hz, 51 taps</span>
+<span class="text-tertiary">const</span> float32_t coeffs[51] = {
+  -0.000722f, -0.001267f, /* ... 47 más ... */
+   0.000722f
+};
+
+<span class="text-outline">// Crear filtro: (coeficientes, numTaps, blockSize)</span>
+FIRFilter filtroECG(coeffs, 51, 1);</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="flex gap-6">
+        <div class="flex flex-col items-center shrink-0">
+          <div class="w-8 h-8 rounded-full border-2 border-primary flex items-center justify-center text-primary font-bold text-sm">3</div>
+        </div>
+        <div class="pb-8 flex-1">
+          <h4 class="font-headline-md text-headline-md mb-2">Filtrar en Tiempo Real</h4>
+          <p class="text-on-surface-variant mb-4">Llama a <code class="bg-surface-container px-1 rounded text-primary">processSample()</code> en el loop de Arduino para filtrado muestra a muestra con latencia mínima.</p>
+          <div class="bg-surface-container rounded-lg overflow-hidden border border-outline-variant">
+            <div class="bg-surface-container-high px-4 py-2 flex justify-between items-center">
+              <span class="text-xs font-label-caps text-on-surface-variant">loop.ino</span>
+              <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+            </div>
+            <pre class="p-4 font-code-block text-code-block text-secondary overflow-x-auto"><span class="text-tertiary">void</span> <span class="text-primary">loop</span>() {
+  <span class="text-outline">// Leer ADC y normalizar a [-1, 1]</span>
+  float32_t muestra = (analogRead(A0) - 2048.0f) / 2048.0f;
+
+  <span class="text-outline">// Aplicar filtro FIR</span>
+  float32_t filtrada = filtroECG.<span class="text-primary">processSample</span>(muestra);
+
+  Serial.println(filtrada);
+  <span class="text-outline">// ~1.04 ms @ 960 Hz</span>
+  delayMicroseconds(1042);
+}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Architecture Diagram -->
+  <section class="max-w-content-max-width mx-auto px-gutter mb-section-gap">
+    <div class="flex items-center gap-4 mb-8">
+      <span class="font-label-caps text-primary">03. ARQUITECTURA</span>
+      <div class="h-px flex-1 bg-outline-variant"></div>
+    </div>
+    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">Herencia desde CMSIS-DSP</h2>
+    <p class="text-on-surface-variant mb-10">BioFilterLib no reemplaza a CMSIS-DSP: lo <strong class="text-on-surface">encapsula</strong>. Cada clase C++ contiene una instancia de la estructura CMSIS correspondiente como miembro privado, exponiendo una API amigable para Arduino.</p>
+
+    <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant p-8 overflow-x-auto">
+      <div class="min-w-[700px]">
+
+        <!-- CMSIS-DSP Top Layer -->
+        <div class="flex justify-center mb-2">
+          <div class="bg-surface-container-high border-2 border-outline rounded-xl px-8 py-3 text-center">
+            <div class="text-[10px] font-label-caps text-outline mb-1">LIBRERÍA EXTERNA (ARM)</div>
+            <div class="font-bold text-on-surface text-lg font-headline-md">CMSIS-DSP</div>
+            <div class="font-code-block text-xs text-on-surface-variant mt-1">#include &lt;arm_math.h&gt;</div>
+          </div>
+        </div>
+
+        <!-- Connectors from CMSIS to structs -->
+        <div class="flex justify-around items-start px-4 mt-0 mb-0">
+          <div class="w-px h-6 bg-outline-variant mx-auto" style="margin-left:16%"></div>
+          <div class="w-px h-6 bg-outline-variant mx-auto"></div>
+          <div class="w-px h-6 bg-outline-variant mx-auto"></div>
+          <div class="w-px h-6 bg-outline-variant mx-auto" style="margin-right:16%"></div>
+        </div>
+
+        <!-- CMSIS Structs Row -->
+        <div class="grid grid-cols-4 gap-3 mb-0">
+          <div class="uml-node bg-surface-container border border-outline-variant rounded-lg p-3 text-center">
+            <div class="font-code-block text-[10px] text-secondary leading-tight">arm_fir_<br/>instance_f32</div>
+          </div>
+          <div class="uml-node bg-surface-container border border-outline-variant rounded-lg p-3 text-center">
+            <div class="font-code-block text-[10px] text-tertiary leading-tight">arm_biquad_casd_<br/>df1_inst_f32</div>
+          </div>
+          <div class="uml-node bg-surface-container border border-outline-variant rounded-lg p-3 text-center">
+            <div class="font-code-block text-[10px] text-primary leading-tight">arm_lms_norm_<br/>instance_f32</div>
+          </div>
+          <div class="uml-node bg-surface-container border border-outline-variant rounded-lg p-3 text-center">
+            <div class="font-code-block text-[10px] text-secondary leading-tight">arm_fir_<br/>instance_f32 ×4</div>
+          </div>
+        </div>
+
+        <!-- Arrow labels -->
+        <div class="grid grid-cols-4 gap-3 text-center">
+          <div class="flex flex-col items-center gap-0">
+            <div class="w-px h-4 bg-outline-variant/60"></div>
+            <div class="text-[9px] font-label-caps text-outline">ENCAPSULA</div>
+            <div class="w-px h-4 bg-outline-variant/60"></div>
+          </div>
+          <div class="flex flex-col items-center gap-0">
+            <div class="w-px h-4 bg-outline-variant/60"></div>
+            <div class="text-[9px] font-label-caps text-outline">ENCAPSULA</div>
+            <div class="w-px h-4 bg-outline-variant/60"></div>
+          </div>
+          <div class="flex flex-col items-center gap-0">
+            <div class="w-px h-4 bg-outline-variant/60"></div>
+            <div class="text-[9px] font-label-caps text-outline">ENCAPSULA</div>
+            <div class="w-px h-4 bg-outline-variant/60"></div>
+          </div>
+          <div class="flex flex-col items-center gap-0">
+            <div class="w-px h-4 bg-outline-variant/60"></div>
+            <div class="text-[9px] font-label-caps text-outline">COMPONE</div>
+            <div class="w-px h-4 bg-outline-variant/60"></div>
+          </div>
+        </div>
+
+        <!-- BioFilterLib Classes Row -->
+        <div class="grid grid-cols-4 gap-3">
+          <a href="filtros-fir-iir.html" class="uml-node bg-surface-container-high border-2 border-secondary/40 rounded-xl p-4 hover:border-secondary transition-all">
+            <div class="text-[9px] font-label-caps text-secondary text-center mb-2">CLASE C++</div>
+            <div class="font-bold text-center text-on-surface font-headline-md text-base border-b border-outline-variant pb-2 mb-2">FIRFilter</div>
+            <div class="font-code-block text-[10px] space-y-1 text-on-surface-variant">
+              <div>- _firInstance</div>
+              <div>- _coeffs[]</div>
+              <div>- _state[]</div>
+              <div class="text-secondary">+ processSample()</div>
+              <div class="text-secondary">+ processBuffer()</div>
+            </div>
+          </a>
+          <a href="filtros-fir-iir.html" class="uml-node bg-surface-container-high border-2 border-tertiary/40 rounded-xl p-4 hover:border-tertiary transition-all">
+            <div class="text-[9px] font-label-caps text-tertiary text-center mb-2">CLASE C++</div>
+            <div class="font-bold text-center text-on-surface font-headline-md text-base border-b border-outline-variant pb-2 mb-2">IIRFilter</div>
+            <div class="font-code-block text-[10px] space-y-1 text-on-surface-variant">
+              <div>- _iirInstance</div>
+              <div>- _coeffs[]</div>
+              <div>- _state[]</div>
+              <div class="text-tertiary">+ processSample()</div>
+              <div class="text-tertiary">+ processBuffer()</div>
+            </div>
+          </a>
+          <a href="filtros-avanzados.html" class="uml-node bg-surface-container-high border-2 border-primary/40 rounded-xl p-4 hover:border-primary transition-all">
+            <div class="text-[9px] font-label-caps text-primary text-center mb-2">CLASE C++</div>
+            <div class="font-bold text-center text-on-surface font-headline-md text-base border-b border-outline-variant pb-2 mb-2">LMSFilter</div>
+            <div class="font-code-block text-[10px] space-y-1 text-on-surface-variant">
+              <div>- _lmsInstance</div>
+              <div>- _coeffs[]</div>
+              <div>- _mu</div>
+              <div class="text-primary">+ processSample()</div>
+              <div class="text-primary">+ setMu()</div>
+            </div>
+          </a>
+          <a href="filtros-avanzados.html" class="uml-node bg-surface-container-high border-2 border-secondary/40 rounded-xl p-4 hover:border-secondary transition-all">
+            <div class="text-[9px] font-label-caps text-secondary text-center mb-2">CLASE C++</div>
+            <div class="font-bold text-center text-on-surface font-headline-md text-base border-b border-outline-variant pb-2 mb-2">WaveletFilter</div>
+            <div class="font-code-block text-[10px] space-y-1 text-on-surface-variant">
+              <div>- *_approxFilter</div>
+              <div>- *_detailFilter</div>
+              <div>- DB-4 coeffs</div>
+              <div class="text-secondary">+ processSample()</div>
+              <div class="text-secondary">+ reconstruct()</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Bottom: BioFilterLib.h -->
+        <div class="mt-6 flex justify-center">
+          <div class="bg-primary/10 border border-primary/30 rounded-xl px-6 py-3 text-center">
+            <div class="text-[10px] font-label-caps text-primary mb-1">PUNTO DE ENTRADA</div>
+            <div class="font-code-block text-sm text-on-surface">#include &lt;BioFilterLib.h&gt;</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Info callout about relationship -->
+    <div class="mt-8 bg-secondary/5 border-l-4 border-secondary p-5 rounded-r-lg flex gap-4">
+      <span class="material-symbols-outlined text-secondary shrink-0">info</span>
+      <div>
+        <h4 class="font-bold text-on-surface mb-1">Composición vs. Herencia</h4>
+        <p class="text-sm text-on-surface-variant">
+          BioFilterLib usa <strong class="text-on-surface">composición</strong>: cada clase C++ tiene como miembro privado la estructura CMSIS-DSP correspondiente. Esto expone la API de Arduino sin sacrificar las optimizaciones ARM nativas. <code class="bg-surface-container px-1 rounded text-secondary text-xs">WaveletFilter</code> es especial: compone <strong class="text-on-surface">4 instancias de FIRFilter</strong> para implementar el banco de filtros de análisis y síntesis Daubechies-4.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter Types Overview -->
+  <section class="max-w-content-max-width mx-auto px-gutter mb-section-gap">
+    <div class="flex items-center gap-4 mb-8">
+      <span class="font-label-caps text-primary">04. FILTROS DISPONIBLES</span>
+      <div class="h-px flex-1 bg-outline-variant"></div>
+    </div>
+    <div class="overflow-hidden border border-outline-variant rounded-xl">
+      <table class="w-full text-left border-collapse">
+        <thead class="bg-surface-container-high">
+          <tr>
+            <th class="p-4 font-label-caps text-label-caps text-primary border-b border-outline-variant">FILTRO</th>
+            <th class="p-4 font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant">TIPO</th>
+            <th class="p-4 font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant">FASE</th>
+            <th class="p-4 font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant">ADAPTATIVO</th>
+            <th class="p-4 font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant hidden md:table-cell">USO TÍPICO</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant/30">
+          <tr class="hover:bg-surface-variant/10 transition-colors">
+            <td class="p-4"><a href="filtros-fir-iir.html" class="font-bold text-secondary hover:underline font-code-block">FIRFilter</a></td>
+            <td class="p-4 text-on-surface-variant text-sm">Respuesta Finita</td>
+            <td class="p-4 text-sm"><span class="text-green-400">Lineal</span></td>
+            <td class="p-4 text-sm text-on-surface-variant">No</td>
+            <td class="p-4 text-on-surface-variant text-sm hidden md:table-cell">Pasa-bajas, anti-aliasing ECG</td>
+          </tr>
+          <tr class="hover:bg-surface-variant/10 transition-colors">
+            <td class="p-4"><a href="filtros-fir-iir.html" class="font-bold text-tertiary hover:underline font-code-block">IIRFilter</a></td>
+            <td class="p-4 text-on-surface-variant text-sm">Biquad Cascada</td>
+            <td class="p-4 text-sm"><span class="text-yellow-400">No lineal</span></td>
+            <td class="p-4 text-sm text-on-surface-variant">No</td>
+            <td class="p-4 text-on-surface-variant text-sm hidden md:table-cell">Notch 50/60 Hz, Butterworth</td>
+          </tr>
+          <tr class="hover:bg-surface-variant/10 transition-colors">
+            <td class="p-4"><a href="filtros-avanzados.html" class="font-bold text-primary hover:underline font-code-block">LMSFilter</a></td>
+            <td class="p-4 text-on-surface-variant text-sm">Mínimos Cuadrados</td>
+            <td class="p-4 text-sm"><span class="text-blue-400">Variable</span></td>
+            <td class="p-4 text-sm text-green-400 font-bold">Sí</td>
+            <td class="p-4 text-on-surface-variant text-sm hidden md:table-cell">Cancelación artefactos, ruido variable</td>
+          </tr>
+          <tr class="hover:bg-surface-variant/10 transition-colors">
+            <td class="p-4"><a href="filtros-avanzados.html" class="font-bold text-secondary hover:underline font-code-block">WaveletFilter</a></td>
+            <td class="p-4 text-on-surface-variant text-sm">Banco de Filtros (DB-4)</td>
+            <td class="p-4 text-sm"><span class="text-green-400">Casi lineal</span></td>
+            <td class="p-4 text-sm text-on-surface-variant">No</td>
+            <td class="p-4 text-on-surface-variant text-sm hidden md:table-cell">Detección QRS, denoising EEG</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Biomedical Signals Section -->
+  <section class="max-w-content-max-width mx-auto px-gutter mb-section-gap">
+    <div class="flex items-center gap-4 mb-8">
+      <span class="font-label-caps text-primary">05. SEÑALES BIOMÉDICAS</span>
+      <div class="h-px flex-1 bg-outline-variant"></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- ECG -->
+      <div class="glass-card rounded-xl p-6">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">monitor_heart</span>
+          <h3 class="font-headline-md text-headline-md text-primary">ECG</h3>
+        </div>
+        <div class="space-y-2 text-sm text-on-surface-variant">
+          <div class="flex justify-between"><span>Rango útil</span><span class="text-on-surface">0.05 – 100 Hz</span></div>
+          <div class="flex justify-between"><span>Muestreo típico</span><span class="text-on-surface">500 – 1000 Hz</span></div>
+          <div class="flex justify-between"><span>Ruido principal</span><span class="text-on-surface">50/60 Hz, deriva</span></div>
+        </div>
+        <div class="mt-4 pt-4 border-t border-outline-variant/30">
+          <p class="text-xs text-on-surface-variant">Filtros recomendados:</p>
+          <div class="flex flex-wrap gap-2 mt-2">
+            <span class="text-xs bg-secondary/10 text-secondary px-2 py-1 rounded font-code-block">IIRFilter (notch)</span>
+            <span class="text-xs bg-primary/10 text-primary px-2 py-1 rounded font-code-block">FIRFilter (LP)</span>
+            <span class="text-xs bg-tertiary/10 text-tertiary px-2 py-1 rounded font-code-block">LMSFilter</span>
+          </div>
+        </div>
+      </div>
+      <!-- EMG -->
+      <div class="glass-card rounded-xl p-6">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL' 1;">exercise</span>
+          <h3 class="font-headline-md text-headline-md text-secondary">EMG</h3>
+        </div>
+        <div class="space-y-2 text-sm text-on-surface-variant">
+          <div class="flex justify-between"><span>Rango útil</span><span class="text-on-surface">10 – 500 Hz</span></div>
+          <div class="flex justify-between"><span>Muestreo típico</span><span class="text-on-surface">1000 – 2000 Hz</span></div>
+          <div class="flex justify-between"><span>Ruido principal</span><span class="text-on-surface">Movimiento, 50/60 Hz</span></div>
+        </div>
+        <div class="mt-4 pt-4 border-t border-outline-variant/30">
+          <p class="text-xs text-on-surface-variant">Filtros recomendados:</p>
+          <div class="flex flex-wrap gap-2 mt-2">
+            <span class="text-xs bg-secondary/10 text-secondary px-2 py-1 rounded font-code-block">FIRFilter (BP)</span>
+            <span class="text-xs bg-primary/10 text-primary px-2 py-1 rounded font-code-block">LMSFilter</span>
+            <span class="text-xs bg-tertiary/10 text-tertiary px-2 py-1 rounded font-code-block">WaveletFilter</span>
+          </div>
+        </div>
+      </div>
+      <!-- EEG -->
+      <div class="glass-card rounded-xl p-6">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="material-symbols-outlined text-tertiary" style="font-variation-settings:'FILL' 1;">psychology</span>
+          <h3 class="font-headline-md text-headline-md text-tertiary">EEG</h3>
+        </div>
+        <div class="space-y-2 text-sm text-on-surface-variant">
+          <div class="flex justify-between"><span>Rango útil</span><span class="text-on-surface">0.1 – 100 Hz</span></div>
+          <div class="flex justify-between"><span>Muestreo típico</span><span class="text-on-surface">256 – 1000 Hz</span></div>
+          <div class="flex justify-between"><span>Ruido principal</span><span class="text-on-surface">Parpadeo (EOG), 50/60 Hz</span></div>
+        </div>
+        <div class="mt-4 pt-4 border-t border-outline-variant/30">
+          <p class="text-xs text-on-surface-variant">Filtros recomendados:</p>
+          <div class="flex flex-wrap gap-2 mt-2">
+            <span class="text-xs bg-tertiary/10 text-tertiary px-2 py-1 rounded font-code-block">WaveletFilter</span>
+            <span class="text-xs bg-secondary/10 text-secondary px-2 py-1 rounded font-code-block">IIRFilter</span>
+            <span class="text-xs bg-primary/10 text-primary px-2 py-1 rounded font-code-block">LMSFilter (EOG)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="relative mx-gutter mb-section-gap rounded-3xl overflow-hidden bg-primary-container/5 border border-primary/20 py-16">
+    <div class="relative z-10 text-center max-w-2xl mx-auto px-6">
+      <h2 class="font-headline-lg text-headline-lg mb-6">¿Listo para procesar señales biomédicas?</h2>
+      <p class="text-on-surface-variant mb-10">Explora la documentación completa de cada filtro con fundamentos matemáticos, diagramas y ejemplos listos para Arduino Due.</p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="filtros-fir-iir.html" class="bg-primary text-on-primary font-bold px-8 py-3 rounded-full transition-transform hover:scale-105">
+          Filtros FIR &amp; IIR
+        </a>
+        <a href="filtros-avanzados.html" class="bg-surface-bright text-on-surface border border-outline px-8 py-3 rounded-full transition-transform hover:scale-105">
+          Wavelet &amp; LMS
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="lg:ml-sidebar-width border-t border-outline-variant bg-background">
+  <div class="max-w-content-max-width mx-auto py-10 px-gutter flex flex-col md:flex-row justify-between items-center gap-4">
+    <div class="flex flex-col items-center md:items-start gap-1">
+      <span class="font-headline-md text-headline-md font-bold text-primary">BioFilterLib</span>
+      <p class="font-label-caps text-label-caps text-on-surface-variant text-[10px]">© 2024 Sergio Moreno. MIT License · Arduino Due</p>
+    </div>
+    <div class="flex gap-6">
+      <a href="filtros-fir-iir.html" class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors">Filtros</a>
+      <a href="ejemplos.html" class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors">Ejemplos</a>
+      <a href="api.html" class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors">API</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Mobile Bottom Nav -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full bg-surface-container-low border-t border-outline-variant flex justify-around items-center py-2 px-4 z-50">
+  <a href="index.html" class="flex flex-col items-center gap-0.5 text-primary">
+    <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">home</span>
+    <span class="text-[9px] font-label-caps">INICIO</span>
+  </a>
+  <a href="filtros-fir-iir.html" class="flex flex-col items-center gap-0.5 text-on-surface-variant">
+    <span class="material-symbols-outlined">filter_alt</span>
+    <span class="text-[9px] font-label-caps">FILTROS</span>
+  </a>
+  <a href="ejemplos.html" class="flex flex-col items-center gap-0.5 text-on-surface-variant">
+    <span class="material-symbols-outlined">lightbulb</span>
+    <span class="text-[9px] font-label-caps">EJEMPLOS</span>
+  </a>
+  <a href="api.html" class="flex flex-col items-center gap-0.5 text-on-surface-variant">
+    <span class="material-symbols-outlined">menu_book</span>
+    <span class="text-[9px] font-label-caps">API</span>
+  </a>
+</nav>
+
+<!-- Scroll to top FAB -->
+<button id="scrollToTop" class="fixed bottom-20 lg:bottom-8 right-6 w-12 h-12 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 hover:-translate-y-1 z-60">
+  <span class="material-symbols-outlined">arrow_upward</span>
+</button>
+
+<script>
+  // Scroll to top
+  const scrollBtn = document.getElementById('scrollToTop');
+  window.addEventListener('scroll', () => {
+    const show = window.scrollY > 400;
+    scrollBtn.style.opacity = show ? '1' : '0';
+    scrollBtn.style.pointerEvents = show ? 'auto' : 'none';
+    // Nav blur on scroll
+    document.getElementById('topnav').classList.toggle('bg-background/80', window.scrollY > 20);
+    document.getElementById('topnav').classList.toggle('backdrop-blur-md', window.scrollY > 20);
+  });
+  scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // Copy code buttons
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const code = this.closest('.rounded-lg').querySelector('pre').innerText;
+      navigator.clipboard.writeText(code).catch(() => {});
+      const orig = this.innerText;
+      this.innerText = 'check';
+      this.classList.add('text-primary');
+      setTimeout(() => { this.innerText = orig; this.classList.remove('text-primary'); }, 2000);
+    });
+  });
 </script>
-<div id="container">
-<div id="doc-content">
-<!-- window showing the filter options -->
-<div id="MSearchSelectWindow"
-     onmouseover="return searchBox.OnSearchSelectShow()"
-     onmouseout="return searchBox.OnSearchSelectHide()"
-     onkeydown="return searchBox.OnSearchSelectKey(event)">
-</div>
-
-<!-- iframe showing the search results (closed by default) -->
-<div id="MSearchResultsWindow">
-<div id="MSearchResults">
-<div class="SRPage">
-<div id="SRIndex">
-<div id="SRResults"></div>
-<div class="SRStatus" id="Loading">Loading...</div>
-<div class="SRStatus" id="Searching">Searching...</div>
-<div class="SRStatus" id="NoMatches">No Matches</div>
-</div>
-</div>
-</div>
-</div>
-
-<div class="header">
-  <div class="headertitle"><div class="title">BioFilterLib Documentation</div></div>
-</div><!--header-->
-<div class="contents">
-<a href="doxygen_crawl.html"></a>
-</div><!-- contents -->
-</div><!-- doc-content -->
-</div><!-- container -->
-<!-- start footer part -->
-<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
-  <ul>
-    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
-  </ul>
-</div>
 </body>
 </html>

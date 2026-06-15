@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BioFilterLib | Filtros FIR &amp; IIR</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@600;700;800&family=JetBrains+Mono:wght@400;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"/>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+<style>
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle;}
+  .glass-panel{background:rgba(19,27,46,0.7);backdrop-filter:blur(12px);border:1px solid rgba(107,216,203,0.1);}
+  .math-block{font-family:'JetBrains Mono',monospace;background:rgba(107,216,203,0.04);border-left:3px solid #6bd8cb;padding:1.25rem 1.5rem;border-radius:0 0.5rem 0.5rem 0;}
+  .math-block-iir{background:rgba(208,188,255,0.04);border-left-color:#d0bcff;}
+  ::-webkit-scrollbar{width:8px;height:8px;}
+  ::-webkit-scrollbar-track{background:#0b1326;}
+  ::-webkit-scrollbar-thumb{background:#2d3449;border-radius:4px;}
+  .sidebar-scroll::-webkit-scrollbar{width:4px;}
+  .sidebar-scroll::-webkit-scrollbar-thumb{background:#3d4947;border-radius:10px;}
+  body{scroll-behavior:smooth;}
+  .katex-display{overflow-x:auto;overflow-y:hidden;padding:0.5rem 0;}
+</style>
+<script id="tailwind-config">
+  tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-primary":"#003732","on-secondary-fixed":"#001e2f","error-container":"#93000a","on-primary-fixed":"#00201d","on-error":"#690005","inverse-primary":"#006a61","secondary-fixed-dim":"#89ceff","on-tertiary-container":"#340080","on-tertiary-fixed":"#23005c","primary-fixed-dim":"#6bd8cb","on-secondary-container":"#00344e","surface-variant":"#2d3449","surface-container-lowest":"#060e20","on-primary-container":"#00302b","secondary":"#89ceff","on-surface":"#dae2fd","on-secondary":"#00344d","inverse-on-surface":"#283044","surface-container-high":"#222a3d","surface-tint":"#6bd8cb","on-surface-variant":"#bcc9c6","on-tertiary":"#3c0091","tertiary-fixed":"#e9ddff","primary-fixed":"#89f5e7","on-error-container":"#ffdad6","background":"#0b1326","outline":"#879391","inverse-surface":"#dae2fd","secondary-fixed":"#c9e6ff","error":"#ffb4ab","on-primary-fixed-variant":"#005049","on-background":"#dae2fd","on-tertiary-fixed-variant":"#5516be","surface-container-low":"#131b2e","secondary-container":"#00a2e6","tertiary-container":"#a078ff","primary-container":"#29a195","primary":"#6bd8cb","surface-dim":"#0b1326","on-secondary-fixed-variant":"#004c6e","surface-container-highest":"#2d3449","surface-bright":"#31394d","tertiary":"#d0bcff","surface":"#0b1326","outline-variant":"#3d4947","tertiary-fixed-dim":"#d0bcff","surface-container":"#171f33"},borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},spacing:{"section-gap":"4rem","sidebar-width":"280px","base-unit":"4px","gutter":"24px","content-max-width":"800px"},fontFamily:{"body-lg":["Inter"],"headline-lg":["Geist"],"label-caps":["JetBrains Mono"],"display":["Geist"],"body-md":["Inter"],"headline-md":["Geist"],"code-block":["JetBrains Mono"]},fontSize:{"body-lg":["18px",{"lineHeight":"1.75","fontWeight":"400"}],"headline-lg":["32px",{"lineHeight":"1.2","fontWeight":"600"}],"label-caps":["12px",{"lineHeight":"1.0","letterSpacing":"0.05em","fontWeight":"600"}],"display":["48px",{"lineHeight":"1.1","letterSpacing":"-0.02em","fontWeight":"700"}],"body-md":["16px",{"lineHeight":"1.6","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"1.3","fontWeight":"600"}],"code-block":["14px",{"lineHeight":"1.5","fontWeight":"400"}]}}}}
+</script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+
+<!-- Top Navigation -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-background border-b border-outline-variant" id="topnav">
+  <div class="flex items-center gap-8">
+    <a href="index.html" class="font-headline-md text-headline-md text-primary font-extrabold tracking-tighter">BioFilterLib</a>
+    <div class="hidden md:flex gap-6">
+      <a href="index.html" class="font-body-md text-on-surface-variant hover:text-primary transition-colors">Docs</a>
+      <a href="ejemplos.html" class="font-body-md text-on-surface-variant hover:text-primary transition-colors">Ejemplos</a>
+      <a href="api.html" class="font-body-md text-on-surface-variant hover:text-primary transition-colors">API</a>
+    </div>
+  </div>
+  <button onclick="document.getElementById('mobilemenu').classList.toggle('hidden')" class="md:hidden p-2 text-on-surface-variant">
+    <span class="material-symbols-outlined">menu</span>
+  </button>
+</nav>
+<div id="mobilemenu" class="hidden fixed top-16 left-0 w-full bg-surface-container-low border-b border-outline-variant z-40 p-4 flex flex-col gap-2">
+  <a href="index.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">info</span>Introducción</a>
+  <a href="filtros-fir-iir.html" class="flex items-center gap-3 px-3 py-2 text-primary bg-primary-container/10 font-bold rounded-lg"><span class="material-symbols-outlined">filter_alt</span>Filtros FIR &amp; IIR</a>
+  <a href="filtros-avanzados.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">analytics</span>Wavelet &amp; LMS</a>
+  <a href="ejemplos.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">lightbulb</span>Ejemplos</a>
+  <a href="api.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">menu_book</span>API Reference</a>
+</div>
+
+<!-- Sidebar -->
+<aside class="hidden lg:flex flex-col border-r border-outline-variant w-sidebar-width fixed left-0 top-16 h-[calc(100vh-64px)] p-4 bg-surface-container-low overflow-y-auto sidebar-scroll z-40">
+  <div class="flex items-center gap-3 mb-8">
+    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+      <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">biotech</span>
+    </div>
+    <div>
+      <h3 class="font-headline-md text-on-surface text-lg leading-tight">Library Docs</h3>
+      <p class="text-on-surface-variant text-xs font-label-caps">v1.0.0 · Arduino Due</p>
+    </div>
+  </div>
+  <nav class="flex flex-col gap-1 flex-grow">
+    <a href="index.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 transition-colors rounded-lg">
+      <span class="material-symbols-outlined">info</span><span>Introducción</span>
+    </a>
+    <div class="mt-3 mb-1 px-3"><span class="text-[10px] font-bold text-outline tracking-widest uppercase">Filtros Digitales</span></div>
+    <a href="filtros-fir-iir.html" class="flex items-center gap-3 px-3 py-2 text-primary bg-primary-container/10 font-bold rounded-lg">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">filter_alt</span><span>FIR &amp; IIR</span>
+    </a>
+    <!-- FIR sub-items -->
+    <a href="#fir" class="flex items-center gap-2 pl-10 py-1.5 text-on-surface-variant hover:text-primary text-sm transition-colors">
+      <span class="text-xs">→</span> FIRFilter
+    </a>
+    <a href="#iir" class="flex items-center gap-2 pl-10 py-1.5 text-on-surface-variant hover:text-primary text-sm transition-colors">
+      <span class="text-xs">→</span> IIRFilter
+    </a>
+    <a href="#comparativa" class="flex items-center gap-2 pl-10 py-1.5 text-on-surface-variant hover:text-primary text-sm transition-colors">
+      <span class="text-xs">→</span> Comparativa
+    </a>
+    <a href="filtros-avanzados.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 transition-colors rounded-lg">
+      <span class="material-symbols-outlined">analytics</span><span>Wavelet &amp; LMS</span>
+    </a>
+    <div class="mt-3 mb-1 px-3"><span class="text-[10px] font-bold text-outline tracking-widest uppercase">Guías</span></div>
+    <a href="ejemplos.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 transition-colors rounded-lg">
+      <span class="material-symbols-outlined">lightbulb</span><span>Ejemplos</span>
+    </a>
+    <a href="api.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 transition-colors rounded-lg">
+      <span class="material-symbols-outlined">menu_book</span><span>API Reference</span>
+    </a>
+  </nav>
+  <div class="mt-auto pt-6 border-t border-outline-variant">
+    <a href="https://github.com" target="_blank" class="w-full bg-primary text-on-primary py-2 px-4 rounded-lg font-bold hover:brightness-110 transition-all flex items-center justify-center gap-2">
+      <span class="material-symbols-outlined text-sm">terminal</span> GitHub
+    </a>
+  </div>
+</aside>
+
+<!-- Main Content -->
+<main class="lg:ml-sidebar-width pt-24 pb-24 px-6 lg:px-0 flex justify-center">
+<div class="max-w-content-max-width w-full">
+
+  <!-- Breadcrumbs -->
+  <nav class="flex items-center gap-2 font-label-caps text-label-caps text-outline mb-8">
+    <a href="index.html" class="hover:text-primary transition-colors">DOCS</a>
+    <span>/</span>
+    <span>FILTROS DIGITALES</span>
+    <span>/</span>
+    <span class="text-primary">FIR &amp; IIR</span>
+  </nav>
+
+  <!-- Hero -->
+  <section class="mb-12">
+    <h1 class="font-display text-display text-on-surface mb-4">Filtros FIR e IIR</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+      Los filtros FIR (Respuesta al Impulso Finita) e IIR (Infinita) son los pilares del procesamiento de señales digitales biomédicas. BioFilterLib los implementa como clases C++ que encapsulan las estructuras optimizadas de <strong class="text-primary">CMSIS-DSP</strong> para el ARM Cortex-M3.
+    </p>
+  </section>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- FIR FILTER SECTION                         -->
+  <!-- ══════════════════════════════════════════ -->
+  <article id="fir" class="mb-section-gap scroll-mt-24">
+
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-1 h-8 bg-secondary rounded-full"></div>
+      <h2 class="font-headline-lg text-headline-lg text-on-surface">FIRFilter — Respuesta al Impulso Finita</h2>
+    </div>
+
+    <!-- CMSIS Inheritance Box -->
+    <div class="glass-panel rounded-xl p-5 mb-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+      <div class="shrink-0">
+        <div class="text-[9px] font-label-caps text-outline mb-1">CMSIS-DSP SUBYACENTE</div>
+        <code class="font-code-block text-sm text-secondary bg-surface-container px-3 py-1.5 rounded">arm_fir_instance_f32</code>
+      </div>
+      <div class="flex-1 h-px sm:h-auto sm:w-px bg-outline-variant mx-2"></div>
+      <div class="flex-1">
+        <p class="text-sm text-on-surface-variant">
+          La clase <strong class="text-secondary">FIRFilter</strong> contiene como miembro privado una instancia de <code class="text-secondary text-xs">arm_fir_instance_f32</code> e invoca <code class="text-secondary text-xs">arm_fir_f32()</code> para el procesamiento. Los 4 archivos <code class="text-xs text-on-surface">arm_fir_f32.c</code> / <code class="text-xs text-on-surface">arm_fir_init_f32.c</code> están incluidos en <code class="text-xs text-on-surface">src/utils/</code>.
+        </p>
+      </div>
+    </div>
+
+    <!-- Math Theory -->
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-4 flex items-center gap-2">
+      <span class="material-symbols-outlined text-secondary">functions</span> Fundamento Matemático
+    </h3>
+    <p class="text-on-surface-variant mb-4">
+      Un filtro FIR de orden $N$ calcula la convolución discreta entre la señal de entrada $x[n]$ y sus $N$ coeficientes $b[k]$ (también llamados "taps"):
+    </p>
+    <div class="math-block mb-6">
+      $$y[n] = \sum_{k=0}^{N-1} b[k] \cdot x[n-k]$$
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div class="bg-surface-container rounded-lg p-4 border border-outline-variant">
+        <div class="font-code-block text-secondary text-sm mb-1">$y[n]$</div>
+        <p class="text-xs text-on-surface-variant">Muestra de salida en el instante $n$</p>
+      </div>
+      <div class="bg-surface-container rounded-lg p-4 border border-outline-variant">
+        <div class="font-code-block text-secondary text-sm mb-1">$b[k]$</div>
+        <p class="text-xs text-on-surface-variant">Coeficientes del filtro (pesos de la convolución). Se calculan con scipy/MATLAB.</p>
+      </div>
+      <div class="bg-surface-container rounded-lg p-4 border border-outline-variant">
+        <div class="font-code-block text-secondary text-sm mb-1">$x[n-k]$</div>
+        <p class="text-xs text-on-surface-variant">Muestra de entrada retrasada $k$ instantes. El filtro necesita $N-1$ muestras pasadas.</p>
+      </div>
+    </div>
+
+    <!-- Key Properties -->
+    <div class="space-y-3 mb-8">
+      <div class="flex gap-4 p-4 glass-panel rounded-xl">
+        <span class="material-symbols-outlined text-secondary shrink-0">check_circle</span>
+        <div>
+          <strong class="text-on-surface">Siempre estable</strong>
+          <p class="text-sm text-on-surface-variant mt-0.5">No tiene realimentación, por lo que no puede volverse inestable independientemente de los coeficientes.</p>
+        </div>
+      </div>
+      <div class="flex gap-4 p-4 glass-panel rounded-xl">
+        <span class="material-symbols-outlined text-secondary shrink-0">check_circle</span>
+        <div>
+          <strong class="text-on-surface">Fase lineal</strong>
+          <p class="text-sm text-on-surface-variant mt-0.5">Con coeficientes simétricos, el retardo de grupo es constante en todas las frecuencias. <strong class="text-on-surface">Crítico para preservar la morfología del ECG/EEG.</strong></p>
+        </div>
+      </div>
+      <div class="flex gap-4 p-4 glass-panel rounded-xl border-l-2 border-yellow-500/50">
+        <span class="material-symbols-outlined text-yellow-400 shrink-0">warning</span>
+        <div>
+          <strong class="text-on-surface">Mayor carga computacional</strong>
+          <p class="text-sm text-on-surface-variant mt-0.5">Para la misma selectividad, un FIR necesita más coeficientes que un IIR. En Arduino Due a 84 MHz es perfectamente viable para tasas de muestreo típicas.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Constructor -->
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-4 flex items-center gap-2">
+      <span class="material-symbols-outlined text-secondary">terminal</span> Constructor
+    </h3>
+    <div class="rounded-xl overflow-hidden border border-outline-variant bg-surface-container-lowest mb-4">
+      <div class="flex justify-between items-center px-4 py-3 bg-surface-container-high border-b border-outline-variant">
+        <span class="font-code-block text-xs text-secondary">FIRFilter.h</span>
+        <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+      </div>
+      <pre class="p-5 font-code-block text-code-block text-on-surface overflow-x-auto"><span class="text-secondary">FIRFilter</span>(<span class="text-tertiary">float32_t</span>* coeffs, <span class="text-tertiary">uint16_t</span> numTaps, <span class="text-tertiary">uint16_t</span> blockSize);</pre>
+    </div>
+    <div class="overflow-hidden border border-outline-variant rounded-xl mb-8">
+      <table class="w-full text-left border-collapse">
+        <thead class="bg-surface-container-high">
+          <tr>
+            <th class="p-3 font-label-caps text-label-caps text-secondary border-b border-outline-variant text-[10px]">PARÁMETRO</th>
+            <th class="p-3 font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant text-[10px]">TIPO</th>
+            <th class="p-3 font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant text-[10px]">DESCRIPCIÓN</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant/30 text-sm">
+          <tr><td class="p-3 font-code-block text-secondary">coeffs</td><td class="p-3 text-on-surface-variant font-code-block">float32_t*</td><td class="p-3 text-on-surface-variant">Array de coeficientes del filtro. Debe permanecer válido mientras exista el objeto.</td></tr>
+          <tr><td class="p-3 font-code-block text-secondary">numTaps</td><td class="p-3 text-on-surface-variant font-code-block">uint16_t</td><td class="p-3 text-on-surface-variant">Número de coeficientes (= orden + 1). Típico para bioseñales: 11–101.</td></tr>
+          <tr><td class="p-3 font-code-block text-secondary">blockSize</td><td class="p-3 text-on-surface-variant font-code-block">uint16_t</td><td class="p-3 text-on-surface-variant">Tamaño del bloque CMSIS-DSP. Usar <code class="text-secondary">1</code> para tiempo real; potencias de 2 para batch.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="bg-primary/5 border-l-4 border-primary p-4 rounded-r-lg mb-8 text-sm text-on-surface-variant">
+      <strong class="text-on-surface">Memoria requerida:</strong> El buffer de estado interno tiene tamaño <code class="text-primary">numTaps + blockSize - 1</code> elementos <code class="text-primary">float32_t</code> (4 bytes c/u). Para 51 taps + blockSize=1: <strong class="text-on-surface">204 bytes</strong>.
+    </div>
+
+    <!-- Methods -->
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-4 flex items-center gap-2">
+      <span class="material-symbols-outlined text-secondary">code</span> Métodos
+    </h3>
+    <div class="space-y-4 mb-8">
+      <div class="rounded-xl overflow-hidden border border-outline-variant bg-surface-container-lowest">
+        <div class="flex justify-between items-center px-4 py-3 bg-surface-container-high border-b border-outline-variant">
+          <span class="font-code-block text-xs text-secondary">processSample — tiempo real</span>
+          <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+        </div>
+        <pre class="p-5 font-code-block text-code-block overflow-x-auto"><span class="text-tertiary">float32_t</span> <span class="text-primary">processSample</span>(<span class="text-tertiary">float32_t</span> input);</pre>
+        <div class="px-5 pb-4 text-sm text-on-surface-variant">Procesa una muestra individual manteniendo el estado interno. Ideal para el <code class="text-secondary">loop()</code> de Arduino. <strong class="text-on-surface">Retorna:</strong> la muestra filtrada.</div>
+      </div>
+      <div class="rounded-xl overflow-hidden border border-outline-variant bg-surface-container-lowest">
+        <div class="flex justify-between items-center px-4 py-3 bg-surface-container-high border-b border-outline-variant">
+          <span class="font-code-block text-xs text-secondary">processBuffer — por lotes</span>
+          <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+        </div>
+        <pre class="p-5 font-code-block text-code-block overflow-x-auto"><span class="text-tertiary">void</span> <span class="text-primary">processBuffer</span>(<span class="text-tertiary">float32_t</span>* inputArray, <span class="text-tertiary">float32_t</span>* outputArray, <span class="text-tertiary">uint32_t</span> length);</pre>
+        <div class="px-5 pb-4 text-sm text-on-surface-variant">Procesa un bloque completo. Mayor throughput gracias a las instrucciones SIMD del Cortex-M3. Los arrays no deben solaparse en memoria.</div>
+      </div>
+    </div>
+
+    <!-- Full Code Example -->
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-4 flex items-center gap-2">
+      <span class="material-symbols-outlined text-secondary">lightbulb</span> Ejemplo Completo — Filtro Pasa-Bajas ECG
+    </h3>
+    <div class="rounded-xl overflow-hidden border border-outline-variant bg-surface-container-lowest mb-4">
+      <div class="flex justify-between items-center px-4 py-3 bg-surface-container-high border-b border-outline-variant">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary text-sm">terminal</span>
+          <span class="font-code-block text-xs text-on-surface">FIR_ECG_lowpass.ino</span>
+        </div>
+        <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+      </div>
+      <pre class="p-5 font-code-block text-code-block text-[#89f5e7] leading-relaxed overflow-x-auto"><span class="text-outline italic">// FIR Pasa-Bajas 40 Hz, Fs=960 Hz, 51 taps (Ventana Hamming)</span>
+<span class="text-outline italic">// Generado con: scipy.signal.firwin(51, 40, fs=960, window='hamming')</span>
+<span class="text-tertiary">#include</span> <span class="text-secondary">&lt;BioFilterLib.h&gt;</span>
+
+<span class="text-tertiary">const</span> float32_t coeffs[51] = {
+  -0.000722f, -0.001267f, -0.001540f, -0.000996f,  0.000738f,
+   0.003838f,  0.008015f,  0.012478f,  0.015748f,  0.015829f,
+   0.010561f,  0.000000f, -0.015052f, -0.031823f, -0.046489f,
+  -0.054661f, -0.052049f, -0.035751f,  0.000000f,  0.049774f,
+   0.108029f,  0.168259f,  0.221893f,  0.261089f,  0.280000f,
+   <span class="text-outline">/* ... simétrico ... */</span>
+  -0.000722f
+};
+
+FIRFilter filtroECG(coeffs, 51, 1); <span class="text-outline italic">// blockSize=1 para tiempo real</span>
+
+<span class="text-tertiary">void</span> <span class="text-primary">setup</span>() {
+  Serial.begin(115200);
+  analogReadResolution(12); <span class="text-outline italic">// 12 bits en Arduino Due</span>
+}
+
+<span class="text-tertiary">void</span> <span class="text-primary">loop</span>() {
+  <span class="text-outline italic">// Leer ADC y normalizar a rango [-1, 1]</span>
+  float32_t raw = (analogRead(A0) - 2048.0f) / 2048.0f;
+
+  <span class="text-outline italic">// Aplicar filtro FIR</span>
+  float32_t filtrada = filtroECG.<span class="text-primary">processSample</span>(raw);
+
+  <span class="text-outline italic">// Compensar retardo de grupo: (numTaps-1)/2 = 25 muestras</span>
+  Serial.print(raw,   6);  Serial.print(",");
+  Serial.println(filtrada, 6);
+
+  delayMicroseconds(1042); <span class="text-outline italic">// ~960 Hz</span>
+}</pre>
+    </div>
+    <div class="bg-secondary/5 border-l-4 border-secondary p-4 rounded-r-lg text-sm text-on-surface-variant">
+      <strong class="text-on-surface">Retardo de Grupo (Group Delay):</strong> Un FIR simétrico introduce un retardo constante de $(N-1)/2$ muestras. Para 51 taps = <strong class="text-on-surface">25 muestras = 26 ms a 960 Hz</strong>. Este retardo es constante en todas las frecuencias (fase lineal).
+    </div>
+  </article>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- IIR FILTER SECTION                         -->
+  <!-- ══════════════════════════════════════════ -->
+  <article id="iir" class="mb-section-gap scroll-mt-24">
+
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-1 h-8 bg-tertiary rounded-full"></div>
+      <h2 class="font-headline-lg text-headline-lg text-on-surface">IIRFilter — Secciones Biquad en Cascada</h2>
+    </div>
+
+    <!-- CMSIS Inheritance Box -->
+    <div class="glass-panel rounded-xl p-5 mb-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+      <div class="shrink-0">
+        <div class="text-[9px] font-label-caps text-outline mb-1">CMSIS-DSP SUBYACENTE</div>
+        <code class="font-code-block text-sm text-tertiary bg-surface-container px-3 py-1.5 rounded">arm_biquad_casd_df1_inst_f32</code>
+      </div>
+      <div class="flex-1 h-px sm:h-auto sm:w-px bg-outline-variant mx-2"></div>
+      <div class="flex-1">
+        <p class="text-sm text-on-surface-variant">
+          La clase <strong class="text-tertiary">IIRFilter</strong> encapsula una instancia de <code class="text-tertiary text-xs">arm_biquad_casd_df1_inst_f32</code> e invoca <code class="text-tertiary text-xs">arm_biquad_cascade_df1_f32()</code>. Implementa la forma directa I (Direct Form 1) para máxima estabilidad numérica.
+        </p>
+      </div>
+    </div>
+
+    <!-- Math Theory -->
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-4 flex items-center gap-2">
+      <span class="material-symbols-outlined text-tertiary">functions</span> Fundamento Matemático — Sección Biquad
+    </h3>
+    <p class="text-on-surface-variant mb-4">
+      Cada sección biquad implementa un filtro de segundo orden con coeficientes de avance ($b$) y de realimentación ($a$):
+    </p>
+    <div class="math-block math-block-iir mb-4">
+      $$y[n] = b_0 x[n] + b_1 x[n-1] + b_2 x[n-2] \;-\; a_1 y[n-1] - a_2 y[n-2]$$
+    </div>
+    <p class="text-on-surface-variant mb-4">
+      Para un filtro de orden $2M$, se encadenan $M$ secciones biquad, donde la salida de cada sección es la entrada de la siguiente:
+    </p>
+    <div class="math-block math-block-iir mb-6">
+      $$y_k[n] = b_{0,k}\,x_k[n] + b_{1,k}\,x_k[n-1] + b_{2,k}\,x_k[n-2] - a_{1,k}\,y_k[n-1] - a_{2,k}\,y_k[n-2]$$
+    </div>
+    <p class="text-sm text-outline mb-8">donde $x_{k+1}[n] = y_k[n]$: la salida de la etapa $k$ alimenta la entrada de la etapa $k+1$.</p>
+
+    <!-- Coefficient Format Callout -->
+    <div class="bg-tertiary/5 border-l-4 border-tertiary p-5 rounded-r-lg mb-8">
+      <div class="flex gap-3 items-start">
+        <span class="material-symbols-outlined text-tertiary shrink-0">data_array</span>
+        <div>
+          <h4 class="font-bold text-on-surface mb-2">Formato de Coeficientes para CMSIS-DSP</h4>
+          <p class="text-sm text-on-surface-variant mb-3">Cada sección biquad necesita 5 coeficientes en el orden: <code class="text-tertiary">&#123; b0, b1, b2, a1, a2 &#125;</code>. El coeficiente $a_0 = 1$ se omite. Para un filtro de 2 etapas, el array tiene 10 elementos.</p>
+          <div class="rounded-lg overflow-hidden border border-outline-variant bg-surface-container-lowest">
+            <div class="px-4 py-2 bg-surface-container-high border-b border-outline-variant flex justify-between items-center">
+              <span class="font-code-block text-xs text-tertiary">formato_coeficientes.ino</span>
+              <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-tertiary">content_copy</button>
+            </div>
+            <pre class="p-4 font-code-block text-code-block overflow-x-auto"><span class="text-outline">// Filtro Notch 60 Hz, Fs=960 Hz, Q=30 — 1 sección biquad</span>
+<span class="text-outline">// scipy: b,a = signal.iirnotch(60, 30, 960)</span>
+<span class="text-outline">// Convertir a SOS con signal.tf2sos(b, a)</span>
+<span class="text-tertiary">const</span> float32_t notch60Hz[5] = {
+  <span class="text-primary">0.99034f</span>,  <span class="text-outline">// b0</span>
+ <span class="text-primary">-1.80193f</span>,  <span class="text-outline">// b1</span>
+  <span class="text-primary">0.99034f</span>,  <span class="text-outline">// b2</span>
+  <span class="text-secondary">1.80193f</span>,  <span class="text-outline">// a1  (signo invertido respecto a scipy)</span>
+ <span class="text-secondary">-0.98068f</span>   <span class="text-outline">// a2  (signo invertido respecto a scipy)</span>
+};</pre>
+          </div>
+          <p class="text-xs text-outline mt-3">⚠️ CMSIS-DSP usa los coeficientes $a$ con signo <strong class="text-on-surface">invertido</strong> respecto a la convención de scipy/MATLAB. Verificar al generar los coeficientes.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key Properties -->
+    <div class="space-y-3 mb-8">
+      <div class="flex gap-4 p-4 glass-panel rounded-xl">
+        <span class="material-symbols-outlined text-tertiary shrink-0">check_circle</span>
+        <div><strong class="text-on-surface">Alta selectividad con bajo orden</strong>
+          <p class="text-sm text-on-surface-variant mt-0.5">Un filtro notch IIR de 2do orden logra la misma atenuación que un FIR de 200+ coeficientes. Ideal para eliminar 50/60 Hz de interferencia eléctrica.</p>
+        </div>
+      </div>
+      <div class="flex gap-4 p-4 glass-panel rounded-xl">
+        <span class="material-symbols-outlined text-tertiary shrink-0">check_circle</span>
+        <div><strong class="text-on-surface">Menor uso de memoria y CPU</strong>
+          <p class="text-sm text-on-surface-variant mt-0.5">Buffer de estado: solo <code class="text-tertiary">4 × numStages</code> elementos float32. Para 1 etapa = <strong class="text-on-surface">16 bytes</strong>. Retardo de grupo mínimo (~0 muestras para notch).</p>
+        </div>
+      </div>
+      <div class="flex gap-4 p-4 glass-panel rounded-xl border-l-2 border-yellow-500/50">
+        <span class="material-symbols-outlined text-yellow-400 shrink-0">warning</span>
+        <div><strong class="text-on-surface">Fase no lineal</strong>
+          <p class="text-sm text-on-surface-variant mt-0.5">El retardo de grupo varía con la frecuencia. Puede distorsionar la morfología de señales como el complejo QRS del ECG. Para análisis morfológico, preferir FIR.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Constructor -->
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-4">Constructor</h3>
+    <div class="rounded-xl overflow-hidden border border-outline-variant bg-surface-container-lowest mb-4">
+      <div class="flex justify-between items-center px-4 py-3 bg-surface-container-high border-b border-outline-variant">
+        <span class="font-code-block text-xs text-tertiary">IIRFilter.h</span>
+        <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+      </div>
+      <pre class="p-5 font-code-block text-code-block overflow-x-auto"><span class="text-tertiary">IIRFilter</span>(<span class="text-tertiary">float32_t</span>* coeffs, <span class="text-tertiary">uint8_t</span> numStages, <span class="text-tertiary">uint16_t</span> blockSize);</pre>
+    </div>
+    <div class="overflow-hidden border border-outline-variant rounded-xl mb-8">
+      <table class="w-full text-left border-collapse">
+        <thead class="bg-surface-container-high">
+          <tr>
+            <th class="p-3 font-label-caps text-label-caps text-tertiary border-b border-outline-variant text-[10px]">PARÁMETRO</th>
+            <th class="p-3 font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant text-[10px]">TIPO</th>
+            <th class="p-3 font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant text-[10px]">DESCRIPCIÓN</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant/30 text-sm">
+          <tr><td class="p-3 font-code-block text-tertiary">coeffs</td><td class="p-3 text-on-surface-variant font-code-block">float32_t*</td><td class="p-3 text-on-surface-variant">Array con <code class="text-tertiary">numStages × 5</code> coeficientes en orden <code class="text-tertiary">&#123;b0, b1, b2, a1, a2&#125;</code> por etapa.</td></tr>
+          <tr><td class="p-3 font-code-block text-tertiary">numStages</td><td class="p-3 text-on-surface-variant font-code-block">uint8_t</td><td class="p-3 text-on-surface-variant">Número de secciones biquad. Un filtro de orden $2M$ necesita $M$ etapas.</td></tr>
+          <tr><td class="p-3 font-code-block text-tertiary">blockSize</td><td class="p-3 text-on-surface-variant font-code-block">uint16_t</td><td class="p-3 text-on-surface-variant">Tamaño del bloque CMSIS-DSP. Usar <code class="text-tertiary">1</code> para tiempo real.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Full Code Example -->
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-4 flex items-center gap-2">
+      <span class="material-symbols-outlined text-tertiary">lightbulb</span> Ejemplo Completo — Filtro Notch 60 Hz ECG
+    </h3>
+    <div class="rounded-xl overflow-hidden border border-outline-variant bg-surface-container-lowest mb-4">
+      <div class="flex justify-between items-center px-4 py-3 bg-surface-container-high border-b border-outline-variant">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-tertiary text-sm">terminal</span>
+          <span class="font-code-block text-xs text-on-surface">IIR_Notch_60Hz.ino</span>
+        </div>
+        <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+      </div>
+      <pre class="p-5 font-code-block text-code-block text-[#89f5e7] leading-relaxed overflow-x-auto"><span class="text-outline italic">// IIR Notch 60 Hz, Fs=960 Hz, Q=30 (1 etapa biquad)</span>
+<span class="text-outline italic">// Generado con scipy.signal.iirnotch(60, 30, fs=960)</span>
+<span class="text-outline italic">// Nota: CMSIS-DSP invierte el signo de a1 y a2 vs scipy</span>
+<span class="text-tertiary">#include</span> <span class="text-secondary">&lt;BioFilterLib.h&gt;</span>
+
+<span class="text-tertiary">const</span> float32_t notchCoeffs[5] = {
+   <span class="text-primary">0.99034f</span>,  <span class="text-outline">// b0</span>
+  <span class="text-primary">-1.80193f</span>,  <span class="text-outline">// b1</span>
+   <span class="text-primary">0.99034f</span>,  <span class="text-outline">// b2</span>
+   <span class="text-secondary">1.80193f</span>,  <span class="text-outline">// a1 (negado)</span>
+  <span class="text-secondary">-0.98068f</span>   <span class="text-outline">// a2 (negado)</span>
+};
+
+<span class="text-outline">// 1 etapa biquad, blockSize=1 (tiempo real)</span>
+IIRFilter notch60Hz(notchCoeffs, 1, 1);
+
+<span class="text-tertiary">void</span> <span class="text-primary">setup</span>() {
+  Serial.begin(115200);
+  analogReadResolution(12);
+}
+
+<span class="text-tertiary">void</span> <span class="text-primary">loop</span>() {
+  float32_t raw     = (analogRead(A0) - 2048.0f) / 2048.0f;
+  float32_t filtrada = notch60Hz.<span class="text-primary">processSample</span>(raw);
+
+  Serial.print(raw,    6); Serial.print(",");
+  Serial.println(filtrada, 6);
+  delayMicroseconds(1042);
+}</pre>
+    </div>
+  </article>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- COMPARISON TABLE                           -->
+  <!-- ══════════════════════════════════════════ -->
+  <section id="comparativa" class="mb-section-gap scroll-mt-24">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-1 h-8 bg-primary rounded-full"></div>
+      <h2 class="font-headline-lg text-headline-lg text-on-surface">Comparativa FIR vs. IIR</h2>
+    </div>
+    <div class="overflow-hidden border border-outline-variant rounded-xl">
+      <table class="w-full text-left border-collapse">
+        <thead class="bg-surface-container-high">
+          <tr>
+            <th class="p-4 font-label-caps text-label-caps text-primary border-b border-outline-variant text-[10px]">CARACTERÍSTICA</th>
+            <th class="p-4 font-label-caps text-label-caps text-secondary border-b border-outline-variant text-[10px]">FIRFilter</th>
+            <th class="p-4 font-label-caps text-label-caps text-tertiary border-b border-outline-variant text-[10px]">IIRFilter</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant/30 text-sm">
+          <tr class="hover:bg-surface-variant/10">
+            <td class="p-4 font-bold text-on-surface">Estabilidad</td>
+            <td class="p-4 text-green-400">✓ Siempre estable</td>
+            <td class="p-4 text-yellow-400">⚠ Puede ser inestable (coeficientes mal calculados)</td>
+          </tr>
+          <tr class="hover:bg-surface-variant/10">
+            <td class="p-4 font-bold text-on-surface">Respuesta de Fase</td>
+            <td class="p-4 text-green-400">✓ Lineal (simétrico)</td>
+            <td class="p-4 text-yellow-400">⚠ No lineal — distorsiona morfología</td>
+          </tr>
+          <tr class="hover:bg-surface-variant/10">
+            <td class="p-4 font-bold text-on-surface">Eficiencia (CPU/RAM)</td>
+            <td class="p-4 text-on-surface-variant">Moderada — más coeficientes</td>
+            <td class="p-4 text-green-400">✓ Alta — pocos coeficientes</td>
+          </tr>
+          <tr class="hover:bg-surface-variant/10">
+            <td class="p-4 font-bold text-on-surface">Retardo de Grupo</td>
+            <td class="p-4 text-on-surface-variant">$(N-1)/2$ muestras (constante)</td>
+            <td class="p-4 text-green-400">✓ Mínimo (~0 para notch)</td>
+          </tr>
+          <tr class="hover:bg-surface-variant/10">
+            <td class="p-4 font-bold text-on-surface">Buffer de Estado</td>
+            <td class="p-4 text-on-surface-variant"><code class="text-secondary">numTaps + blockSize - 1</code> floats</td>
+            <td class="p-4 text-green-400">✓ Solo <code class="text-tertiary">4 × numStages</code> floats</td>
+          </tr>
+          <tr class="hover:bg-surface-variant/10">
+            <td class="p-4 font-bold text-on-surface">CMSIS struct</td>
+            <td class="p-4 font-code-block text-secondary text-xs">arm_fir_instance_f32</td>
+            <td class="p-4 font-code-block text-tertiary text-xs">arm_biquad_casd_df1_inst_f32</td>
+          </tr>
+          <tr class="hover:bg-surface-variant/10">
+            <td class="p-4 font-bold text-on-surface">Mejor para</td>
+            <td class="p-4 text-on-surface-variant">Preservar morfología (QRS), anti-aliasing</td>
+            <td class="p-4 text-on-surface-variant">Notch 50/60 Hz, alta selectividad</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Next steps -->
+  <div class="flex flex-col sm:flex-row gap-4">
+    <a href="filtros-avanzados.html" class="flex-1 glass-panel rounded-xl p-6 hover:border-primary/40 transition-all group">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="material-symbols-outlined text-primary">analytics</span>
+        <span class="font-headline-md text-headline-md text-on-surface">Siguiente: Wavelet &amp; LMS</span>
+      </div>
+      <p class="text-sm text-on-surface-variant">Filtros adaptativos y análisis tiempo-frecuencia para señales no estacionarias.</p>
+    </a>
+    <a href="ejemplos.html" class="flex-1 glass-panel rounded-xl p-6 hover:border-primary/40 transition-all group">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="material-symbols-outlined text-secondary">lightbulb</span>
+        <span class="font-headline-md text-headline-md text-on-surface">Ver Ejemplos Completos</span>
+      </div>
+      <p class="text-sm text-on-surface-variant">Ejemplos listos para Arduino Due con salida al Serial Plotter.</p>
+    </a>
+  </div>
+
+</div>
+</main>
+
+<!-- Footer -->
+<footer class="lg:ml-sidebar-width border-t border-outline-variant bg-background mt-section-gap">
+  <div class="max-w-content-max-width mx-auto py-10 px-gutter flex flex-col md:flex-row justify-between items-center gap-4">
+    <div><span class="font-headline-md font-bold text-primary">BioFilterLib</span>
+    <p class="font-label-caps text-[10px] text-on-surface-variant mt-1">© 2024 Sergio Moreno · MIT License</p></div>
+    <div class="flex gap-6">
+      <a href="index.html" class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary text-[10px]">Inicio</a>
+      <a href="ejemplos.html" class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary text-[10px]">Ejemplos</a>
+      <a href="api.html" class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary text-[10px]">API</a>
+    </div>
+  </div>
+</footer>
+
+<nav class="lg:hidden fixed bottom-0 left-0 w-full bg-surface-container-low border-t border-outline-variant flex justify-around items-center py-2 px-4 z-50">
+  <a href="index.html" class="flex flex-col items-center gap-0.5 text-on-surface-variant"><span class="material-symbols-outlined">home</span><span class="text-[9px] font-label-caps">INICIO</span></a>
+  <a href="filtros-fir-iir.html" class="flex flex-col items-center gap-0.5 text-primary"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">filter_alt</span><span class="text-[9px] font-label-caps">FILTROS</span></a>
+  <a href="ejemplos.html" class="flex flex-col items-center gap-0.5 text-on-surface-variant"><span class="material-symbols-outlined">lightbulb</span><span class="text-[9px] font-label-caps">EJEMPLOS</span></a>
+  <a href="api.html" class="flex flex-col items-center gap-0.5 text-on-surface-variant"><span class="material-symbols-outlined">menu_book</span><span class="text-[9px] font-label-caps">API</span></a>
+</nav>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    document.getElementById('topnav').classList.toggle('bg-background/80',window.scrollY>20);
+    document.getElementById('topnav').classList.toggle('backdrop-blur-md',window.scrollY>20);
+  });
+  document.querySelectorAll('.copy-btn').forEach(btn=>{
+    btn.addEventListener('click',function(){
+      const pre=this.closest('.rounded-xl')||this.closest('.rounded-lg');
+      if(pre){const code=pre.querySelector('pre')?.innerText||'';navigator.clipboard.writeText(code).catch(()=>{});}
+      const orig=this.innerText;this.innerText='check';this.classList.add('text-primary');
+      setTimeout(()=>{this.innerText=orig;this.classList.remove('text-primary');},2000);
+    });
+  });
+</script>
+</body>
+</html>

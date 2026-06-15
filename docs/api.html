@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BioFilterLib | API Reference</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@600;700;800&family=JetBrains+Mono:wght@400;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"/>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+<style>
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle;}
+  ::-webkit-scrollbar{width:8px;height:8px;}::-webkit-scrollbar-track{background:#0b1326;}::-webkit-scrollbar-thumb{background:#2d3449;border-radius:4px;}
+  .sidebar-scroll::-webkit-scrollbar{width:4px;}.sidebar-scroll::-webkit-scrollbar-thumb{background:#3d4947;border-radius:10px;}
+  body{scroll-behavior:smooth;}.katex-display{overflow-x:auto;padding:0.25rem 0;}
+  .method-card{border-left:3px solid transparent;transition:border-color 0.15s;}
+  .method-card:hover{border-left-color:#6bd8cb;}
+  .param-type{font-family:'JetBrains Mono',monospace;font-size:12px;}
+</style>
+<script id="tailwind-config">
+  tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-primary":"#003732","secondary":"#89ceff","on-surface":"#dae2fd","surface-variant":"#2d3449","surface-container-lowest":"#060e20","surface-container-low":"#131b2e","surface-container":"#171f33","surface-container-high":"#222a3d","surface-container-highest":"#2d3449","background":"#0b1326","outline":"#879391","outline-variant":"#3d4947","primary":"#6bd8cb","on-primary-container":"#00302b","primary-container":"#29a195","on-secondary":"#00344d","secondary-container":"#00a2e6","tertiary":"#d0bcff","on-tertiary":"#3c0091","tertiary-container":"#a078ff","on-tertiary-container":"#340080","on-surface-variant":"#bcc9c6","surface-bright":"#31394d","surface":"#0b1326","error":"#ffb4ab","on-background":"#dae2fd","on-secondary-container":"#00344e","primary-fixed":"#89f5e7","primary-fixed-dim":"#6bd8cb","inverse-primary":"#006a61","on-error":"#690005"},borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},spacing:{"section-gap":"4rem","sidebar-width":"280px","gutter":"24px","content-max-width":"800px"},fontFamily:{"body-lg":["Inter"],"headline-lg":["Geist"],"label-caps":["JetBrains Mono"],"display":["Geist"],"body-md":["Inter"],"headline-md":["Geist"],"code-block":["JetBrains Mono"]},fontSize:{"body-lg":["18px",{"lineHeight":"1.75","fontWeight":"400"}],"headline-lg":["32px",{"lineHeight":"1.2","fontWeight":"600"}],"label-caps":["12px",{"lineHeight":"1.0","letterSpacing":"0.05em","fontWeight":"600"}],"display":["48px",{"lineHeight":"1.1","letterSpacing":"-0.02em","fontWeight":"700"}],"body-md":["16px",{"lineHeight":"1.6","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"1.3","fontWeight":"600"}],"code-block":["14px",{"lineHeight":"1.5","fontWeight":"400"}]}}}}
+</script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+
+<nav id="topnav" class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-background border-b border-outline-variant transition-all duration-200">
+  <div class="flex items-center gap-8">
+    <a href="index.html" class="font-headline-md text-headline-md text-primary font-extrabold tracking-tighter">BioFilterLib</a>
+    <div class="hidden md:flex gap-6">
+      <a href="index.html" class="font-body-md text-on-surface-variant hover:text-primary transition-colors">Docs</a>
+      <a href="ejemplos.html" class="font-body-md text-on-surface-variant hover:text-primary transition-colors">Ejemplos</a>
+      <a href="api.html" class="font-body-md text-primary font-bold border-b-2 border-primary pb-1">API</a>
+    </div>
+  </div>
+  <button onclick="document.getElementById('mobilemenu').classList.toggle('hidden')" class="md:hidden p-2 text-on-surface-variant"><span class="material-symbols-outlined">menu</span></button>
+</nav>
+<div id="mobilemenu" class="hidden fixed top-16 left-0 w-full bg-surface-container-low border-b border-outline-variant z-40 p-4 flex flex-col gap-2">
+  <a href="index.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">info</span>Introducción</a>
+  <a href="filtros-fir-iir.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">filter_alt</span>FIR &amp; IIR</a>
+  <a href="filtros-avanzados.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">analytics</span>Wavelet &amp; LMS</a>
+  <a href="ejemplos.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">lightbulb</span>Ejemplos</a>
+  <a href="api.html" class="flex items-center gap-3 px-3 py-2 text-primary bg-primary-container/10 font-bold rounded-lg"><span class="material-symbols-outlined">menu_book</span>API Reference</a>
+</div>
+
+<aside class="hidden lg:flex flex-col border-r border-outline-variant w-sidebar-width fixed left-0 top-16 h-[calc(100vh-64px)] p-4 bg-surface-container-low overflow-y-auto sidebar-scroll z-40">
+  <div class="flex items-center gap-3 mb-6">
+    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center"><span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">biotech</span></div>
+    <div><h3 class="font-headline-md text-on-surface text-lg leading-tight">Library Docs</h3><p class="text-on-surface-variant text-xs font-label-caps">v1.0.0 · Arduino Due</p></div>
+  </div>
+  <nav class="flex flex-col gap-1 flex-grow text-sm">
+    <a href="index.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined text-base">info</span><span>Introducción</span></a>
+    <div class="mt-3 mb-1 px-3"><span class="text-[10px] font-bold text-outline tracking-widest uppercase">Filtros</span></div>
+    <a href="filtros-fir-iir.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined text-base">filter_alt</span><span>FIR &amp; IIR</span></a>
+    <a href="filtros-avanzados.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined text-base">analytics</span><span>Wavelet &amp; LMS</span></a>
+    <a href="ejemplos.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined text-base">lightbulb</span><span>Ejemplos</span></a>
+    <div class="mt-3 mb-1 px-3"><span class="text-[10px] font-bold text-outline tracking-widest uppercase">API Reference</span></div>
+    <a href="api.html" class="flex items-center gap-3 px-3 py-2 text-primary bg-primary-container/10 font-bold rounded-lg"><span class="material-symbols-outlined text-base" style="font-variation-settings:'FILL' 1;">menu_book</span><span>API Reference</span></a>
+    <a href="#firfilter" class="pl-8 py-1.5 text-secondary hover:text-primary transition-colors">FIRFilter</a>
+    <a href="#iirfilter" class="pl-8 py-1.5 text-tertiary hover:text-primary transition-colors">IIRFilter</a>
+    <a href="#lmsfilter" class="pl-8 py-1.5 text-primary hover:text-primary transition-colors">LMSFilter</a>
+    <a href="#waveletfilter" class="pl-8 py-1.5 text-secondary hover:text-primary transition-colors">WaveletFilter</a>
+    <a href="#utils" class="pl-8 py-1.5 text-on-surface-variant hover:text-primary transition-colors">Utils</a>
+    <a href="#utils-extended" class="pl-8 py-1.5 text-on-surface-variant hover:text-primary transition-colors">Utils Extended</a>
+  </nav>
+  <div class="mt-auto pt-4 border-t border-outline-variant">
+    <a href="https://github.com" target="_blank" class="w-full bg-primary text-on-primary py-2 px-4 rounded-lg font-bold hover:brightness-110 transition-all flex items-center justify-center gap-2 text-sm"><span class="material-symbols-outlined text-sm">terminal</span> GitHub</a>
+  </div>
+</aside>
+
+<main class="lg:ml-sidebar-width pt-24 pb-24 px-6 lg:px-0 flex justify-center">
+<div class="max-w-content-max-width w-full">
+
+  <nav class="flex items-center gap-2 font-label-caps text-label-caps text-outline mb-8">
+    <a href="index.html" class="hover:text-primary">DOCS</a><span>/</span><span class="text-primary">API REFERENCE</span>
+  </nav>
+
+  <section class="mb-10">
+    <h1 class="font-display text-display text-on-surface mb-4">API Reference</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant">Documentación completa de todas las clases, constructores, métodos y funciones de BioFilterLib. Archivo principal: <code class="bg-surface-container px-2 py-0.5 rounded text-primary">#include &lt;BioFilterLib.h&gt;</code></p>
+  </section>
+
+  <!-- Quick reference index -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-section-gap">
+    <a href="#firfilter" class="bg-surface-container border border-secondary/30 hover:border-secondary rounded-xl p-4 text-center transition-all group">
+      <div class="font-code-block text-secondary font-bold text-base">FIRFilter</div>
+      <div class="text-[10px] font-label-caps text-outline mt-1">2 MÉTODOS</div>
+    </a>
+    <a href="#iirfilter" class="bg-surface-container border border-tertiary/30 hover:border-tertiary rounded-xl p-4 text-center transition-all">
+      <div class="font-code-block text-tertiary font-bold text-base">IIRFilter</div>
+      <div class="text-[10px] font-label-caps text-outline mt-1">2 MÉTODOS</div>
+    </a>
+    <a href="#lmsfilter" class="bg-surface-container border border-primary/30 hover:border-primary rounded-xl p-4 text-center transition-all">
+      <div class="font-code-block text-primary font-bold text-base">LMSFilter</div>
+      <div class="text-[10px] font-label-caps text-outline mt-1">5 MÉTODOS</div>
+    </a>
+    <a href="#waveletfilter" class="bg-surface-container border border-secondary/30 hover:border-secondary rounded-xl p-4 text-center transition-all">
+      <div class="font-code-block text-secondary font-bold text-base">WaveletFilter</div>
+      <div class="text-[10px] font-label-caps text-outline mt-1">4 MÉTODOS</div>
+    </a>
+  </div>
+
+  <!-- ═══════════════════════════ -->
+  <!-- FIRFilter                   -->
+  <!-- ═══════════════════════════ -->
+  <section id="firfilter" class="mb-section-gap scroll-mt-24">
+    <div class="flex items-center gap-4 mb-6">
+      <div class="h-px flex-1 bg-outline-variant"></div>
+      <div class="flex items-center gap-3">
+        <span class="font-code-block text-secondary text-xl font-bold">FIRFilter</span>
+        <span class="text-[10px] font-label-caps bg-secondary/10 text-secondary px-2 py-0.5 rounded">src/filters/FIRFilter.h</span>
+      </div>
+      <div class="h-px flex-1 bg-outline-variant"></div>
+    </div>
+    <p class="text-on-surface-variant mb-4">Wrapper C++ para <code class="text-secondary text-sm">arm_fir_instance_f32</code> (CMSIS-DSP). Filtro de Respuesta al Impulso Finita con fase lineal garantizada. Procesa <code class="text-secondary">float32_t</code>.</p>
+
+    <!-- Constructor -->
+    <div class="method-card bg-surface-container-low rounded-xl p-5 mb-4 border border-outline-variant">
+      <div class="flex items-start justify-between mb-3">
+        <div><span class="font-code-block text-secondary font-bold">FIRFilter</span><span class="font-code-block text-on-surface-variant text-sm">(float32_t* coeffs, uint16_t numTaps, uint16_t blockSize)</span></div>
+        <span class="text-[9px] font-label-caps bg-surface-container text-outline px-2 py-0.5 rounded shrink-0">CONSTRUCTOR</span>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-sm">
+          <thead><tr class="border-b border-outline-variant/50"><th class="pb-2 text-[10px] font-label-caps text-secondary w-1/4">PARÁMETRO</th><th class="pb-2 text-[10px] font-label-caps text-on-surface-variant w-1/4">TIPO</th><th class="pb-2 text-[10px] font-label-caps text-on-surface-variant">DESCRIPCIÓN</th></tr></thead>
+          <tbody class="divide-y divide-outline-variant/20">
+            <tr><td class="py-2 font-code-block text-secondary">coeffs</td><td class="py-2 param-type text-on-surface-variant">float32_t*</td><td class="py-2 text-on-surface-variant">Array de coeficientes. Debe mantenerse válido mientras exista el objeto.</td></tr>
+            <tr><td class="py-2 font-code-block text-secondary">numTaps</td><td class="py-2 param-type text-on-surface-variant">uint16_t</td><td class="py-2 text-on-surface-variant">Número de coeficientes (= orden + 1). Rango recomendado: 11–101.</td></tr>
+            <tr><td class="py-2 font-code-block text-secondary">blockSize</td><td class="py-2 param-type text-on-surface-variant">uint16_t</td><td class="py-2 text-on-surface-variant"><code class="text-secondary">1</code> para tiempo real. Potencias de 2 (32, 64…) para batch. Estado interno: <code class="text-secondary">numTaps + blockSize - 1</code> floats.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- processSample -->
+    <div class="method-card bg-surface-container-low rounded-xl p-5 mb-4 border border-outline-variant">
+      <div class="flex items-start justify-between mb-3">
+        <div><span class="param-type text-tertiary">float32_t </span><span class="font-code-block text-primary font-bold">processSample</span><span class="font-code-block text-on-surface-variant text-sm">(float32_t input)</span></div>
+        <span class="text-[9px] font-label-caps bg-primary/10 text-primary px-2 py-0.5 rounded shrink-0">MÉTODO</span>
+      </div>
+      <p class="text-sm text-on-surface-variant mb-2">Aplica el filtro FIR a una sola muestra. Mantiene el estado interno automáticamente. Ideal para el <code class="text-primary">loop()</code>.</p>
+      <div class="flex gap-4 text-sm"><span class="text-outline">Entrada:</span><span class="text-on-surface-variant">Muestra a filtrar (normalmente en [-1.0, 1.0])</span></div>
+      <div class="flex gap-4 text-sm"><span class="text-outline">Retorna:</span><span class="text-on-surface-variant">Muestra filtrada <code class="text-secondary">float32_t</code></span></div>
+    </div>
+
+    <!-- processBuffer -->
+    <div class="method-card bg-surface-container-low rounded-xl p-5 mb-4 border border-outline-variant">
+      <div class="flex items-start justify-between mb-3">
+        <div><span class="param-type text-tertiary">void </span><span class="font-code-block text-primary font-bold">processBuffer</span><span class="font-code-block text-on-surface-variant text-sm">(float32_t* input, float32_t* output, uint32_t length)</span></div>
+        <span class="text-[9px] font-label-caps bg-primary/10 text-primary px-2 py-0.5 rounded shrink-0">MÉTODO</span>
+      </div>
+      <p class="text-sm text-on-surface-variant mb-2">Procesa un array completo. Mayor throughput por instrucciones SIMD del Cortex-M3. Los arrays no deben solaparse.</p>
+      <div class="overflow-x-auto"><table class="w-full text-sm border-collapse"><thead><tr class="border-b border-outline-variant/50"><th class="pb-1 text-[10px] font-label-caps text-secondary w-1/4">PARAM</th><th class="pb-1 text-[10px] font-label-caps text-on-surface-variant">DESCRIPCIÓN</th></tr></thead><tbody class="divide-y divide-outline-variant/20"><tr><td class="py-1.5 font-code-block text-secondary">input</td><td class="py-1.5 text-on-surface-variant">Array de entrada (mínimo <code class="text-secondary">length</code> elementos)</td></tr><tr><td class="py-1.5 font-code-block text-secondary">output</td><td class="py-1.5 text-on-surface-variant">Array de salida (mínimo <code class="text-secondary">length</code> elementos, no solapar con input)</td></tr><tr><td class="py-1.5 font-code-block text-secondary">length</td><td class="py-1.5 text-on-surface-variant">Número de muestras a procesar</td></tr></tbody></table></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ -->
+  <!-- IIRFilter                   -->
+  <!-- ═══════════════════════════ -->
+  <section id="iirfilter" class="mb-section-gap scroll-mt-24">
+    <div class="flex items-center gap-4 mb-6">
+      <div class="h-px flex-1 bg-outline-variant"></div>
+      <div class="flex items-center gap-3">
+        <span class="font-code-block text-tertiary text-xl font-bold">IIRFilter</span>
+        <span class="text-[10px] font-label-caps bg-tertiary/10 text-tertiary px-2 py-0.5 rounded">src/filters/IIRFilter.h</span>
+      </div>
+      <div class="h-px flex-1 bg-outline-variant"></div>
+    </div>
+    <p class="text-on-surface-variant mb-4">Wrapper C++ para <code class="text-tertiary text-sm">arm_biquad_casd_df1_inst_f32</code> (CMSIS-DSP). Filtro IIR en cascada de secciones biquad (Direct Form 1). Alta selectividad con bajo costo computacional.</p>
+
+    <!-- Constructor -->
+    <div class="method-card bg-surface-container-low rounded-xl p-5 mb-4 border border-outline-variant">
+      <div class="flex items-start justify-between mb-3">
+        <div><span class="font-code-block text-tertiary font-bold">IIRFilter</span><span class="font-code-block text-on-surface-variant text-sm">(float32_t* coeffs, uint8_t numStages, uint16_t blockSize)</span></div>
+        <span class="text-[9px] font-label-caps bg-surface-container text-outline px-2 py-0.5 rounded shrink-0">CONSTRUCTOR</span>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-sm">
+          <thead><tr class="border-b border-outline-variant/50"><th class="pb-2 text-[10px] font-label-caps text-tertiary w-1/4">PARÁMETRO</th><th class="pb-2 text-[10px] font-label-caps text-on-surface-variant w-1/4">TIPO</th><th class="pb-2 text-[10px] font-label-caps text-on-surface-variant">DESCRIPCIÓN</th></tr></thead>
+          <tbody class="divide-y divide-outline-variant/20">
+            <tr><td class="py-2 font-code-block text-tertiary">coeffs</td><td class="py-2 param-type text-on-surface-variant">float32_t*</td><td class="py-2 text-on-surface-variant">Array de <code class="text-tertiary">numStages × 5</code> coeficientes en orden <code class="text-tertiary">{b0, b1, b2, a1, a2}</code>. <strong class="text-on-surface">a1 y a2 con signo invertido</strong> respecto a scipy/MATLAB.</td></tr>
+            <tr><td class="py-2 font-code-block text-tertiary">numStages</td><td class="py-2 param-type text-on-surface-variant">uint8_t</td><td class="py-2 text-on-surface-variant">Número de secciones biquad. Un filtro de orden $2M$ necesita $M$ etapas. Memoria: <code class="text-tertiary">4 × numStages</code> floats.</td></tr>
+            <tr><td class="py-2 font-code-block text-tertiary">blockSize</td><td class="py-2 param-type text-on-surface-variant">uint16_t</td><td class="py-2 text-on-surface-variant">Usar <code class="text-tertiary">1</code> para tiempo real.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- processSample -->
+    <div class="method-card bg-surface-container-low rounded-xl p-5 mb-4 border border-outline-variant">
+      <div class="flex items-start justify-between mb-2">
+        <div><span class="param-type text-tertiary">float32_t </span><span class="font-code-block text-primary font-bold">processSample</span><span class="font-code-block text-on-surface-variant text-sm">(float32_t input)</span></div>
+        <span class="text-[9px] font-label-caps bg-primary/10 text-primary px-2 py-0.5 rounded shrink-0">MÉTODO</span>
+      </div>
+      <p class="text-sm text-on-surface-variant">Filtra una muestra individual. Retarda de grupo mínimo. Idéntica firma que <code class="text-secondary">FIRFilter::processSample()</code>.</p>
+    </div>
+
+    <!-- processBuffer -->
+    <div class="method-card bg-surface-container-low rounded-xl p-5 mb-4 border border-outline-variant">
+      <div class="flex items-start justify-between mb-2">
+        <div><span class="param-type text-tertiary">void </span><span class="font-code-block text-primary font-bold">processBuffer</span><span class="font-code-block text-on-surface-variant text-sm">(float32_t* input, float32_t* output, uint32_t length)</span></div>
+        <span class="text-[9px] font-label-caps bg-primary/10 text-primary px-2 py-0.5 rounded shrink-0">MÉTODO</span>
+      </div>
+      <p class="text-sm text-on-surface-variant">Procesa un array de muestras. Los arrays no deben solaparse.</p>
+    </div>
+
+    <div class="bg-yellow-500/5 border-l-4 border-yellow-500/50 p-4 rounded-r-lg text-sm text-on-surface-variant">
+      <strong class="text-yellow-400">⚠ Signo de coeficientes a:</strong> CMSIS-DSP espera $a_1$ y $a_2$ con signo <strong>negado</strong> respecto a la ecuación estándar y respecto a <code>scipy.signal</code>. Multiplicar por -1 al exportar desde Python.
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ -->
+  <!-- LMSFilter                   -->
+  <!-- ═══════════════════════════ -->
+  <section id="lmsfilter" class="mb-section-gap scroll-mt-24">
+    <div class="flex items-center gap-4 mb-6">
+      <div class="h-px flex-1 bg-outline-variant"></div>
+      <div class="flex items-center gap-3">
+        <span class="font-code-block text-primary text-xl font-bold">LMSFilter</span>
+        <span class="text-[10px] font-label-caps bg-primary/10 text-primary px-2 py-0.5 rounded">src/filters/LMSFilter.h</span>
+      </div>
+      <div class="h-px flex-1 bg-outline-variant"></div>
+    </div>
+    <p class="text-on-surface-variant mb-4">Wrapper C++ para <code class="text-primary text-sm">arm_lms_norm_instance_f32</code> (CMSIS-DSP). Implementa el algoritmo <strong class="text-on-surface">LMS Normalizado (NLMS)</strong>. Los coeficientes se actualizan automáticamente durante el procesamiento.</p>
+
+    <!-- Constructor -->
+    <div class="method-card bg-surface-container-low rounded-xl p-5 mb-4 border border-outline-variant">
+      <div class="flex items-start justify-between mb-3">
+        <div><span class="font-code-block text-primary font-bold">LMSFilter</span><span class="font-code-block text-on-surface-variant text-sm">(float32_t* coeffs, uint16_t numTaps, float32_t mu, uint16_t blockSize)</span></div>
+        <span class="text-[9px] font-label-caps bg-surface-container text-outline px-2 py-0.5 rounded shrink-0">CONSTRUCTOR</span>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-sm">
+          <thead><tr class="border-b border-outline-variant/50"><th class="pb-2 text-[10px] font-label-caps text-primary w-1/4">PARÁMETRO</th><th class="pb-2 text-[10px] font-label-caps text-on-surface-variant w-1/4">TIPO</th><th class="pb-2 text-[10px] font-label-caps text-on-surface-variant">DESCRIPCIÓN</th></tr></thead>
+          <tbody class="divide-y divide-outline-variant/20">
+            <tr><td class="py-2 font-code-block text-primary">coeffs</td><td class="py-2 param-type text-on-surface-variant">float32_t*</td><td class="py-2 text-on-surface-variant">Coeficientes iniciales. Inicializar a <code class="text-primary">0.0f</code>. <strong class="text-on-surface">Serán modificados</strong> durante la adaptación.</td></tr>
+            <tr><td class="py-2 font-code-block text-primary">numTaps</td><td class="py-2 param-type text-on-surface-variant">uint16_t</td><td class="py-2 text-on-surface-variant">Número de coeficientes. Rango típico: 16–128. Memoria de estado: <code class="text-primary">numTaps</code> floats.</td></tr>
+            <tr><td class="py-2 font-code-block text-primary">mu</td><td class="py-2 param-type text-on-surface-variant">float32_t</td><td class="py-2 text-on-surface-variant">Paso de adaptación. ECG: 0.01–0.05 · EMG: 0.001–0.01 · EEG: 0.0001–0.001. Valores grandes = convergencia rápida pero inestable.</td></tr>
+            <tr><td class="py-2 font-code-block text-primary">blockSize</td><td class="py-2 param-type text-on-surface-variant">uint16_t</td><td class="py-2 text-on-surface-variant">Usar <code class="text-primary">1</code> para tiempo real.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- processSample -->
+    <div class="method-card bg-surface-container-low rounded-xl p-5 mb-4 border border-outline-variant">
+      <div class="flex items-start justify-between mb-3">
+        <div class="flex-1"><span class="param-type text-tertiary">void </span><span class="font-code-block text-primary font-bold">processSample</span><span class="font-code-block text-on-surface-variant text-sm">(float32_t input, float32_t reference, float32_t* output, float32_t* error)</span></div>
+        <span class="text-[9px] font-label-caps bg-primary/10 text-primary px-2 py-0.5 rounded shrink-0">MÉTODO</span>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead><tr class="border-b border-outline-variant/50"><th class="pb-1 text-[10px] font-label-caps text-primary w-1/3">PARÁMETRO</th><th class="pb-1 text-[10px] font-label-caps text-on-surface-variant">DESCRIPCIÓN</th></tr></thead>
+          <tbody class="divide-y divide-outline-variant/20">
+            <tr><td class="py-1.5 font-code-block text-primary">input</td><td class="py-1.5 text-on-surface-variant">Señal primaria contaminada (ECG + ruido)</td></tr>
+            <tr><td class="py-1.5 font-code-block text-primary">reference</td><td class="py-1.5 text-on-surface-variant">Señal de referencia del ruido (ej: seno de 60 Hz, canal EOG)</td></tr>
+            <tr><td class="py-1.5 font-code-block text-primary">output</td><td class="py-1.5 text-on-surface-variant">Puntero → señal limpia resultante</td></tr>
+            <tr><td class="py-1.5 font-code-block text-primary">error</td><td class="py-1.5 text-on-surface-variant">Puntero → error de adaptación (<code>reference − output</code>). Decrece al converger.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- processBuffer -->
+    <div class="method-card bg-surface-container-low rounded-xl p-5 mb-4 border border-outline-variant">
+      <div class="flex items-start justify-between mb-2">
+        <div class="flex-1"><span class="param-type text-tertiary">void </span><span class="font-code-block text-primary font-bold">processBuffer</span><span class="font-code-block text-on-surface-variant text-sm">(float32_t* input, float32_t* reference, float32_t* output, float32_t* error, uint32_t length)</span></div>
+        <span class="text-[9px] font-label-caps bg-primary/10 text-primary px-2 py-0.5 rounded shrink-0">MÉTODO</span>
+      </div>
+      <p class="text-sm text-on-surface-variant">Procesa un bloque completo. Los coeficientes se actualizan continuamente dentro del bloque. Todos los arrays deben tener al menos <code class="text-primary">length</code> elementos.</p>
+    </div>
+
+    <!-- getMu / setMu / reset -->
+    <div class="method-card bg-surface-container-low rounded-xl p-5 mb-4 border border-outline-variant">
+      <div class="flex items-start justify-between mb-3">
+        <div>
+          <div class="mb-1"><span class="param-type text-tertiary">float32_t </span><span class="font-code-block text-primary font-bold">getMu</span><span class="font-code-block text-on-surface-variant text-sm">() const</span></div>
+          <div class="mb-1"><span class="param-type text-tertiary">void </span><span class="font-code-block text-primary font-bold">setMu</span><span class="font-code-block text-on-surface-variant text-sm">(float32_t newMu)</span></div>
+          <div><span class="param-type text-tertiary">void </span><span class="font-code-block text-primary font-bold">resetCoefficients</span><span class="font-code-block text-on-surface-variant text-sm">(const float32_t* newCoeffs = nullptr)</span></div>
+        </div>
+        <span class="text-[9px] font-label-caps bg-primary/10 text-primary px-2 py-0.5 rounded shrink-0">MÉTODOS</span>
+      </div>
+      <div class="space-y-1 text-sm text-on-surface-variant">
+        <p><code class="text-primary">getMu()</code> — retorna el valor actual de μ.</p>
+        <p><code class="text-primary">setMu(newMu)</code> — ajusta μ en tiempo real sin reinicializar el filtro. Útil para esquemas de μ variable.</p>
+        <p><code class="text-primary">resetCoefficients(newCoeffs)</code> — reinicia los pesos. Si <code class="text-primary">newCoeffs = nullptr</code>, los inicializa a cero. Usar si el filtro diverge o al cambiar de señal.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ -->
+  <!-- WaveletFilter               -->
+  <!-- ═══════════════════════════ -->
+  <section id="waveletfilter" class="mb-section-gap scroll-mt-24">
+    <div class="flex items-center gap-4 mb-6">
+      <div class="h-px flex-1 bg-outline-variant"></div>
+      <div class="flex items-center gap-3">
+        <span class="font-code-block text-secondary text-xl font-bold">WaveletFilter</span>
+        <span class="text-[10px] font-label-caps bg-secondary/10 text-secondary px-2 py-0.5 rounded">src/filters/WaveletFilter.h</span>
+      </div>
+      <div class="h-px flex-1 bg-outline-variant"></div>
+    </div>
+    <p class="text-on-surface-variant mb-4">Banco de 4 filtros FIR que implementa la Transformada Wavelet Discreta con wavelet <strong class="text-on-surface">Daubechies-4</strong> (8 coeficientes por filtro). Coeficientes predefinidos — no requiere cálculo externo.</p>
+
+    <!-- Constructor -->
+    <div class="method-card bg-surface-container-low rounded-xl p-5 mb-4 border border-outline-variant">
+      <div class="flex items-start justify-between mb-2">
+        <div><span class="font-code-block text-secondary font-bold">WaveletFilter</span><span class="font-code-block text-on-surface-variant text-sm">(uint16_t blockSize)</span></div>
+        <span class="text-[9px] font-label-caps bg-surface-container text-outline px-2 py-0.5 rounded shrink-0">CONSTRUCTOR</span>
+      </div>
+      <p class="text-sm text-on-surface-variant">Inicializa los 4 filtros FIR internos (análisis LP, análisis HP, síntesis LP, síntesis HP) con los coeficientes DB-4. Usar <code class="text-secondary">blockSize=1</code> para tiempo real.</p>
+    </div>
+
+    <!-- processSample -->
+    <div class="method-card bg-surface-container-low rounded-xl p-5 mb-4 border border-outline-variant">
+      <div class="flex items-start justify-between mb-3">
+        <div><span class="param-type text-tertiary">void </span><span class="font-code-block text-primary font-bold">processSample</span><span class="font-code-block text-on-surface-variant text-sm">(float32_t input, float32_t* approxCoeff, float32_t* detailCoeff)</span></div>
+        <span class="text-[9px] font-label-caps bg-primary/10 text-primary px-2 py-0.5 rounded shrink-0">MÉTODO</span>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead><tr class="border-b border-outline-variant/50"><th class="pb-1 text-[10px] font-label-caps text-secondary w-1/3">PARÁMETRO</th><th class="pb-1 text-[10px] font-label-caps text-on-surface-variant">DESCRIPCIÓN</th></tr></thead>
+          <tbody class="divide-y divide-outline-variant/20">
+            <tr><td class="py-1.5 font-code-block text-secondary">input</td><td class="py-1.5 text-on-surface-variant">Muestra de entrada</td></tr>
+            <tr><td class="py-1.5 font-code-block text-secondary">approxCoeff</td><td class="py-1.5 text-on-surface-variant">Puntero → coeficiente de aproximación (baja frecuencia, ≤ Fs/4)</td></tr>
+            <tr><td class="py-1.5 font-code-block text-secondary">detailCoeff</td><td class="py-1.5 text-on-surface-variant">Puntero → coeficiente de detalle (alta frecuencia, Fs/4 – Fs/2)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- processBuffer -->
+    <div class="method-card bg-surface-container-low rounded-xl p-5 mb-4 border border-outline-variant">
+      <div class="flex items-start justify-between mb-2">
+        <div class="flex-1"><span class="param-type text-tertiary">void </span><span class="font-code-block text-primary font-bold">processBuffer</span><span class="font-code-block text-on-surface-variant text-sm">(float32_t* input, float32_t* approxArray, float32_t* detailArray, uint32_t length)</span></div>
+        <span class="text-[9px] font-label-caps bg-primary/10 text-primary px-2 py-0.5 rounded shrink-0">MÉTODO</span>
+      </div>
+      <p class="text-sm text-on-surface-variant">Versión por bloques. Mayor throughput. Los 3 arrays deben tener al menos <code class="text-secondary">length</code> elementos y no solaparse.</p>
+    </div>
+
+    <!-- reconstruct -->
+    <div class="method-card bg-surface-container-low rounded-xl p-5 mb-4 border border-outline-variant">
+      <div class="flex items-start justify-between mb-3">
+        <div><span class="param-type text-tertiary">float32_t </span><span class="font-code-block text-primary font-bold">reconstruct</span><span class="font-code-block text-on-surface-variant text-sm">(float32_t approxCoeff, float32_t detailCoeff)</span></div>
+        <span class="text-[9px] font-label-caps bg-primary/10 text-primary px-2 py-0.5 rounded shrink-0">MÉTODO</span>
+      </div>
+      <p class="text-sm text-on-surface-variant mb-2">Síntesis wavelet. Combina aproximación y detalle para reconstruir la señal.</p>
+      <div class="bg-surface-container rounded-lg p-3 text-xs font-code-block text-on-surface-variant space-y-1">
+        <div><span class="text-secondary">reconstruct(approx, detail)</span> <span class="text-outline">→ señal original</span></div>
+        <div><span class="text-secondary">reconstruct(approx, 0.0f)</span>  <span class="text-outline">→ señal suavizada (sin ruido HF)</span></div>
+        <div><span class="text-secondary">reconstruct(0.0f, detail)</span>  <span class="text-outline">→ solo bordes y transitorios</span></div>
+      </div>
+    </div>
+
+    <!-- reset -->
+    <div class="method-card bg-surface-container-low rounded-xl p-5 mb-4 border border-outline-variant">
+      <div class="flex items-start justify-between mb-2">
+        <div><span class="param-type text-tertiary">void </span><span class="font-code-block text-primary font-bold">reset</span><span class="font-code-block text-on-surface-variant text-sm">()</span></div>
+        <span class="text-[9px] font-label-caps bg-primary/10 text-primary px-2 py-0.5 rounded shrink-0">MÉTODO</span>
+      </div>
+      <p class="text-sm text-on-surface-variant">Limpia el estado de los 4 filtros FIR internos. No modifica los coeficientes DB-4. Usar al cambiar de paciente o reiniciar sesión.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ -->
+  <!-- Utils                       -->
+  <!-- ═══════════════════════════ -->
+  <section id="utils" class="mb-section-gap scroll-mt-24">
+    <div class="flex items-center gap-4 mb-6">
+      <div class="h-px flex-1 bg-outline-variant"></div>
+      <div class="flex items-center gap-3">
+        <span class="font-code-block text-on-surface text-xl font-bold">utils</span>
+        <span class="text-[10px] font-label-caps bg-surface-container text-outline px-2 py-0.5 rounded">src/utils/utils.h</span>
+      </div>
+      <div class="h-px flex-1 bg-outline-variant"></div>
+    </div>
+    <p class="text-on-surface-variant mb-6">Funciones C para métricas de señal. Incluidas con <code class="text-on-surface">extern "C"</code> para compatibilidad C++.</p>
+
+    <div class="overflow-hidden border border-outline-variant rounded-xl">
+      <table class="w-full text-left border-collapse">
+        <thead class="bg-surface-container-high">
+          <tr>
+            <th class="p-3 font-label-caps text-[10px] text-primary border-b border-outline-variant">FUNCIÓN</th>
+            <th class="p-3 font-label-caps text-[10px] text-on-surface-variant border-b border-outline-variant">FIRMA</th>
+            <th class="p-3 font-label-caps text-[10px] text-on-surface-variant border-b border-outline-variant">DESCRIPCIÓN</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant/30 text-sm">
+          <tr class="hover:bg-surface-variant/10">
+            <td class="p-3 font-code-block text-primary">calculateSNR</td>
+            <td class="p-3 font-code-block text-xs text-on-surface-variant">float(signal*, noise*, uint32_t)</td>
+            <td class="p-3 text-on-surface-variant">Relación señal-ruido en dB. $\text{SNR} = 10\log_{10}(P_s/P_n)$</td>
+          </tr>
+          <tr class="hover:bg-surface-variant/10">
+            <td class="p-3 font-code-block text-primary">calculateMSE</td>
+            <td class="p-3 font-code-block text-xs text-on-surface-variant">float(original*, filtered*, uint32_t)</td>
+            <td class="p-3 text-on-surface-variant">Error cuadrático medio entre dos señales</td>
+          </tr>
+          <tr class="hover:bg-surface-variant/10">
+            <td class="p-3 font-code-block text-primary">calculateRMS</td>
+            <td class="p-3 font-code-block text-xs text-on-surface-variant">float(signal*, uint32_t)</td>
+            <td class="p-3 text-on-surface-variant">Valor eficaz (Root Mean Square) de la señal</td>
+          </tr>
+          <tr class="hover:bg-surface-variant/10">
+            <td class="p-3 font-code-block text-primary">calculateStdDev</td>
+            <td class="p-3 font-code-block text-xs text-on-surface-variant">float(signal*, uint32_t)</td>
+            <td class="p-3 text-on-surface-variant">Desviación estándar de la señal</td>
+          </tr>
+          <tr class="hover:bg-surface-variant/10">
+            <td class="p-3 font-code-block text-primary">calculateCorrelation</td>
+            <td class="p-3 font-code-block text-xs text-on-surface-variant">float(a*, b*, uint32_t)</td>
+            <td class="p-3 text-on-surface-variant">Coeficiente de correlación de Pearson entre dos señales. Rango: [-1, 1]</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ -->
+  <!-- Utils Extended              -->
+  <!-- ═══════════════════════════ -->
+  <section id="utils-extended" class="mb-section-gap scroll-mt-24">
+    <div class="flex items-center gap-4 mb-6">
+      <div class="h-px flex-1 bg-outline-variant"></div>
+      <div class="flex items-center gap-3">
+        <span class="font-code-block text-on-surface text-xl font-bold">utils_extended</span>
+        <span class="text-[10px] font-label-caps bg-surface-container text-outline px-2 py-0.5 rounded">src/utils/utils_extended.h</span>
+      </div>
+      <div class="h-px flex-1 bg-outline-variant"></div>
+    </div>
+    <p class="text-on-surface-variant mb-6">Herramientas de benchmarking y evaluación de calidad para Arduino Due. Usadas en los sketches de la carpeta <code class="text-on-surface">test/</code>.</p>
+
+    <!-- Structs -->
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-4">Estructuras de datos</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+      <div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant">
+        <div class="font-code-block text-secondary font-bold mb-3">PerformanceMetrics</div>
+        <div class="space-y-1 text-xs font-code-block text-on-surface-variant">
+          <div><span class="text-outline">uint32_t</span> processingTimeSample_us</div>
+          <div><span class="text-outline">uint32_t</span> processingTimeBuffer_us</div>
+          <div><span class="text-outline">float</span>    throughputSample_sps</div>
+          <div><span class="text-outline">float</span>    throughputBuffer_sps</div>
+          <div><span class="text-outline">float</span>    cpuUsageSample_pct</div>
+          <div><span class="text-outline">uint32_t</span> ramUsed_bytes</div>
+        </div>
+      </div>
+      <div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant">
+        <div class="font-code-block text-primary font-bold mb-3">QualityMetrics</div>
+        <div class="space-y-1 text-xs font-code-block text-on-surface-variant">
+          <div><span class="text-outline">float</span> inputSNR_dB</div>
+          <div><span class="text-outline">float</span> outputSNR_dB</div>
+          <div><span class="text-outline">float</span> snrImprovement_dB</div>
+          <div><span class="text-outline">float</span> mse</div>
+          <div><span class="text-outline">float</span> correlation</div>
+          <div><span class="text-outline">float</span> rmsInput / rmsOutput</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Functions -->
+    <div class="overflow-hidden border border-outline-variant rounded-xl">
+      <table class="w-full text-left border-collapse">
+        <thead class="bg-surface-container-high">
+          <tr>
+            <th class="p-3 font-label-caps text-[10px] text-primary border-b border-outline-variant">FUNCIÓN</th>
+            <th class="p-3 font-label-caps text-[10px] text-on-surface-variant border-b border-outline-variant">DESCRIPCIÓN</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant/30 text-sm">
+          <tr class="hover:bg-surface-variant/10"><td class="p-3 font-code-block text-primary">testFilterSpeed_Sample()</td><td class="p-3 text-on-surface-variant">Mide el tiempo de <code>processSample()</code> en μs y calcula throughput y % CPU</td></tr>
+          <tr class="hover:bg-surface-variant/10"><td class="p-3 font-code-block text-primary">testFilterSpeed_Buffer()</td><td class="p-3 text-on-surface-variant">Mide el tiempo de <code>processBuffer()</code> para un bloque completo</td></tr>
+          <tr class="hover:bg-surface-variant/10"><td class="p-3 font-code-block text-primary">testFilterQuality()</td><td class="p-3 text-on-surface-variant">Calcula SNR de entrada/salida, mejora en dB, MSE y correlación</td></tr>
+          <tr class="hover:bg-surface-variant/10"><td class="p-3 font-code-block text-primary">testMemoryUsage()</td><td class="p-3 text-on-surface-variant">Mide el RAM usado antes/después de crear el filtro</td></tr>
+          <tr class="hover:bg-surface-variant/10"><td class="p-3 font-code-block text-primary">printPerformanceMetrics()</td><td class="p-3 text-on-surface-variant">Imprime tabla de rendimiento por Serial (formato legible)</td></tr>
+          <tr class="hover:bg-surface-variant/10"><td class="p-3 font-code-block text-primary">printQualityMetrics()</td><td class="p-3 text-on-surface-variant">Imprime tabla de calidad con evaluación EXCELENTE/BUENO/ACEPTABLE</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Memory Reference -->
+  <section class="mb-section-gap">
+    <div class="flex items-center gap-4 mb-6">
+      <span class="font-label-caps text-primary">REFERENCIA RÁPIDA</span>
+      <div class="h-px flex-1 bg-outline-variant"></div>
+    </div>
+    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-6">Consumo de Memoria (Arduino Due, 96 KB RAM)</h2>
+    <div class="overflow-hidden border border-outline-variant rounded-xl">
+      <table class="w-full text-left border-collapse">
+        <thead class="bg-surface-container-high">
+          <tr>
+            <th class="p-3 font-label-caps text-[10px] text-primary border-b border-outline-variant">CLASE</th>
+            <th class="p-3 font-label-caps text-[10px] text-on-surface-variant border-b border-outline-variant">BUFFER DE ESTADO</th>
+            <th class="p-3 font-label-caps text-[10px] text-on-surface-variant border-b border-outline-variant">EJEMPLO (N=64)</th>
+            <th class="p-3 font-label-caps text-[10px] text-on-surface-variant border-b border-outline-variant">BYTES</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant/30 text-sm">
+          <tr class="hover:bg-surface-variant/10"><td class="p-3 font-code-block text-secondary">FIRFilter</td><td class="p-3 text-on-surface-variant font-code-block text-xs">(numTaps + blockSize - 1) × 4</td><td class="p-3 text-on-surface-variant">64 taps, BS=1</td><td class="p-3 font-bold text-on-surface">252 B</td></tr>
+          <tr class="hover:bg-surface-variant/10"><td class="p-3 font-code-block text-tertiary">IIRFilter</td><td class="p-3 text-on-surface-variant font-code-block text-xs">numStages × 4 × 4</td><td class="p-3 text-on-surface-variant">2 etapas</td><td class="p-3 font-bold text-on-surface">32 B</td></tr>
+          <tr class="hover:bg-surface-variant/10"><td class="p-3 font-code-block text-primary">LMSFilter</td><td class="p-3 text-on-surface-variant font-code-block text-xs">numTaps × 4</td><td class="p-3 text-on-surface-variant">64 taps</td><td class="p-3 font-bold text-on-surface">256 B</td></tr>
+          <tr class="hover:bg-surface-variant/10"><td class="p-3 font-code-block text-secondary">WaveletFilter</td><td class="p-3 text-on-surface-variant font-code-block text-xs">4 × FIRFilter (8 taps c/u)</td><td class="p-3 text-on-surface-variant">BS=1</td><td class="p-3 font-bold text-on-surface">~224 B</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer class="lg:ml-sidebar-width border-t border-outline-variant bg-background mt-section-gap">
+  <div class="max-w-content-max-width mx-auto py-10 px-gutter flex flex-col md:flex-row justify-between items-center gap-4">
+    <div><span class="font-headline-md font-bold text-primary">BioFilterLib</span><p class="font-label-caps text-[10px] text-on-surface-variant mt-1">© 2024 Sergio Moreno · MIT License · Arduino Due (ARM Cortex-M3)</p></div>
+    <div class="flex gap-6">
+      <a href="index.html" class="font-label-caps text-[10px] text-on-surface-variant hover:text-primary">Inicio</a>
+      <a href="filtros-fir-iir.html" class="font-label-caps text-[10px] text-on-surface-variant hover:text-primary">Filtros</a>
+      <a href="ejemplos.html" class="font-label-caps text-[10px] text-on-surface-variant hover:text-primary">Ejemplos</a>
+    </div>
+  </div>
+</footer>
+
+<nav class="lg:hidden fixed bottom-0 left-0 w-full bg-surface-container-low border-t border-outline-variant flex justify-around items-center py-2 px-4 z-50">
+  <a href="index.html" class="flex flex-col items-center gap-0.5 text-on-surface-variant"><span class="material-symbols-outlined">home</span><span class="text-[9px] font-label-caps">INICIO</span></a>
+  <a href="filtros-fir-iir.html" class="flex flex-col items-center gap-0.5 text-on-surface-variant"><span class="material-symbols-outlined">filter_alt</span><span class="text-[9px] font-label-caps">FILTROS</span></a>
+  <a href="ejemplos.html" class="flex flex-col items-center gap-0.5 text-on-surface-variant"><span class="material-symbols-outlined">lightbulb</span><span class="text-[9px] font-label-caps">EJEMPLOS</span></a>
+  <a href="api.html" class="flex flex-col items-center gap-0.5 text-primary"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">menu_book</span><span class="text-[9px] font-label-caps">API</span></a>
+</nav>
+
+<script>
+  window.addEventListener('scroll',()=>{document.getElementById('topnav').classList.toggle('bg-background/80',window.scrollY>20);document.getElementById('topnav').classList.toggle('backdrop-blur-md',window.scrollY>20);});
+  document.querySelectorAll('.copy-btn').forEach(btn=>{btn.addEventListener('click',function(){const pre=this.closest('.rounded-xl');if(pre){const code=pre.querySelector('pre')?.innerText||'';navigator.clipboard.writeText(code).catch(()=>{});}const orig=this.innerText;this.innerText='check';this.classList.add('text-primary');setTimeout(()=>{this.innerText=orig;this.classList.remove('text-primary');},2000);});});
+</script>
+</body>
+</html>

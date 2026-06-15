@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BioFilterLib | Wavelet &amp; LMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@600;700;800&family=JetBrains+Mono:wght@400;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"/>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+<style>
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle;}
+  .glass-panel{background:rgba(19,27,46,0.7);backdrop-filter:blur(12px);border:1px solid rgba(107,216,203,0.1);}
+  .math-block{font-family:'JetBrains Mono',monospace;background:rgba(107,216,203,0.04);border-left:3px solid #6bd8cb;padding:1.25rem 1.5rem;border-radius:0 0.5rem 0.5rem 0;}
+  .math-block-lms{background:rgba(137,206,255,0.04);border-left-color:#89ceff;}
+  ::-webkit-scrollbar{width:8px;height:8px;}::-webkit-scrollbar-track{background:#0b1326;}::-webkit-scrollbar-thumb{background:#2d3449;border-radius:4px;}
+  .sidebar-scroll::-webkit-scrollbar{width:4px;}.sidebar-scroll::-webkit-scrollbar-thumb{background:#3d4947;border-radius:10px;}
+  body{scroll-behavior:smooth;}.katex-display{overflow-x:auto;overflow-y:hidden;padding:0.5rem 0;}
+</style>
+<script id="tailwind-config">
+  tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-primary":"#003732","secondary":"#89ceff","on-surface":"#dae2fd","surface-variant":"#2d3449","surface-container-lowest":"#060e20","surface-container-low":"#131b2e","surface-container":"#171f33","surface-container-high":"#222a3d","surface-container-highest":"#2d3449","background":"#0b1326","outline":"#879391","outline-variant":"#3d4947","primary":"#6bd8cb","on-primary-container":"#00302b","primary-container":"#29a195","on-secondary":"#00344d","secondary-container":"#00a2e6","tertiary":"#d0bcff","on-tertiary":"#3c0091","tertiary-container":"#a078ff","on-tertiary-container":"#340080","on-surface-variant":"#bcc9c6","surface-bright":"#31394d","surface-dim":"#0b1326","surface":"#0b1326","error":"#ffb4ab","on-background":"#dae2fd","on-secondary-container":"#00344e","on-primary-fixed":"#00201d","primary-fixed":"#89f5e7","primary-fixed-dim":"#6bd8cb","inverse-primary":"#006a61","on-error":"#690005","error-container":"#93000a","on-error-container":"#ffdad6"},borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},spacing:{"section-gap":"4rem","sidebar-width":"280px","gutter":"24px","content-max-width":"800px"},fontFamily:{"body-lg":["Inter"],"headline-lg":["Geist"],"label-caps":["JetBrains Mono"],"display":["Geist"],"body-md":["Inter"],"headline-md":["Geist"],"code-block":["JetBrains Mono"]},fontSize:{"body-lg":["18px",{"lineHeight":"1.75","fontWeight":"400"}],"headline-lg":["32px",{"lineHeight":"1.2","fontWeight":"600"}],"label-caps":["12px",{"lineHeight":"1.0","letterSpacing":"0.05em","fontWeight":"600"}],"display":["48px",{"lineHeight":"1.1","letterSpacing":"-0.02em","fontWeight":"700"}],"body-md":["16px",{"lineHeight":"1.6","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"1.3","fontWeight":"600"}],"code-block":["14px",{"lineHeight":"1.5","fontWeight":"400"}]}}}}
+</script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+
+<!-- Top Navigation -->
+<nav id="topnav" class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-background border-b border-outline-variant transition-all duration-200">
+  <div class="flex items-center gap-8">
+    <a href="index.html" class="font-headline-md text-headline-md text-primary font-extrabold tracking-tighter">BioFilterLib</a>
+    <div class="hidden md:flex gap-6">
+      <a href="index.html" class="font-body-md text-on-surface-variant hover:text-primary transition-colors">Docs</a>
+      <a href="ejemplos.html" class="font-body-md text-on-surface-variant hover:text-primary transition-colors">Ejemplos</a>
+      <a href="api.html" class="font-body-md text-on-surface-variant hover:text-primary transition-colors">API</a>
+    </div>
+  </div>
+  <button onclick="document.getElementById('mobilemenu').classList.toggle('hidden')" class="md:hidden p-2 text-on-surface-variant"><span class="material-symbols-outlined">menu</span></button>
+</nav>
+<div id="mobilemenu" class="hidden fixed top-16 left-0 w-full bg-surface-container-low border-b border-outline-variant z-40 p-4 flex flex-col gap-2">
+  <a href="index.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">info</span>Introducción</a>
+  <a href="filtros-fir-iir.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">filter_alt</span>Filtros FIR &amp; IIR</a>
+  <a href="filtros-avanzados.html" class="flex items-center gap-3 px-3 py-2 text-primary bg-primary-container/10 font-bold rounded-lg"><span class="material-symbols-outlined">analytics</span>Wavelet &amp; LMS</a>
+  <a href="ejemplos.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">lightbulb</span>Ejemplos</a>
+  <a href="api.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">menu_book</span>API Reference</a>
+</div>
+
+<!-- Sidebar -->
+<aside class="hidden lg:flex flex-col border-r border-outline-variant w-sidebar-width fixed left-0 top-16 h-[calc(100vh-64px)] p-4 bg-surface-container-low overflow-y-auto sidebar-scroll z-40">
+  <div class="flex items-center gap-3 mb-8">
+    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+      <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">biotech</span>
+    </div>
+    <div><h3 class="font-headline-md text-on-surface text-lg leading-tight">Library Docs</h3><p class="text-on-surface-variant text-xs font-label-caps">v1.0.0 · Arduino Due</p></div>
+  </div>
+  <nav class="flex flex-col gap-1 flex-grow">
+    <a href="index.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">info</span><span>Introducción</span></a>
+    <div class="mt-3 mb-1 px-3"><span class="text-[10px] font-bold text-outline tracking-widest uppercase">Filtros Digitales</span></div>
+    <a href="filtros-fir-iir.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">filter_alt</span><span>FIR &amp; IIR</span></a>
+    <a href="filtros-avanzados.html" class="flex items-center gap-3 px-3 py-2 text-primary bg-primary-container/10 font-bold rounded-lg"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">analytics</span><span>Wavelet &amp; LMS</span></a>
+    <a href="#wavelet" class="flex items-center gap-2 pl-10 py-1.5 text-on-surface-variant hover:text-primary text-sm transition-colors"><span class="text-xs">→</span> WaveletFilter</a>
+    <a href="#lms" class="flex items-center gap-2 pl-10 py-1.5 text-on-surface-variant hover:text-primary text-sm transition-colors"><span class="text-xs">→</span> LMSFilter</a>
+    <div class="mt-3 mb-1 px-3"><span class="text-[10px] font-bold text-outline tracking-widest uppercase">Guías</span></div>
+    <a href="ejemplos.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">lightbulb</span><span>Ejemplos</span></a>
+    <a href="api.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">menu_book</span><span>API Reference</span></a>
+  </nav>
+  <div class="mt-auto pt-6 border-t border-outline-variant">
+    <a href="https://github.com" target="_blank" class="w-full bg-primary text-on-primary py-2 px-4 rounded-lg font-bold hover:brightness-110 transition-all flex items-center justify-center gap-2 text-sm"><span class="material-symbols-outlined text-sm">terminal</span> GitHub</a>
+  </div>
+</aside>
+
+<!-- Main Content -->
+<main class="lg:ml-sidebar-width pt-24 pb-24 px-6 lg:px-0 flex justify-center">
+<div class="max-w-content-max-width w-full">
+
+  <!-- Breadcrumbs -->
+  <nav class="flex items-center gap-2 font-label-caps text-label-caps text-outline mb-8">
+    <a href="index.html" class="hover:text-primary">DOCS</a><span>/</span>
+    <span>FILTROS DIGITALES</span><span>/</span>
+    <span class="text-primary">WAVELET &amp; LMS</span>
+  </nav>
+
+  <!-- Hero -->
+  <section class="mb-12">
+    <h1 class="font-display text-display text-on-surface mb-4">Filtros Avanzados: Wavelet y LMS</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant">
+      Para señales biomédicas no estacionarias —como el ECG con artefactos de movimiento o el EEG con parpadeos— se necesitan técnicas más sofisticadas. <strong class="text-primary">WaveletFilter</strong> descompone la señal en tiempo y frecuencia simultáneamente; <strong class="text-secondary">LMSFilter</strong> se adapta en tiempo real al ruido cambiante.
+    </p>
+  </section>
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- WAVELET SECTION                     -->
+  <!-- ═══════════════════════════════════ -->
+  <article id="wavelet" class="mb-section-gap scroll-mt-24">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-1 h-8 bg-primary rounded-full"></div>
+      <h2 class="font-headline-lg text-headline-lg text-on-surface">WaveletFilter — Banco de Filtros Daubechies-4</h2>
+    </div>
+
+    <!-- CMSIS Composition Box -->
+    <div class="glass-panel rounded-xl p-5 mb-8">
+      <div class="text-[9px] font-label-caps text-outline mb-3">ARQUITECTURA INTERNA — COMPOSICIÓN DE FIRFilter</div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="bg-surface-container rounded-lg p-4 border border-outline-variant/50">
+          <div class="text-xs font-label-caps text-outline mb-2">ETAPA DE ANÁLISIS</div>
+          <div class="space-y-2">
+            <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-secondary"></span><code class="text-xs font-code-block text-secondary">*_approxFilter</code> <span class="text-xs text-on-surface-variant">→ Pasa-Bajo (DB-4)</span></div>
+            <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-primary"></span><code class="text-xs font-code-block text-primary">*_detailFilter</code> <span class="text-xs text-on-surface-variant">→ Pasa-Alto (DB-4)</span></div>
+          </div>
+        </div>
+        <div class="bg-surface-container rounded-lg p-4 border border-outline-variant/50">
+          <div class="text-xs font-label-caps text-outline mb-2">ETAPA DE SÍNTESIS</div>
+          <div class="space-y-2">
+            <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-secondary"></span><code class="text-xs font-code-block text-secondary">*_synthApproxFilter</code><span class="text-xs text-on-surface-variant">→ Reconstrucción</span></div>
+            <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-primary"></span><code class="text-xs font-code-block text-primary">*_synthDetailFilter</code><span class="text-xs text-on-surface-variant">→ Reconstrucción</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="text-xs text-on-surface-variant mt-4">Cada uno de los 4 filtros internos es una instancia de <code class="text-primary text-xs">FIRFilter</code>, que a su vez encapsula <code class="text-xs text-on-surface">arm_fir_instance_f32</code>. La wavelet <strong class="text-on-surface">no</strong> usa CMSIS directamente; la implementa como un banco de 4 filtros FIR.</p>
+    </div>
+
+    <!-- Math Theory -->
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-4 flex items-center gap-2">
+      <span class="material-symbols-outlined text-primary">functions</span> Fundamento Matemático
+    </h3>
+    <p class="text-on-surface-variant mb-4">
+      A diferencia de la Transformada de Fourier (que solo da información de frecuencia), la <strong class="text-on-surface">Transformada Wavelet Discreta (DWT)</strong> descompone la señal en componentes que tienen localización tanto en <em>tiempo</em> como en <em>frecuencia</em>. Se implementa como un banco de dos filtros:
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div>
+        <div class="text-xs font-label-caps text-secondary mb-2">FILTRO DE APROXIMACIÓN (PASA-BAJO)</div>
+        <div class="math-block">
+          $$A[n] = \sum_{k=0}^{7} h[k] \cdot x[n-k]$$
+        </div>
+        <p class="text-xs text-on-surface-variant mt-2">Extrae componentes de baja frecuencia. Representa la <em>tendencia</em> y forma base de la señal.</p>
+      </div>
+      <div>
+        <div class="text-xs font-label-caps text-primary mb-2">FILTRO DE DETALLE (PASA-ALTO)</div>
+        <div class="math-block" style="border-left-color:#6bd8cb80;">
+          $$D[n] = \sum_{k=0}^{7} g[k] \cdot x[n-k]$$
+        </div>
+        <p class="text-xs text-on-surface-variant mt-2">Extrae componentes de alta frecuencia. Representa <em>bordes, transitorios y ruido</em>.</p>
+      </div>
+    </div>
+
+    <p class="text-on-surface-variant mb-4">La reconstrucción perfecta se obtiene combinando ambas salidas con los filtros de síntesis $\tilde{h}$ y $\tilde{g}$:</p>
+    <div class="math-block mb-8">
+      $$\hat{x}[n] = \sum_{k} \tilde{h}[k]\,A[n-k] \;+\; \sum_{k} \tilde{g}[k]\,D[n-k]$$
+    </div>
+
+    <!-- Daubechies-4 specifics -->
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-4">Wavelet Daubechies-4 (DB-4)</h3>
+    <p class="text-on-surface-variant mb-4">La librería usa coeficientes <strong class="text-on-surface">Daubechies de orden 4</strong> (8 coeficientes por filtro). Son ideales para bioseñales porque:</p>
+    <div class="space-y-3 mb-6">
+      <div class="flex gap-3 p-4 glass-panel rounded-xl"><span class="material-symbols-outlined text-primary shrink-0">check_circle</span><div><strong class="text-on-surface">Reconstrucción perfecta:</strong><span class="text-on-surface-variant"> Los filtros de análisis y síntesis son ortogonales — no hay pérdida de información.</span></div></div>
+      <div class="flex gap-3 p-4 glass-panel rounded-xl"><span class="material-symbols-outlined text-primary shrink-0">check_circle</span><div><strong class="text-on-surface">Soporte compacto:</strong><span class="text-on-surface-variant"> Solo 8 coeficientes. Eficiente en CPU y RAM para el Cortex-M3.</span></div></div>
+      <div class="flex gap-3 p-4 glass-panel rounded-xl"><span class="material-symbols-outlined text-primary shrink-0">check_circle</span><div><strong class="text-on-surface">Fase casi lineal:</strong><span class="text-on-surface-variant"> Preserva mejor la morfología del QRS en ECG que otras wavelets.</span></div></div>
+    </div>
+
+    <!-- Filter Bank Diagram -->
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-4">Diagrama del Banco de Filtros</h3>
+    <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant p-8 mb-8 overflow-x-auto">
+      <div class="min-w-[520px]">
+        <!-- Analysis Stage -->
+        <div class="text-[10px] font-label-caps text-outline mb-4 text-center">ETAPA DE ANÁLISIS</div>
+        <div class="flex items-center justify-center gap-0 mb-10">
+          <!-- Input -->
+          <div class="bg-surface-container-high border border-outline-variant rounded-lg px-4 py-3 text-center shrink-0">
+            <div class="font-code-block text-sm text-on-surface">x[n]</div>
+            <div class="text-[9px] text-outline mt-1">Señal original</div>
+          </div>
+          <!-- Arrow fork -->
+          <div class="flex flex-col items-center mx-2">
+            <div class="w-8 h-px bg-outline-variant/60"></div>
+          </div>
+          <div class="flex flex-col gap-4">
+            <!-- Low pass branch -->
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-px bg-outline-variant/60"></div>
+              <div class="bg-secondary/10 border border-secondary/40 rounded-lg px-4 py-2 text-center">
+                <div class="text-[10px] font-label-caps text-secondary">PASA-BAJO</div>
+                <div class="font-code-block text-xs text-secondary mt-1">h[k] — DB-4</div>
+                <div class="text-[9px] text-outline">_approxFilter</div>
+              </div>
+              <div class="w-4 h-px bg-outline-variant/60"></div>
+              <div class="bg-surface-container border border-secondary/30 rounded-lg px-4 py-2 text-center">
+                <div class="font-code-block text-sm text-secondary">A[n]</div>
+                <div class="text-[9px] text-outline">Aproximación</div>
+              </div>
+            </div>
+            <!-- High pass branch -->
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-px bg-outline-variant/60"></div>
+              <div class="bg-primary/10 border border-primary/40 rounded-lg px-4 py-2 text-center">
+                <div class="text-[10px] font-label-caps text-primary">PASA-ALTO</div>
+                <div class="font-code-block text-xs text-primary mt-1">g[k] — DB-4</div>
+                <div class="text-[9px] text-outline">_detailFilter</div>
+              </div>
+              <div class="w-4 h-px bg-outline-variant/60"></div>
+              <div class="bg-surface-container border border-primary/30 rounded-lg px-4 py-2 text-center">
+                <div class="font-code-block text-sm text-primary">D[n]</div>
+                <div class="text-[9px] text-outline">Detalle</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Synthesis Stage -->
+        <div class="text-[10px] font-label-caps text-outline mb-4 text-center">ETAPA DE SÍNTESIS (reconstruct)</div>
+        <div class="flex items-center justify-center gap-2">
+          <div class="flex flex-col gap-4">
+            <div class="flex items-center gap-2">
+              <div class="bg-surface-container border border-secondary/30 rounded-lg px-4 py-2 text-center">
+                <div class="font-code-block text-sm text-secondary">A[n]</div>
+                <div class="text-[9px] text-outline">approxCoeff</div>
+              </div>
+              <div class="w-4 h-px bg-outline-variant/60"></div>
+              <div class="bg-secondary/10 border border-secondary/40 rounded-lg px-4 py-2 text-center">
+                <div class="text-[10px] font-label-caps text-secondary">SÍNTESIS LP</div>
+                <div class="font-code-block text-xs text-secondary mt-1">h̃[k]</div>
+                <div class="text-[9px] text-outline">_synthApproxFilter</div>
+              </div>
+              <div class="w-3 h-px bg-outline-variant/60"></div>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="bg-surface-container border border-primary/30 rounded-lg px-4 py-2 text-center">
+                <div class="font-code-block text-sm text-primary">D[n]</div>
+                <div class="text-[9px] text-outline">detailCoeff</div>
+              </div>
+              <div class="w-4 h-px bg-outline-variant/60"></div>
+              <div class="bg-primary/10 border border-primary/40 rounded-lg px-4 py-2 text-center">
+                <div class="text-[10px] font-label-caps text-primary">SÍNTESIS HP</div>
+                <div class="font-code-block text-xs text-primary mt-1">g̃[k]</div>
+                <div class="text-[9px] text-outline">_synthDetailFilter</div>
+              </div>
+              <div class="w-3 h-px bg-outline-variant/60"></div>
+            </div>
+          </div>
+          <!-- Summation -->
+          <div class="flex flex-col items-center justify-center w-10 h-16 bg-surface-container-high border border-outline-variant rounded-lg">
+            <span class="text-xl text-on-surface font-bold">Σ</span>
+          </div>
+          <div class="w-4 h-px bg-outline-variant/60"></div>
+          <div class="bg-surface-container-high border border-outline-variant rounded-lg px-4 py-3 text-center">
+            <div class="font-code-block text-sm text-on-surface">x̂[n]</div>
+            <div class="text-[9px] text-outline mt-1">Señal reconstruida</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- API -->
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-4">Constructor y Métodos</h3>
+    <div class="space-y-4 mb-8">
+      <div class="rounded-xl overflow-hidden border border-outline-variant bg-surface-container-lowest">
+        <div class="flex justify-between items-center px-4 py-3 bg-surface-container-high border-b border-outline-variant">
+          <span class="font-code-block text-xs text-primary">Constructor</span>
+          <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+        </div>
+        <pre class="p-5 font-code-block text-code-block overflow-x-auto"><span class="text-primary">WaveletFilter</span>(<span class="text-tertiary">uint16_t</span> blockSize);</pre>
+        <div class="px-5 pb-4 text-sm text-on-surface-variant">Los coeficientes DB-4 están predefinidos. Solo necesitas el <code class="text-primary">blockSize</code>: usa <strong>1</strong> para tiempo real.</div>
+      </div>
+
+      <div class="rounded-xl overflow-hidden border border-outline-variant bg-surface-container-lowest">
+        <div class="flex justify-between items-center px-4 py-3 bg-surface-container-high border-b border-outline-variant">
+          <span class="font-code-block text-xs text-primary">processSample — análisis</span>
+          <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+        </div>
+        <pre class="p-5 font-code-block text-code-block overflow-x-auto"><span class="text-tertiary">void</span> <span class="text-primary">processSample</span>(<span class="text-tertiary">float32_t</span> input, <span class="text-tertiary">float32_t</span>* approxCoeff, <span class="text-tertiary">float32_t</span>* detailCoeff);</pre>
+        <div class="px-5 pb-4 text-sm text-on-surface-variant">Aplica los filtros de análisis. Escribe el coeficiente de <span class="text-secondary">aproximación</span> (baja frecuencia) y el de <span class="text-primary">detalle</span> (alta frecuencia).</div>
+      </div>
+
+      <div class="rounded-xl overflow-hidden border border-outline-variant bg-surface-container-lowest">
+        <div class="flex justify-between items-center px-4 py-3 bg-surface-container-high border-b border-outline-variant">
+          <span class="font-code-block text-xs text-primary">reconstruct — síntesis</span>
+          <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+        </div>
+        <pre class="p-5 font-code-block text-code-block overflow-x-auto"><span class="text-tertiary">float32_t</span> <span class="text-primary">reconstruct</span>(<span class="text-tertiary">float32_t</span> approxCoeff, <span class="text-tertiary">float32_t</span> detailCoeff);</pre>
+        <div class="px-5 pb-4 text-sm text-on-surface-variant">
+          Combina aproximación + detalle para reconstruir. <strong class="text-on-surface">Truco de filtrado:</strong> para eliminar ruido de alta frecuencia, pasa <code class="text-primary">approxCoeff</code> y <code class="text-primary">0.0f</code> como detalle.
+        </div>
+      </div>
+
+      <div class="rounded-xl overflow-hidden border border-outline-variant bg-surface-container-lowest">
+        <div class="flex justify-between items-center px-4 py-3 bg-surface-container-high border-b border-outline-variant">
+          <span class="font-code-block text-xs text-primary">reset</span>
+          <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+        </div>
+        <pre class="p-5 font-code-block text-code-block overflow-x-auto"><span class="text-tertiary">void</span> <span class="text-primary">reset</span>();</pre>
+        <div class="px-5 pb-4 text-sm text-on-surface-variant">Limpia el estado interno de los 4 filtros FIR. Usar al cambiar de paciente o iniciar nueva sesión de adquisición.</div>
+      </div>
+    </div>
+
+    <!-- Code Example -->
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-4 flex items-center gap-2">
+      <span class="material-symbols-outlined text-primary">lightbulb</span> Ejemplo — Denoising de ECG con Wavelet
+    </h3>
+    <div class="rounded-xl overflow-hidden border border-outline-variant bg-surface-container-lowest mb-6">
+      <div class="flex justify-between items-center px-4 py-3 bg-surface-container-high border-b border-outline-variant">
+        <div class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">terminal</span><span class="font-code-block text-xs text-on-surface">Wavelet_ECG_denoising.ino</span></div>
+        <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+      </div>
+      <pre class="p-5 font-code-block text-code-block text-[#89f5e7] leading-relaxed overflow-x-auto"><span class="text-outline italic">// Denoising de ECG usando Wavelet DB-4</span>
+<span class="text-outline italic">// Aproximación = señal suavizada (sin ruido de alta frecuencia)</span>
+<span class="text-outline italic">// Detalle      = ruido + transitorios (picos QRS)</span>
+<span class="text-tertiary">#include</span> <span class="text-secondary">&lt;BioFilterLib.h&gt;</span>
+
+WaveletFilter ecgWavelet(1); <span class="text-outline italic">// blockSize=1 para tiempo real</span>
+
+<span class="text-tertiary">void</span> <span class="text-primary">setup</span>() {
+  Serial.begin(115200);
+  analogReadResolution(12);
+}
+
+<span class="text-tertiary">void</span> <span class="text-primary">loop</span>() {
+  float32_t raw = (analogRead(A0) - 2048.0f) / 2048.0f;
+
+  float32_t approx, detail;
+  ecgWavelet.<span class="text-primary">processSample</span>(raw, &amp;approx, &amp;detail);
+
+  <span class="text-outline italic">// Señal denoised: reconstruir solo con aproximación</span>
+  float32_t denoised = ecgWavelet.<span class="text-primary">reconstruct</span>(approx, 0.0f);
+
+  <span class="text-outline italic">// Detección de QRS: el detalle tiene picos R</span>
+  <span class="text-tertiary">if</span> (abs(detail) > 0.15f) {
+    <span class="text-outline italic">// Posible complejo QRS detectado</span>
+    digitalWrite(LED_BUILTIN, HIGH);
+  } <span class="text-tertiary">else</span> {
+    digitalWrite(LED_BUILTIN, LOW);
+  }
+
+  <span class="text-outline italic">// Visualizar las 4 señales en Serial Plotter</span>
+  Serial.print(raw,      4); Serial.print(",");
+  Serial.print(approx,   4); Serial.print(",");
+  Serial.print(detail,   4); Serial.print(",");
+  Serial.println(denoised, 4);
+
+  delayMicroseconds(1042); <span class="text-outline italic">// 960 Hz</span>
+}</pre>
+    </div>
+  </article>
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- LMS FILTER SECTION                  -->
+  <!-- ═══════════════════════════════════ -->
+  <article id="lms" class="mb-section-gap scroll-mt-24">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-1 h-8 bg-secondary rounded-full"></div>
+      <h2 class="font-headline-lg text-headline-lg text-on-surface">LMSFilter — Filtro Adaptativo LMS</h2>
+    </div>
+
+    <!-- CMSIS Composition Box -->
+    <div class="glass-panel rounded-xl p-5 mb-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+      <div class="shrink-0">
+        <div class="text-[9px] font-label-caps text-outline mb-1">CMSIS-DSP SUBYACENTE</div>
+        <code class="font-code-block text-sm text-secondary bg-surface-container px-3 py-1.5 rounded">arm_lms_norm_instance_f32</code>
+      </div>
+      <div class="flex-1 h-px sm:h-auto sm:w-px bg-outline-variant mx-2"></div>
+      <div class="flex-1">
+        <p class="text-sm text-on-surface-variant">Encapsula <code class="text-secondary text-xs">arm_lms_norm_instance_f32</code> e invoca <code class="text-secondary text-xs">arm_lms_norm_f32()</code>. Usa el algoritmo <strong class="text-on-surface">LMS Normalizado (NLMS)</strong>, más estable que el LMS estándar porque normaliza el paso de adaptación por la potencia de la señal.</p>
+      </div>
+    </div>
+
+    <!-- Math -->
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-4 flex items-center gap-2">
+      <span class="material-symbols-outlined text-secondary">functions</span> Fundamento Matemático — Algoritmo LMS
+    </h3>
+    <p class="text-on-surface-variant mb-6">El LMS actualiza iterativamente sus pesos $\mathbf{w}[n]$ para minimizar el error cuadrático medio entre la señal de referencia $d[n]$ y la salida estimada $y[n]$:</p>
+
+    <div class="grid grid-cols-1 gap-4 mb-8">
+      <div>
+        <div class="text-xs font-label-caps text-secondary mb-2">① SALIDA DEL FILTRO</div>
+        <div class="math-block math-block-lms">$$y[n] = \mathbf{w}^T[n]\,\mathbf{x}[n] = \sum_{k=0}^{M-1} w_k[n]\,x[n-k]$$</div>
+      </div>
+      <div>
+        <div class="text-xs font-label-caps text-secondary mb-2">② SEÑAL DE ERROR</div>
+        <div class="math-block math-block-lms">$$e[n] = d[n] - y[n]$$</div>
+        <p class="text-xs text-on-surface-variant mt-2">Diferencia entre la señal deseada $d[n]$ (referencia) y la estimación del filtro. Decrece a medida que el filtro converge.</p>
+      </div>
+      <div>
+        <div class="text-xs font-label-caps text-secondary mb-2">③ ACTUALIZACIÓN DE PESOS (NLMS)</div>
+        <div class="math-block math-block-lms">$$\mathbf{w}[n+1] = \mathbf{w}[n] + \mu \cdot e[n] \cdot \frac{\mathbf{x}[n]}{\|\mathbf{x}[n]\|^2 + \epsilon}$$</div>
+        <p class="text-xs text-on-surface-variant mt-2">$\mu$ es el paso de adaptación (step size). La normalización por $\|\mathbf{x}\|^2$ hace al NLMS más estable que el LMS clásico ante variaciones de potencia de la señal.</p>
+      </div>
+    </div>
+
+    <!-- Mu Table -->
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-4">Selección del Paso de Adaptación $\mu$</h3>
+    <p class="text-on-surface-variant mb-4">El parámetro <code class="text-secondary">mu</code> es el más crítico del filtro LMS. Controla el balance entre velocidad de convergencia y estabilidad:</p>
+    <div class="overflow-hidden border border-outline-variant rounded-xl mb-8">
+      <table class="w-full text-left border-collapse">
+        <thead class="bg-surface-container-high">
+          <tr>
+            <th class="p-3 font-label-caps text-label-caps text-secondary border-b border-outline-variant text-[10px]">SEÑAL</th>
+            <th class="p-3 font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant text-[10px]">MU RECOMENDADO</th>
+            <th class="p-3 font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant text-[10px]">TAPS TÍPICOS</th>
+            <th class="p-3 font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant text-[10px]">USO</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant/30 text-sm">
+          <tr class="hover:bg-surface-variant/10"><td class="p-3 font-bold text-on-surface">ECG</td><td class="p-3 font-code-block text-secondary">0.01 – 0.05</td><td class="p-3 text-on-surface-variant">32 – 64</td><td class="p-3 text-on-surface-variant">Cancelación 50/60 Hz, deriva de línea base</td></tr>
+          <tr class="hover:bg-surface-variant/10"><td class="p-3 font-bold text-on-surface">EMG</td><td class="p-3 font-code-block text-secondary">0.001 – 0.01</td><td class="p-3 text-on-surface-variant">64 – 128</td><td class="p-3 text-on-surface-variant">Artefactos de movimiento, supresión de ruido</td></tr>
+          <tr class="hover:bg-surface-variant/10"><td class="p-3 font-bold text-on-surface">EEG</td><td class="p-3 font-code-block text-secondary">0.0001 – 0.001</td><td class="p-3 text-on-surface-variant">32 – 64</td><td class="p-3 text-on-surface-variant">Cancelación de parpadeo (EOG como referencia)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Convergence info -->
+    <div class="bg-secondary/5 border-l-4 border-secondary p-5 rounded-r-lg mb-8">
+      <div class="flex gap-3 items-start">
+        <span class="material-symbols-outlined text-secondary shrink-0">info</span>
+        <div>
+          <h4 class="font-bold text-on-surface mb-2">¿Por qué usar LMS en vez de un Notch fijo?</h4>
+          <p class="text-sm text-on-surface-variant">Un filtro notch IIR elimina exactamente 60.0 Hz. Pero en la práctica, la frecuencia de la red puede variar entre 59.5–60.5 Hz según la carga, y la impedancia de los electrodos cambia durante la sesión. El LMS <strong class="text-on-surface">se adapta automáticamente</strong> a estas variaciones en tiempo real, sin necesidad de rediseñar el filtro.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- API Methods -->
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-4">Constructor y Métodos</h3>
+    <div class="space-y-4 mb-8">
+      <div class="rounded-xl overflow-hidden border border-outline-variant bg-surface-container-lowest">
+        <div class="flex justify-between items-center px-4 py-3 bg-surface-container-high border-b border-outline-variant">
+          <span class="font-code-block text-xs text-secondary">Constructor</span>
+          <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+        </div>
+        <pre class="p-5 font-code-block text-code-block overflow-x-auto"><span class="text-secondary">LMSFilter</span>(<span class="text-tertiary">float32_t</span>* coeffs, <span class="text-tertiary">uint16_t</span> numTaps, <span class="text-tertiary">float32_t</span> mu, <span class="text-tertiary">uint16_t</span> blockSize);</pre>
+        <div class="px-5 pb-4 text-sm text-on-surface-variant">Los <code class="text-secondary">coeffs</code> se inicializan típicamente a cero. <strong class="text-on-surface">Son modificados</strong> internamente durante la adaptación.</div>
+      </div>
+      <div class="rounded-xl overflow-hidden border border-outline-variant bg-surface-container-lowest">
+        <div class="flex justify-between items-center px-4 py-3 bg-surface-container-high border-b border-outline-variant">
+          <span class="font-code-block text-xs text-secondary">processSample</span>
+          <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+        </div>
+        <pre class="p-5 font-code-block text-code-block overflow-x-auto"><span class="text-tertiary">void</span> <span class="text-primary">processSample</span>(<span class="text-tertiary">float32_t</span> input, <span class="text-tertiary">float32_t</span> reference,
+                      <span class="text-tertiary">float32_t</span>* output, <span class="text-tertiary">float32_t</span>* error);</pre>
+        <div class="px-5 pb-4 text-sm text-on-surface-variant"><code class="text-secondary">input</code> = señal contaminada · <code class="text-secondary">reference</code> = señal de ruido puro (ej: seno de 60 Hz) · <code class="text-secondary">output</code> = señal limpia · <code class="text-secondary">error</code> = señal de convergencia.</div>
+      </div>
+      <div class="rounded-xl overflow-hidden border border-outline-variant bg-surface-container-lowest">
+        <div class="flex justify-between items-center px-4 py-3 bg-surface-container-high border-b border-outline-variant">
+          <span class="font-code-block text-xs text-secondary">setMu / getMu / resetCoefficients</span>
+          <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+        </div>
+        <pre class="p-5 font-code-block text-code-block overflow-x-auto"><span class="text-tertiary">void</span>      <span class="text-primary">setMu</span>(<span class="text-tertiary">float32_t</span> newMu);
+<span class="text-tertiary">float32_t</span> <span class="text-primary">getMu</span>() <span class="text-tertiary">const</span>;
+<span class="text-tertiary">void</span>      <span class="text-primary">resetCoefficients</span>(<span class="text-tertiary">const</span> <span class="text-tertiary">float32_t</span>* newCoeffs = <span class="text-tertiary">nullptr</span>);</pre>
+        <div class="px-5 pb-4 text-sm text-on-surface-variant"><code class="text-primary">setMu()</code> ajusta la velocidad de adaptación en tiempo real. <code class="text-primary">resetCoefficients()</code> reinicia los pesos (útil si el filtro diverge).</div>
+      </div>
+    </div>
+
+    <!-- Code Example -->
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-4 flex items-center gap-2">
+      <span class="material-symbols-outlined text-secondary">lightbulb</span> Ejemplo — Cancelación Adaptativa de 60 Hz en ECG
+    </h3>
+    <div class="rounded-xl overflow-hidden border border-outline-variant bg-surface-container-lowest mb-4">
+      <div class="flex justify-between items-center px-4 py-3 bg-surface-container-high border-b border-outline-variant">
+        <div class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-sm">terminal</span><span class="font-code-block text-xs text-on-surface">LMS_cancelacion_60Hz.ino</span></div>
+        <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+      </div>
+      <pre class="p-5 font-code-block text-code-block text-[#89f5e7] leading-relaxed overflow-x-auto"><span class="text-outline italic">// LMS: cancelación adaptativa de interferencia de 60 Hz en ECG</span>
+<span class="text-outline italic">// La señal de referencia es un seno de 60 Hz generado localmente</span>
+<span class="text-tertiary">#include</span> <span class="text-secondary">&lt;BioFilterLib.h&gt;</span>
+
+<span class="text-tertiary">const</span> <span class="text-tertiary">uint16_t</span> NUM_TAPS = 64;
+<span class="text-tertiary">const</span> float32_t MU      = 0.01f;   <span class="text-outline">// Step size para ECG</span>
+<span class="text-tertiary">const</span> float32_t FS      = 960.0f;  <span class="text-outline">// Hz de muestreo</span>
+
+float32_t lmsCoeffs[NUM_TAPS] = {0}; <span class="text-outline">// Inicializar a cero</span>
+LMSFilter cancelador(lmsCoeffs, NUM_TAPS, MU, 1);
+
+<span class="text-tertiary">float</span> tiempoSeg = 0.0f;
+
+<span class="text-tertiary">void</span> <span class="text-primary">setup</span>() {
+  Serial.begin(115200);
+  analogReadResolution(12);
+}
+
+<span class="text-tertiary">void</span> <span class="text-primary">loop</span>() {
+  <span class="text-outline">// Señal primaria: ECG + interferencia de red</span>
+  float32_t ecgContaminado = (analogRead(A0) - 2048.0f) / 2048.0f;
+
+  <span class="text-outline">// Señal de referencia: seno puro de 60 Hz</span>
+  float32_t ref60Hz = sin(2.0f * PI * 60.0f * tiempoSeg);
+
+  float32_t ecgLimpio, errorAdaptacion;
+  cancelador.<span class="text-primary">processSample</span>(ecgContaminado, ref60Hz,
+                          &amp;ecgLimpio, &amp;errorAdaptacion);
+
+  <span class="text-outline">// Visualizar en Serial Plotter (4 señales)</span>
+  Serial.print(ecgContaminado,  4); Serial.print(",");
+  Serial.print(ref60Hz,         4); Serial.print(",");
+  Serial.print(ecgLimpio,       4); Serial.print(",");
+  Serial.println(errorAdaptacion, 4);
+
+  tiempoSeg += 1.0f / FS;
+  delayMicroseconds(1042);
+}</pre>
+    </div>
+    <div class="bg-primary/5 border-l-4 border-primary p-4 rounded-r-lg text-sm text-on-surface-variant">
+      <strong class="text-on-surface">Interpretación de la señal de error:</strong> Si <code class="text-primary">errorAdaptacion</code> decrece con el tiempo → el filtro está convergiendo correctamente. Si oscila sin converger, reduce <code class="text-primary">mu</code>. Si es muy lento, auméntalo.
+    </div>
+  </article>
+
+  <!-- Navigation -->
+  <div class="flex flex-col sm:flex-row gap-4">
+    <a href="filtros-fir-iir.html" class="flex-1 glass-panel rounded-xl p-6 hover:border-primary/40 transition-all">
+      <div class="flex items-center gap-3 mb-2"><span class="material-symbols-outlined text-tertiary">arrow_back</span><span class="font-headline-md text-headline-md text-on-surface">Anterior: FIR &amp; IIR</span></div>
+      <p class="text-sm text-on-surface-variant">Filtros clásicos con fundamentos matemáticos y CMSIS-DSP.</p>
+    </a>
+    <a href="ejemplos.html" class="flex-1 glass-panel rounded-xl p-6 hover:border-primary/40 transition-all">
+      <div class="flex items-center gap-3 mb-2"><span class="material-symbols-outlined text-primary">lightbulb</span><span class="font-headline-md text-headline-md text-on-surface">Siguiente: Ejemplos</span></div>
+      <p class="text-sm text-on-surface-variant">Sketches completos listos para Arduino Due con Serial Plotter.</p>
+    </a>
+  </div>
+
+</div>
+</main>
+
+<footer class="lg:ml-sidebar-width border-t border-outline-variant bg-background mt-section-gap">
+  <div class="max-w-content-max-width mx-auto py-10 px-gutter flex flex-col md:flex-row justify-between items-center gap-4">
+    <div><span class="font-headline-md font-bold text-primary">BioFilterLib</span><p class="font-label-caps text-[10px] text-on-surface-variant mt-1">© 2024 Sergio Moreno · MIT License</p></div>
+    <div class="flex gap-6">
+      <a href="index.html" class="font-label-caps text-[10px] text-on-surface-variant hover:text-primary">Inicio</a>
+      <a href="ejemplos.html" class="font-label-caps text-[10px] text-on-surface-variant hover:text-primary">Ejemplos</a>
+      <a href="api.html" class="font-label-caps text-[10px] text-on-surface-variant hover:text-primary">API</a>
+    </div>
+  </div>
+</footer>
+
+<nav class="lg:hidden fixed bottom-0 left-0 w-full bg-surface-container-low border-t border-outline-variant flex justify-around items-center py-2 px-4 z-50">
+  <a href="index.html" class="flex flex-col items-center gap-0.5 text-on-surface-variant"><span class="material-symbols-outlined">home</span><span class="text-[9px] font-label-caps">INICIO</span></a>
+  <a href="filtros-avanzados.html" class="flex flex-col items-center gap-0.5 text-primary"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">analytics</span><span class="text-[9px] font-label-caps">FILTROS</span></a>
+  <a href="ejemplos.html" class="flex flex-col items-center gap-0.5 text-on-surface-variant"><span class="material-symbols-outlined">lightbulb</span><span class="text-[9px] font-label-caps">EJEMPLOS</span></a>
+  <a href="api.html" class="flex flex-col items-center gap-0.5 text-on-surface-variant"><span class="material-symbols-outlined">menu_book</span><span class="text-[9px] font-label-caps">API</span></a>
+</nav>
+
+<script>
+  window.addEventListener('scroll',()=>{document.getElementById('topnav').classList.toggle('bg-background/80',window.scrollY>20);document.getElementById('topnav').classList.toggle('backdrop-blur-md',window.scrollY>20);});
+  document.querySelectorAll('.copy-btn').forEach(btn=>{btn.addEventListener('click',function(){const pre=this.closest('.rounded-xl');if(pre){const code=pre.querySelector('pre')?.innerText||'';navigator.clipboard.writeText(code).catch(()=>{});}const orig=this.innerText;this.innerText='check';this.classList.add('text-primary');setTimeout(()=>{this.innerText=orig;this.classList.remove('text-primary');},2000);});});
+</script>
+</body>
+</html>

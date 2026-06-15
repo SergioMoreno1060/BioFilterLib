@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BioFilterLib | Ejemplos y Tutoriales</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@600;700;800&family=JetBrains+Mono:wght@400;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle;}
+  .glass-card{background:rgba(19,27,46,0.7);backdrop-filter:blur(12px);border:1px solid rgba(107,216,203,0.1);transition:border-color 0.2s,transform 0.2s;}
+  .glass-card:hover{border-color:rgba(107,216,203,0.35);transform:translateY(-2px);}
+  ::-webkit-scrollbar{width:8px;height:8px;}::-webkit-scrollbar-track{background:#0b1326;}::-webkit-scrollbar-thumb{background:#2d3449;border-radius:4px;}
+  .sidebar-scroll::-webkit-scrollbar{width:4px;}.sidebar-scroll::-webkit-scrollbar-thumb{background:#3d4947;border-radius:10px;}
+  body{scroll-behavior:smooth;}
+</style>
+<script id="tailwind-config">
+  tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-primary":"#003732","secondary":"#89ceff","on-surface":"#dae2fd","surface-variant":"#2d3449","surface-container-lowest":"#060e20","surface-container-low":"#131b2e","surface-container":"#171f33","surface-container-high":"#222a3d","surface-container-highest":"#2d3449","background":"#0b1326","outline":"#879391","outline-variant":"#3d4947","primary":"#6bd8cb","on-primary-container":"#00302b","primary-container":"#29a195","on-secondary":"#00344d","secondary-container":"#00a2e6","tertiary":"#d0bcff","on-tertiary":"#3c0091","tertiary-container":"#a078ff","on-tertiary-container":"#340080","on-surface-variant":"#bcc9c6","surface-bright":"#31394d","surface":"#0b1326","error":"#ffb4ab","on-background":"#dae2fd","on-secondary-container":"#00344e","primary-fixed":"#89f5e7","primary-fixed-dim":"#6bd8cb","inverse-primary":"#006a61","on-error":"#690005","error-container":"#93000a","on-error-container":"#ffdad6"},borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},spacing:{"section-gap":"4rem","sidebar-width":"280px","gutter":"24px","content-max-width":"800px"},fontFamily:{"body-lg":["Inter"],"headline-lg":["Geist"],"label-caps":["JetBrains Mono"],"display":["Geist"],"body-md":["Inter"],"headline-md":["Geist"],"code-block":["JetBrains Mono"]},fontSize:{"body-lg":["18px",{"lineHeight":"1.75","fontWeight":"400"}],"headline-lg":["32px",{"lineHeight":"1.2","fontWeight":"600"}],"label-caps":["12px",{"lineHeight":"1.0","letterSpacing":"0.05em","fontWeight":"600"}],"display":["48px",{"lineHeight":"1.1","letterSpacing":"-0.02em","fontWeight":"700"}],"body-md":["16px",{"lineHeight":"1.6","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"1.3","fontWeight":"600"}],"code-block":["14px",{"lineHeight":"1.5","fontWeight":"400"}]}}}}
+</script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+
+<nav id="topnav" class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-background border-b border-outline-variant transition-all duration-200">
+  <div class="flex items-center gap-8">
+    <a href="index.html" class="font-headline-md text-headline-md text-primary font-extrabold tracking-tighter">BioFilterLib</a>
+    <div class="hidden md:flex gap-6">
+      <a href="index.html" class="font-body-md text-on-surface-variant hover:text-primary transition-colors">Docs</a>
+      <a href="ejemplos.html" class="font-body-md text-primary font-bold border-b-2 border-primary pb-1">Ejemplos</a>
+      <a href="api.html" class="font-body-md text-on-surface-variant hover:text-primary transition-colors">API</a>
+    </div>
+  </div>
+  <button onclick="document.getElementById('mobilemenu').classList.toggle('hidden')" class="md:hidden p-2 text-on-surface-variant"><span class="material-symbols-outlined">menu</span></button>
+</nav>
+<div id="mobilemenu" class="hidden fixed top-16 left-0 w-full bg-surface-container-low border-b border-outline-variant z-40 p-4 flex flex-col gap-2">
+  <a href="index.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">info</span>Introducción</a>
+  <a href="filtros-fir-iir.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">filter_alt</span>FIR &amp; IIR</a>
+  <a href="filtros-avanzados.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">analytics</span>Wavelet &amp; LMS</a>
+  <a href="ejemplos.html" class="flex items-center gap-3 px-3 py-2 text-primary bg-primary-container/10 font-bold rounded-lg"><span class="material-symbols-outlined">lightbulb</span>Ejemplos</a>
+  <a href="api.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">menu_book</span>API Reference</a>
+</div>
+
+<aside class="hidden lg:flex flex-col border-r border-outline-variant w-sidebar-width fixed left-0 top-16 h-[calc(100vh-64px)] p-4 bg-surface-container-low overflow-y-auto sidebar-scroll z-40">
+  <div class="flex items-center gap-3 mb-8">
+    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center"><span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">biotech</span></div>
+    <div><h3 class="font-headline-md text-on-surface text-lg leading-tight">Library Docs</h3><p class="text-on-surface-variant text-xs font-label-caps">v1.0.0 · Arduino Due</p></div>
+  </div>
+  <nav class="flex flex-col gap-1 flex-grow">
+    <a href="index.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">info</span><span>Introducción</span></a>
+    <div class="mt-3 mb-1 px-3"><span class="text-[10px] font-bold text-outline tracking-widest uppercase">Filtros Digitales</span></div>
+    <a href="filtros-fir-iir.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">filter_alt</span><span>FIR &amp; IIR</span></a>
+    <a href="filtros-avanzados.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">analytics</span><span>Wavelet &amp; LMS</span></a>
+    <div class="mt-3 mb-1 px-3"><span class="text-[10px] font-bold text-outline tracking-widest uppercase">Guías</span></div>
+    <a href="ejemplos.html" class="flex items-center gap-3 px-3 py-2 text-primary bg-primary-container/10 font-bold rounded-lg"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">lightbulb</span><span>Ejemplos</span></a>
+    <a href="#ejemplo-fir" class="flex items-center gap-2 pl-10 py-1.5 text-on-surface-variant hover:text-primary text-sm transition-colors"><span class="text-xs">→</span> FIR ECG Lowpass</a>
+    <a href="#ejemplo-iir" class="flex items-center gap-2 pl-10 py-1.5 text-on-surface-variant hover:text-primary text-sm transition-colors"><span class="text-xs">→</span> IIR Notch 60 Hz</a>
+    <a href="#ejemplo-lms" class="flex items-center gap-2 pl-10 py-1.5 text-on-surface-variant hover:text-primary text-sm transition-colors"><span class="text-xs">→</span> LMS Adaptativo</a>
+    <a href="#ejemplo-wavelet" class="flex items-center gap-2 pl-10 py-1.5 text-on-surface-variant hover:text-primary text-sm transition-colors"><span class="text-xs">→</span> Wavelet DB-4</a>
+    <a href="api.html" class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg"><span class="material-symbols-outlined">menu_book</span><span>API Reference</span></a>
+  </nav>
+  <div class="mt-auto pt-6 border-t border-outline-variant">
+    <a href="https://github.com" target="_blank" class="w-full bg-primary text-on-primary py-2 px-4 rounded-lg font-bold hover:brightness-110 transition-all flex items-center justify-center gap-2 text-sm"><span class="material-symbols-outlined text-sm">terminal</span> GitHub</a>
+  </div>
+</aside>
+
+<main class="lg:ml-sidebar-width pt-24 pb-24 px-6 lg:px-0 flex justify-center">
+<div class="max-w-content-max-width w-full">
+
+  <nav class="flex items-center gap-2 font-label-caps text-label-caps text-outline mb-8">
+    <a href="index.html" class="hover:text-primary">DOCS</a><span>/</span>
+    <span class="text-primary">EJEMPLOS</span>
+  </nav>
+
+  <section class="mb-12">
+    <h1 class="font-display text-display text-on-surface mb-4">Ejemplos y Tutoriales</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant">Sketches completos probados en Arduino Due con salida al <strong class="text-on-surface">Serial Plotter</strong>. Cada ejemplo corresponde a los archivos incluidos en la carpeta <code class="bg-surface-container px-1.5 py-0.5 rounded text-primary text-sm">examples/</code> de la librería.</p>
+  </section>
+
+  <!-- Cards overview -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-section-gap">
+    <a href="#ejemplo-fir" class="glass-card rounded-xl p-5 flex gap-4">
+      <div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL' 1;">filter_alt</span></div>
+      <div><h3 class="font-bold text-on-surface mb-1">FIR Pasa-Bajas ECG</h3><p class="text-sm text-on-surface-variant">51 taps, 40 Hz cutoff, 960 Hz Fs. Visualización antes/después en Serial Plotter.</p><div class="flex gap-2 mt-2"><span class="text-[10px] font-label-caps bg-secondary/10 text-secondary px-2 py-0.5 rounded">BÁSICO</span><span class="text-[10px] font-label-caps bg-surface-container text-outline px-2 py-0.5 rounded">15 MIN</span></div></div>
+    </a>
+    <a href="#ejemplo-iir" class="glass-card rounded-xl p-5 flex gap-4">
+      <div class="w-10 h-10 rounded-lg bg-tertiary/10 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-tertiary" style="font-variation-settings:'FILL' 1;">filter_alt</span></div>
+      <div><h3 class="font-bold text-on-surface mb-1">IIR Notch 60 Hz ECG</h3><p class="text-sm text-on-surface-variant">1 sección biquad, Q=30. Mínima latencia, alta selectividad.</p><div class="flex gap-2 mt-2"><span class="text-[10px] font-label-caps bg-tertiary/10 text-tertiary px-2 py-0.5 rounded">BÁSICO</span><span class="text-[10px] font-label-caps bg-surface-container text-outline px-2 py-0.5 rounded">10 MIN</span></div></div>
+    </a>
+    <a href="#ejemplo-lms" class="glass-card rounded-xl p-5 flex gap-4">
+      <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">auto_fix_high</span></div>
+      <div><h3 class="font-bold text-on-surface mb-1">LMS Cancelación Adaptativa</h3><p class="text-sm text-on-surface-variant">64 taps, mu=0.01. ECG sintético + 60 Hz. Convergencia visible en tiempo real.</p><div class="flex gap-2 mt-2"><span class="text-[10px] font-label-caps bg-primary/10 text-primary px-2 py-0.5 rounded">INTERMEDIO</span><span class="text-[10px] font-label-caps bg-surface-container text-outline px-2 py-0.5 rounded">25 MIN</span></div></div>
+    </a>
+    <a href="#ejemplo-wavelet" class="glass-card rounded-xl p-5 flex gap-4">
+      <div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL' 1;">analytics</span></div>
+      <div><h3 class="font-bold text-on-surface mb-1">Wavelet DB-4 Descomposición</h3><p class="text-sm text-on-surface-variant">Análisis y reconstrucción. Comparación DB-4 vs DB-8 incluida.</p><div class="flex gap-2 mt-2"><span class="text-[10px] font-label-caps bg-tertiary/10 text-tertiary px-2 py-0.5 rounded">AVANZADO</span><span class="text-[10px] font-label-caps bg-surface-container text-outline px-2 py-0.5 rounded">30 MIN</span></div></div>
+    </a>
+  </div>
+
+  <!-- ═══════════════════════════════ -->
+  <!-- EJEMPLO 1: FIR                  -->
+  <!-- ═══════════════════════════════ -->
+  <article id="ejemplo-fir" class="mb-section-gap scroll-mt-24">
+    <div class="flex items-center gap-3 mb-2">
+      <span class="text-[10px] font-label-caps text-secondary bg-secondary/10 px-2 py-1 rounded">EJEMPLO 1</span>
+      <span class="text-[10px] font-label-caps text-outline">FILTRO FIR</span>
+    </div>
+    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-3">FIR Pasa-Bajas para ECG</h2>
+    <p class="text-on-surface-variant mb-6">Elimina el ruido muscular (EMG) y la interferencia de alta frecuencia de una señal ECG. Frecuencia de corte 40 Hz a 960 Hz de muestreo. Diseñado con ventana Hamming, 51 coeficientes.</p>
+
+    <div class="bg-primary/5 border-l-4 border-primary p-4 rounded-r-lg mb-6 text-sm">
+      <strong class="text-on-surface">Resultado esperado en Serial Plotter:</strong>
+      <ul class="text-on-surface-variant mt-2 space-y-1 list-disc list-inside">
+        <li>Canal 1 (raw): señal ruidosa con picos agudos</li>
+        <li>Canal 2 (filtrada): forma de onda suave, retardo de 25 muestras visible</li>
+      </ul>
+    </div>
+
+    <div class="rounded-xl overflow-hidden border border-outline-variant bg-surface-container-lowest mb-6">
+      <div class="flex justify-between items-center px-4 py-3 bg-surface-container-high border-b border-outline-variant">
+        <div class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-sm">terminal</span><span class="font-code-block text-xs text-on-surface">Serial_results_BioFilterLib_FIR.ino</span></div>
+        <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+      </div>
+      <pre class="p-5 font-code-block text-code-block text-[#89f5e7] leading-relaxed overflow-x-auto"><span class="text-outline italic">/*
+ * BioFilterLib - Ejemplo FIR Pasa-Bajas ECG
+ * Señal: ECG real cargada desde Waveforms.h (Fs = 960 Hz)
+ * Filtro: Pasa-bajas 40 Hz, 51 taps, Ventana Hamming
+ * Salida: Serial Plotter (raw,filtrada)
+ */</span>
+<span class="text-tertiary">#include</span> <span class="text-secondary">&lt;BioFilterLib.h&gt;</span>
+<span class="text-tertiary">#include</span> <span class="text-secondary">"Waveforms.h"</span>   <span class="text-outline">// Señales de prueba incluidas en src/utils/</span>
+
+<span class="text-outline">// Coeficientes FIR pasa-bajas 40 Hz @ 960 Hz, 51 taps, Hamming</span>
+<span class="text-tertiary">const</span> float32_t firCoeffs[51] = {
+  -7.22e-4f, -1.27e-3f, -1.54e-3f, -9.96e-4f,  7.38e-4f,
+   3.84e-3f,  8.02e-3f,  1.25e-2f,  1.57e-2f,  1.58e-2f,
+   1.06e-2f,  0.00e+0f, -1.51e-2f, -3.18e-2f, -4.65e-2f,
+  -5.47e-2f, -5.20e-2f, -3.58e-2f,  0.00e+0f,  4.98e-2f,
+   1.08e-1f,  1.68e-1f,  2.22e-1f,  2.61e-1f,  2.80e-1f,
+   2.61e-1f,  2.22e-1f,  1.68e-1f,  1.08e-1f,  4.98e-2f,
+   0.00e+0f, -3.58e-2f, -5.20e-2f, -5.47e-2f, -4.65e-2f,
+  -3.18e-2f, -1.51e-2f,  0.00e+0f,  1.06e-2f,  1.58e-2f,
+   1.57e-2f,  1.25e-2f,  8.02e-3f,  3.84e-3f,  7.38e-4f,
+  -9.96e-4f, -1.54e-3f, -1.27e-3f, -7.22e-4f,  0.00e+0f,
+   0.00e+0f
+};
+
+<span class="text-tertiary">const</span> <span class="text-tertiary">uint16_t</span> NUM_TAPS   = 51;
+<span class="text-tertiary">const</span> <span class="text-tertiary">uint16_t</span> BLOCK_SIZE = 1;
+<span class="text-tertiary">const</span> <span class="text-tertiary">uint16_t</span> GROUP_DELAY = (NUM_TAPS - 1) / 2; <span class="text-outline">// 25 muestras</span>
+
+FIRFilter filtroFIR(firCoeffs, NUM_TAPS, BLOCK_SIZE);
+
+<span class="text-outline">// Buffer circular para compensar el retardo de grupo</span>
+float32_t delayBuf[51] = {0};
+<span class="text-tertiary">uint16_t</span> delayIdx = 0;
+
+<span class="text-tertiary">void</span> <span class="text-primary">setup</span>() { Serial.begin(115200); }
+
+<span class="text-tertiary">void</span> <span class="text-primary">loop</span>() {
+  <span class="text-tertiary">static</span> <span class="text-tertiary">uint16_t</span> idx = 0;
+  <span class="text-tertiary">if</span> (idx >= NUM_SAMPLES) idx = 0;
+
+  <span class="text-outline">// Cargar señal ECG desde flash (Waveforms.h)</span>
+  float32_t raw = loadSignal(SIGNAL_ECG_NOISY, idx++);
+
+  <span class="text-outline">// Filtrar</span>
+  float32_t filtrada = filtroFIR.<span class="text-primary">processSample</span>(raw);
+
+  <span class="text-outline">// Alinear raw con la señal filtrada (compensar retardo)</span>
+  delayBuf[delayIdx] = raw;
+  float32_t rawAlineado = delayBuf[(delayIdx - GROUP_DELAY + 51) % 51];
+  delayIdx = (delayIdx + 1) % 51;
+
+  Serial.print(rawAlineado, 5); Serial.print(",");
+  Serial.println(filtrada,  5);
+  delay(1); <span class="text-outline">// ~960 Hz con Serial overhead</span>
+}</pre>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="bg-surface-container rounded-lg p-4 border border-outline-variant text-center">
+        <div class="font-bold text-secondary font-headline-md text-lg">51</div>
+        <div class="text-xs text-on-surface-variant font-label-caps mt-1">COEFICIENTES (TAPS)</div>
+      </div>
+      <div class="bg-surface-container rounded-lg p-4 border border-outline-variant text-center">
+        <div class="font-bold text-primary font-headline-md text-lg">40 Hz</div>
+        <div class="text-xs text-on-surface-variant font-label-caps mt-1">FRECUENCIA DE CORTE</div>
+      </div>
+      <div class="bg-surface-container rounded-lg p-4 border border-outline-variant text-center">
+        <div class="font-bold text-tertiary font-headline-md text-lg">26 ms</div>
+        <div class="text-xs text-on-surface-variant font-label-caps mt-1">RETARDO DE GRUPO</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ═══════════════════════════════ -->
+  <!-- EJEMPLO 2: IIR                  -->
+  <!-- ═══════════════════════════════ -->
+  <article id="ejemplo-iir" class="mb-section-gap scroll-mt-24">
+    <div class="flex items-center gap-3 mb-2">
+      <span class="text-[10px] font-label-caps text-tertiary bg-tertiary/10 px-2 py-1 rounded">EJEMPLO 2</span>
+      <span class="text-[10px] font-label-caps text-outline">FILTRO IIR</span>
+    </div>
+    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-3">IIR Notch 60 Hz para ECG</h2>
+    <p class="text-on-surface-variant mb-6">Elimina la interferencia de la red eléctrica (60 Hz) con una sola sección biquad. Factor de calidad Q=30 produce una muesca muy estrecha sin afectar la morfología del ECG.</p>
+
+    <div class="bg-tertiary/5 border-l-4 border-tertiary p-4 rounded-r-lg mb-6 text-sm">
+      <strong class="text-on-surface">Por qué Q=30:</strong>
+      <p class="text-on-surface-variant mt-1">Un Q alto (ancho de banda estrecho = 60/30 = 2 Hz) elimina solo 59–61 Hz, sin afectar componentes cardíacas importantes. Un Q bajo eliminaría demasiado del espectro.</p>
+    </div>
+
+    <div class="rounded-xl overflow-hidden border border-outline-variant bg-surface-container-lowest mb-6">
+      <div class="flex justify-between items-center px-4 py-3 bg-surface-container-high border-b border-outline-variant">
+        <div class="flex items-center gap-2"><span class="material-symbols-outlined text-tertiary text-sm">terminal</span><span class="font-code-block text-xs text-on-surface">Serial_results_BioFilterLib_IIR.ino</span></div>
+        <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+      </div>
+      <pre class="p-5 font-code-block text-code-block text-[#89f5e7] leading-relaxed overflow-x-auto"><span class="text-outline italic">/*
+ * BioFilterLib - Ejemplo IIR Notch 60 Hz
+ * Filtro biquad de 2do orden, Q=30, Fs=960 Hz
+ * Coeficientes generados con: scipy.signal.iirnotch(60, 30, 960)
+ * IMPORTANTE: CMSIS invierte el signo de a1 y a2 vs scipy
+ */</span>
+<span class="text-tertiary">#include</span> <span class="text-secondary">&lt;BioFilterLib.h&gt;</span>
+<span class="text-tertiary">#include</span> <span class="text-secondary">"Waveforms.h"</span>
+
+<span class="text-outline">// Coeficientes Notch 60 Hz, Q=30 — formato CMSIS {b0,b1,b2,a1,a2}</span>
+<span class="text-outline">// scipy: b=[0.99034,-1.80193,0.99034], a=[1,-1.80193,0.98068]</span>
+<span class="text-outline">// CMSIS: a1 = -(-1.80193) = +1.80193,  a2 = -(0.98068) = -0.98068</span>
+<span class="text-tertiary">const</span> float32_t notchCoeffs[5] = {
+   0.99034f,   <span class="text-outline">// b0</span>
+  -1.80193f,   <span class="text-outline">// b1</span>
+   0.99034f,   <span class="text-outline">// b2</span>
+   1.80193f,   <span class="text-outline">// a1 (negado)</span>
+  -0.98068f    <span class="text-outline">// a2 (negado)</span>
+};
+
+IIRFilter notch60Hz(notchCoeffs, 1, 1);
+
+<span class="text-tertiary">void</span> <span class="text-primary">setup</span>() { Serial.begin(115200); }
+
+<span class="text-tertiary">void</span> <span class="text-primary">loop</span>() {
+  <span class="text-tertiary">static</span> <span class="text-tertiary">uint16_t</span> idx = 0;
+  <span class="text-tertiary">if</span> (idx >= NUM_SAMPLES) idx = 0;
+
+  <span class="text-outline">// ECG con ruido de 60 Hz superpuesto</span>
+  float32_t raw      = loadSignal(SIGNAL_ECG_NOISY_60HZ, idx++);
+  float32_t filtrada = notch60Hz.<span class="text-primary">processSample</span>(raw);
+
+  <span class="text-outline">// IIR tiene retardo mínimo: no se necesita compensación</span>
+  Serial.print(raw,     5); Serial.print(",");
+  Serial.println(filtrada, 5);
+  delay(1);
+}</pre>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="bg-surface-container rounded-lg p-4 border border-outline-variant text-center">
+        <div class="font-bold text-tertiary font-headline-md text-lg">1</div>
+        <div class="text-xs text-on-surface-variant font-label-caps mt-1">SECCIÓN BIQUAD</div>
+      </div>
+      <div class="bg-surface-container rounded-lg p-4 border border-outline-variant text-center">
+        <div class="font-bold text-primary font-headline-md text-lg">Q = 30</div>
+        <div class="text-xs text-on-surface-variant font-label-caps mt-1">FACTOR DE CALIDAD</div>
+      </div>
+      <div class="bg-surface-container rounded-lg p-4 border border-outline-variant text-center">
+        <div class="font-bold text-secondary font-headline-md text-lg">~0 ms</div>
+        <div class="text-xs text-on-surface-variant font-label-caps mt-1">RETARDO DE GRUPO</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ═══════════════════════════════ -->
+  <!-- EJEMPLO 3: LMS                  -->
+  <!-- ═══════════════════════════════ -->
+  <article id="ejemplo-lms" class="mb-section-gap scroll-mt-24">
+    <div class="flex items-center gap-3 mb-2">
+      <span class="text-[10px] font-label-caps text-primary bg-primary/10 px-2 py-1 rounded">EJEMPLO 3</span>
+      <span class="text-[10px] font-label-caps text-outline">FILTRO LMS ADAPTATIVO</span>
+    </div>
+    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-3">LMS — Cancelación Adaptativa de Ruido</h2>
+    <p class="text-on-surface-variant mb-4">Este ejemplo genera un ECG sintético con onda P, complejo QRS y onda T, le suma interferencia de 60 Hz, y usa el LMS para cancelarla adaptativamente. Permite visualizar la convergencia del algoritmo en tiempo real.</p>
+
+    <div class="bg-secondary/5 border-l-4 border-secondary p-4 rounded-r-lg mb-6 text-sm">
+      <strong class="text-on-surface">4 señales en Serial Plotter:</strong>
+      <ol class="text-on-surface-variant mt-2 space-y-1 list-decimal list-inside">
+        <li><span class="text-on-surface">ecgContaminado</span> — ECG + 60 Hz (señal de entrada)</li>
+        <li><span class="text-on-surface">ref60Hz</span> — seno de referencia puro</li>
+        <li><span class="text-on-surface">ecgLimpio</span> — salida del LMS (converge progresivamente)</li>
+        <li><span class="text-on-surface">errorAdaptacion</span> — decae a cero al converger</li>
+      </ol>
+    </div>
+
+    <div class="rounded-xl overflow-hidden border border-outline-variant bg-surface-container-lowest mb-6">
+      <div class="flex justify-between items-center px-4 py-3 bg-surface-container-high border-b border-outline-variant">
+        <div class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">terminal</span><span class="font-code-block text-xs text-on-surface">Serial_results_BioFilterLib_LMS.ino</span></div>
+        <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+      </div>
+      <pre class="p-5 font-code-block text-code-block text-[#89f5e7] leading-relaxed overflow-x-auto"><span class="text-outline italic">/*
+ * BioFilterLib - Ejemplo LMS Adaptativo
+ * ECG sintético (75 BPM) + interferencia 60 Hz
+ * LMS: 64 taps, mu=0.01
+ * Observar en Serial Plotter cómo el error decrece con el tiempo
+ */</span>
+<span class="text-tertiary">#include</span> <span class="text-secondary">&lt;BioFilterLib.h&gt;</span>
+
+<span class="text-tertiary">const</span> <span class="text-tertiary">float</span> FS     = 960.0f;
+<span class="text-tertiary">const</span> <span class="text-tertiary">float</span> BPM    = 75.0f;
+<span class="text-tertiary">const</span> <span class="text-tertiary">float</span> F_NOISE = 60.0f;
+<span class="text-tertiary">const</span> <span class="text-tertiary">float</span> A_NOISE = 0.3f;  <span class="text-outline">// Amplitud del ruido 60 Hz</span>
+
+<span class="text-outline">// LMS: 64 taps, mu=0.01, blockSize=1</span>
+<span class="text-tertiary">const</span> <span class="text-tertiary">uint16_t</span> LMS_TAPS = 64;
+float32_t lmsCoeffs[LMS_TAPS] = {0.0f};
+LMSFilter cancelador(lmsCoeffs, LMS_TAPS, 0.01f, 1);
+
+<span class="text-tertiary">float</span> t = 0.0f;
+
+<span class="text-outline">// Genera un latido ECG sintético simple</span>
+float32_t <span class="text-primary">ecgSintetico</span>(<span class="text-tertiary">float</span> tiempo) {
+  <span class="text-tertiary">float</span> phase = fmod(tiempo * BPM / 60.0f, 1.0f);
+  <span class="text-tertiary">float</span> ecg = 0.0f;
+  <span class="text-outline">// Onda P</span>
+  ecg += 0.15f * exp(-0.5f * pow((phase - 0.2f) / 0.04f, 2));
+  <span class="text-outline">// Onda Q</span>
+  ecg -= 0.1f  * exp(-0.5f * pow((phase - 0.36f) / 0.008f, 2));
+  <span class="text-outline">// Onda R (pico principal)</span>
+  ecg += 1.0f  * exp(-0.5f * pow((phase - 0.4f)  / 0.006f, 2));
+  <span class="text-outline">// Onda S</span>
+  ecg -= 0.2f  * exp(-0.5f * pow((phase - 0.44f) / 0.008f, 2));
+  <span class="text-outline">// Onda T</span>
+  ecg += 0.35f * exp(-0.5f * pow((phase - 0.6f)  / 0.04f,  2));
+  <span class="text-tertiary">return</span> ecg;
+}
+
+<span class="text-tertiary">void</span> <span class="text-primary">setup</span>() { Serial.begin(115200); }
+
+<span class="text-tertiary">void</span> <span class="text-primary">loop</span>() {
+  <span class="text-outline">// ECG sintético + ruido 60 Hz</span>
+  float32_t ecg           = ecgSintetico(t);
+  float32_t ruido60Hz     = A_NOISE * sin(2.0f * PI * F_NOISE * t);
+  float32_t ecgContaminado = ecg + ruido60Hz;
+
+  <span class="text-outline">// Referencia: seno puro de 60 Hz (sin el ECG)</span>
+  float32_t ref60Hz = sin(2.0f * PI * F_NOISE * t);
+
+  <span class="text-outline">// Filtrado adaptativo</span>
+  float32_t ecgLimpio, errorAdaptacion;
+  cancelador.<span class="text-primary">processSample</span>(ecgContaminado, ref60Hz,
+                           &amp;ecgLimpio, &amp;errorAdaptacion);
+
+  Serial.print(ecgContaminado,  4); Serial.print(",");
+  Serial.print(ref60Hz,         4); Serial.print(",");
+  Serial.print(ecgLimpio,       4); Serial.print(",");
+  Serial.println(errorAdaptacion, 4);
+
+  t += 1.0f / FS;
+  delayMicroseconds(1042);
+}</pre>
+    </div>
+
+    <!-- Experiment table -->
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-4">Experimentos: Efecto de M y μ</h3>
+    <p class="text-on-surface-variant mb-4 text-sm">La carpeta <code class="text-primary">examples/Serial_results_BioFilterLib_LMS/</code> incluye 4 subdirectorios con capturas de las siguientes configuraciones:</p>
+    <div class="overflow-hidden border border-outline-variant rounded-xl mb-6">
+      <table class="w-full text-left border-collapse text-sm">
+        <thead class="bg-surface-container-high">
+          <tr>
+            <th class="p-3 font-label-caps text-primary border-b border-outline-variant text-[10px]">CARPETA</th>
+            <th class="p-3 font-label-caps text-on-surface-variant border-b border-outline-variant text-[10px]">TAPS (M)</th>
+            <th class="p-3 font-label-caps text-on-surface-variant border-b border-outline-variant text-[10px]">MU (μ)</th>
+            <th class="p-3 font-label-caps text-on-surface-variant border-b border-outline-variant text-[10px]">CONVERGENCIA</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant/30">
+          <tr class="hover:bg-surface-variant/10"><td class="p-3 font-code-block text-on-surface-variant">M_128_mu_0.1</td><td class="p-3 text-on-surface">128</td><td class="p-3 text-on-surface">0.1</td><td class="p-3 text-yellow-400">Rápida, posible inestabilidad</td></tr>
+          <tr class="hover:bg-surface-variant/10"><td class="p-3 font-code-block text-on-surface-variant">M_128_mu_0.01</td><td class="p-3 text-on-surface">128</td><td class="p-3 text-on-surface">0.01</td><td class="p-3 text-green-400">Óptima para ECG</td></tr>
+          <tr class="hover:bg-surface-variant/10"><td class="p-3 font-code-block text-on-surface-variant">M_64_mu_0.1</td><td class="p-3 text-on-surface">64</td><td class="p-3 text-on-surface">0.1</td><td class="p-3 text-yellow-400">Rápida, menor resolución</td></tr>
+          <tr class="hover:bg-surface-variant/10"><td class="p-3 font-code-block text-on-surface-variant">M_64_mu_0.01</td><td class="p-3 text-on-surface">64</td><td class="p-3 text-on-surface">0.01</td><td class="p-3 text-green-400">Buena para aplicaciones generales</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </article>
+
+  <!-- ═══════════════════════════════ -->
+  <!-- EJEMPLO 4: WAVELET              -->
+  <!-- ═══════════════════════════════ -->
+  <article id="ejemplo-wavelet" class="mb-section-gap scroll-mt-24">
+    <div class="flex items-center gap-3 mb-2">
+      <span class="text-[10px] font-label-caps text-secondary bg-secondary/10 px-2 py-1 rounded">EJEMPLO 4</span>
+      <span class="text-[10px] font-label-caps text-outline">WAVELET DB-4</span>
+    </div>
+    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-3">Wavelet DB-4 — Descomposición y Reconstrucción</h2>
+    <p class="text-on-surface-variant mb-6">Descompone la señal en aproximación (baja frecuencia) y detalle (alta frecuencia), y reconstruye versiones filtradas. La carpeta de ejemplos incluye capturas de pantalla del Serial Plotter para DB-4 y DB-8.</p>
+
+    <div class="rounded-xl overflow-hidden border border-outline-variant bg-surface-container-lowest mb-6">
+      <div class="flex justify-between items-center px-4 py-3 bg-surface-container-high border-b border-outline-variant">
+        <div class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-sm">terminal</span><span class="font-code-block text-xs text-on-surface">Serial_results_BioFilterLib_Wavelet.ino</span></div>
+        <button class="copy-btn material-symbols-outlined text-sm text-on-surface-variant hover:text-primary">content_copy</button>
+      </div>
+      <pre class="p-5 font-code-block text-code-block text-[#89f5e7] leading-relaxed overflow-x-auto"><span class="text-outline italic">/*
+ * BioFilterLib - Ejemplo Wavelet DB-4
+ * Descomposición en aproximación (LP) y detalle (HP)
+ * Reconstrucción con solo aproximación = denoising
+ * Salida: 4 señales en Serial Plotter
+ */</span>
+<span class="text-tertiary">#include</span> <span class="text-secondary">&lt;BioFilterLib.h&gt;</span>
+<span class="text-tertiary">#include</span> <span class="text-secondary">"Waveforms.h"</span>
+
+<span class="text-tertiary">const</span> <span class="text-tertiary">uint32_t</span> BUF_SIZE = 256;
+
+<span class="text-outline">// Buffers para procesamiento por bloques</span>
+float32_t inputBuf[BUF_SIZE];
+float32_t approxBuf[BUF_SIZE];
+float32_t detailBuf[BUF_SIZE];
+
+WaveletFilter wavelet(BUF_SIZE); <span class="text-outline">// blockSize = 256 (por lotes)</span>
+
+<span class="text-tertiary">void</span> <span class="text-primary">setup</span>() {
+  Serial.begin(115200);
+
+  <span class="text-outline">// Cargar un bloque de ECG ruidoso desde flash</span>
+  <span class="text-tertiary">for</span> (<span class="text-tertiary">uint32_t</span> i = 0; i &lt; BUF_SIZE; i++) {
+    inputBuf[i] = loadSignal(SIGNAL_ECG_NOISY, i);
+  }
+
+  <span class="text-outline">// Descomposición wavelet del bloque completo</span>
+  wavelet.<span class="text-primary">processBuffer</span>(inputBuf, approxBuf, detailBuf, BUF_SIZE);
+}
+
+<span class="text-tertiary">void</span> <span class="text-primary">loop</span>() {
+  <span class="text-tertiary">static</span> <span class="text-tertiary">uint32_t</span> idx = 0;
+  <span class="text-tertiary">if</span> (idx >= BUF_SIZE) { idx = 0; wavelet.<span class="text-primary">reset</span>(); return; }
+
+  <span class="text-outline">// Reconstrucción con solo aproximación (denoising)</span>
+  float32_t soloApprox   = wavelet.<span class="text-primary">reconstruct</span>(approxBuf[idx], 0.0f);
+  <span class="text-outline">// Reconstrucción completa (debe ser ≈ original)</span>
+  float32_t reconstruida = wavelet.<span class="text-primary">reconstruct</span>(approxBuf[idx], detailBuf[idx]);
+
+  <span class="text-outline">// 4 señales: original, aproximación, detalle, denoised</span>
+  Serial.print(inputBuf[idx],  4); Serial.print(",");
+  Serial.print(approxBuf[idx], 4); Serial.print(",");
+  Serial.print(detailBuf[idx], 4); Serial.print(",");
+  Serial.println(soloApprox,   4);
+
+  idx++;
+  delay(1);
+}</pre>
+    </div>
+
+    <div class="bg-primary/5 border-l-4 border-primary p-4 rounded-r-lg text-sm">
+      <strong class="text-on-surface">Imágenes de referencia incluidas en <code class="text-primary">examples/Serial_results_BioFilterLib_Wavelet/</code>:</strong>
+      <ul class="text-on-surface-variant mt-2 space-y-1 list-disc list-inside">
+        <li><code class="text-primary">input_db4.png</code> / <code class="text-primary">input_db8.png</code> — señal de entrada</li>
+        <li><code class="text-primary">approx_db4.png</code> / <code class="text-primary">approx_db8.png</code> — coeficientes de aproximación</li>
+        <li><code class="text-primary">detail_db4.png</code> / <code class="text-primary">detail_db8.png</code> — coeficientes de detalle</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- Next step -->
+  <div class="flex justify-center">
+    <a href="api.html" class="glass-card rounded-xl p-6 flex items-center gap-4 hover:border-primary/40 transition-all max-w-md w-full">
+      <span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings:'FILL' 1;">menu_book</span>
+      <div><h3 class="font-headline-md text-headline-md text-on-surface">API Reference completa →</h3><p class="text-sm text-on-surface-variant">Todos los métodos, parámetros y tipos de las 4 clases.</p></div>
+    </a>
+  </div>
+
+</div>
+</main>
+
+<footer class="lg:ml-sidebar-width border-t border-outline-variant bg-background mt-section-gap">
+  <div class="max-w-content-max-width mx-auto py-10 px-gutter flex flex-col md:flex-row justify-between items-center gap-4">
+    <div><span class="font-headline-md font-bold text-primary">BioFilterLib</span><p class="font-label-caps text-[10px] text-on-surface-variant mt-1">© 2024 Sergio Moreno · MIT License</p></div>
+    <div class="flex gap-6">
+      <a href="index.html" class="font-label-caps text-[10px] text-on-surface-variant hover:text-primary">Inicio</a>
+      <a href="filtros-fir-iir.html" class="font-label-caps text-[10px] text-on-surface-variant hover:text-primary">Filtros</a>
+      <a href="api.html" class="font-label-caps text-[10px] text-on-surface-variant hover:text-primary">API</a>
+    </div>
+  </div>
+</footer>
+
+<nav class="lg:hidden fixed bottom-0 left-0 w-full bg-surface-container-low border-t border-outline-variant flex justify-around items-center py-2 px-4 z-50">
+  <a href="index.html" class="flex flex-col items-center gap-0.5 text-on-surface-variant"><span class="material-symbols-outlined">home</span><span class="text-[9px] font-label-caps">INICIO</span></a>
+  <a href="filtros-fir-iir.html" class="flex flex-col items-center gap-0.5 text-on-surface-variant"><span class="material-symbols-outlined">filter_alt</span><span class="text-[9px] font-label-caps">FILTROS</span></a>
+  <a href="ejemplos.html" class="flex flex-col items-center gap-0.5 text-primary"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">lightbulb</span><span class="text-[9px] font-label-caps">EJEMPLOS</span></a>
+  <a href="api.html" class="flex flex-col items-center gap-0.5 text-on-surface-variant"><span class="material-symbols-outlined">menu_book</span><span class="text-[9px] font-label-caps">API</span></a>
+</nav>
+
+<script>
+  window.addEventListener('scroll',()=>{document.getElementById('topnav').classList.toggle('bg-background/80',window.scrollY>20);document.getElementById('topnav').classList.toggle('backdrop-blur-md',window.scrollY>20);});
+  document.querySelectorAll('.copy-btn').forEach(btn=>{btn.addEventListener('click',function(){const pre=this.closest('.rounded-xl');if(pre){const code=pre.querySelector('pre')?.innerText||'';navigator.clipboard.writeText(code).catch(()=>{});}const orig=this.innerText;this.innerText='check';this.classList.add('text-primary');setTimeout(()=>{this.innerText=orig;this.classList.remove('text-primary');},2000);});});
+</script>
+</body>
+</html>
